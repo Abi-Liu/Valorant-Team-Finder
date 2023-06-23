@@ -9,6 +9,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import MongoStore from "connect-mongo";
 import authRoutes from "./routes/auth";
+import connectDB from "./config/database";
 import User from "./models/User";
 import { DatabaseUserInterface } from "./Interfaces/UserInterface";
 
@@ -17,6 +18,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+connectDB();
 app.use(
   session({
     secret: "secretcode",
