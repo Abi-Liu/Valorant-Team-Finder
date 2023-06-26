@@ -9,15 +9,11 @@ const CLIENT_URL = "http://localhost:5173/";
 export default {
   register: async (req: Request, res: Response) => {
     try {
-      console.log(req.body);
-      const { username, password, ign, email } = req.body;
-      console.log(username);
+      const { password, ign, email } = req.body;
       const user = await User.findOne({
-        username: username,
-        ign: ign,
         email: email,
+        ign: ign,
       });
-      console.log(user);
       if (user) {
         res.send("User already exists");
       }
@@ -29,7 +25,6 @@ export default {
           });
         });
         const newUser = await User.create({
-          username: username,
           ign: ign,
           email: email,
           password: hashedPassword,
