@@ -11,19 +11,13 @@ export default {
     try {
       const { password, ign, email } = req.body;
       const user = await User.findOne({
-        email: email,
-        ign: ign,
+        $or: [{ email: email }, { ign: ign }],
       });
       if (user) {
         res.send("User already exists");
       }
-      let hashedPassword;
       if (!user) {
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(password, salt, (err, hash) => {
-            hashedPassword = hash;
-          });
-        });
+        const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await User.create({
           ign: ign,
           email: email,

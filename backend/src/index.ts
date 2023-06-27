@@ -40,22 +40,19 @@ app.use(passport.session());
 const LocalStrategy = passportLocal.Strategy;
 
 passport.use(
-  new LocalStrategy((username: string, password: string, done) => {
-    User.findOne(
-      { username: username },
-      (err: any, user: DatabaseUserInterface) => {
+  new LocalStrategy((email: string, password: string, done) => {
+    User.findOne({ email: email }, (err: any, user: DatabaseUserInterface) => {
+      if (err) throw err;
+      if (!user) return done(null, false);
+      bcrypt.compare(password, user.password, (err, result: boolean) => {
         if (err) throw err;
-        if (!user) return done(null, false);
-        bcrypt.compare(password, user.password, (err, result: boolean) => {
-          if (err) throw err;
-          if (result === true) {
-            return done(null, user);
-          } else {
-            return done(null, false);
-          }
-        });
-      }
-    );
+        if (result === true) {
+          return done(null, user);
+        } else {
+          return done(null, false);
+        }
+      });
+    });
   })
 );
 
