@@ -55,6 +55,20 @@ passport.use(
     });
   })
 );
+passport.serializeUser((user: any, done) => {
+  console.log(user);
+  done(null, user.id);
+});
+
+passport.deserializeUser((user: any, done) => {
+  User.findById(user.id, (err: Error, id: string) => {
+    if (!err) {
+      done(null, user);
+    } else {
+      done(err);
+    }
+  });
+});
 
 app.use("/auth", authRoutes);
 

@@ -5,7 +5,14 @@ import Login from "./pages/Login";
 function App() {
   return (
     <>
-      <Login />
+      <div>
+        <h2>Register</h2>
+        <Register />
+      </div>
+      <div>
+        <h2>Login</h2>
+        <Login />
+      </div>
     </>
   );
 }
