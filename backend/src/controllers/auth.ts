@@ -51,7 +51,7 @@ export default {
   login: (req: Request, res: Response, next: NextFunction) => {
     const { password } = req.body;
     let { email } = req.body;
-    if (!validator.isEmail(email) || !validator.isEmpty(password)) {
+    if (!validator.isEmail(email) || validator.isEmpty(password)) {
       console.log("invalid email/password");
       return res.status(400).json({ message: "Invalid email or password" });
     }
@@ -63,7 +63,7 @@ export default {
         return next(err);
       }
       if (!user) {
-        return res.json({ message: "No user found", info });
+        return res.status(400).json({ message: "No user found", info });
       }
       req.logIn(user, (err) => {
         if (err) {

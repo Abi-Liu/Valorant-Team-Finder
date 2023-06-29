@@ -40,34 +40,44 @@ app.use(passport.session());
 const LocalStrategy = passportLocal.Strategy;
 
 passport.use(
-  new LocalStrategy((email: string, password: string, done) => {
-    User.findOne({ email: email }, (err: any, user: DatabaseUserInterface) => {
-      if (err) throw err;
-      if (!user) return done(null, false);
-      bcrypt.compare(password, user.password, (err, result: boolean) => {
-        if (err) throw err;
-        if (result === true) {
-          return done(null, user);
-        } else {
-          return done(null, false);
+  new LocalStrategy(
+    { usernameField: "email", passwordField: "password" },
+    async (email: string, password: string, done) => {
+      try {
+        const user = await User.findOne({ email: email.toLowerCase() });
+        if (!user) {
+          return done(null, false, { message: `Email ${email} not found.` });
         }
-      });
-    });
-  })
+        if (!user.password) {
+          return done(null, false, {
+            message:
+              "Your account was registered using a sign-in provider. To enable password login, sign in using a provider, and then set a password under your user profile.",
+          });
+        }
+        bcrypt.compare(password, user.password, (err, result: boolean) => {
+          if (err) return done(err);
+          if (result) {
+            return done(null, user);
+          }
+          return done(null, false, { message: "Invalid email or password." });
+        });
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
 );
-passport.serializeUser((user: any, done) => {
-  console.log(user);
-  done(null, user.id);
+passport.serializeUser((user: DatabaseUserInterface, done) => {
+  done(null, user._id);
 });
 
-passport.deserializeUser((user: any, done) => {
-  User.findById(user.id, (err: Error, id: string) => {
-    if (!err) {
-      done(null, user);
-    } else {
-      done(err);
-    }
-  });
+passport.deserializeUser(async (id: string, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
 });
 
 app.use("/auth", authRoutes);
