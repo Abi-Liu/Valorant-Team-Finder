@@ -9,6 +9,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import MongoStore from "connect-mongo";
 import authRoutes from "./routes/auth";
+import teamRoutes from "./routes/team";
 import connectDB from "./config/database";
 import User from "./models/User";
 import { DatabaseUserInterface } from "./Interfaces/UserInterface";
@@ -81,6 +82,7 @@ passport.deserializeUser(async (id: string, done) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/team", teamRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
