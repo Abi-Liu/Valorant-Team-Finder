@@ -10,4 +10,6 @@ export default {
       res.status(500).json({ message: err });
     }
   },
+  join: async (req: Request, res: Response) => {},
+  leave: async (req: Request, res: Response) => {},
 };
