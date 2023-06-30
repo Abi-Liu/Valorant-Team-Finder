@@ -6,5 +6,6 @@ const router = express.Router();
 router.post("/createTeam", teamController.create);
 router.put("/join/:id", teamController.join);
 router.put("/leave/:id", teamController.leave);
+router.get("/getTeams", teamController.getTeams);
 
 export default router;

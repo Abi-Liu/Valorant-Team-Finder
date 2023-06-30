@@ -17,4 +17,5 @@ export default {
   },
   join: async (req: Request, res: Response) => {},
   leave: async (req: Request, res: Response) => {},
+  getTeams: async (req: Request, res: Response) => {},
 };
