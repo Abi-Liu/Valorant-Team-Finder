@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import Team from "src/models/Team";
+import Team from "../models/Team";
 
 export default {
   create: async (req: Request, res: Response) => {
