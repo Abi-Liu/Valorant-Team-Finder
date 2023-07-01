@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import UserProvider from "./contexts/UserContext";
 import Another from "./components/Another";
-import Test from "./components/test";
+import Test from "./components/Test";
 
 function App() {
   return (
