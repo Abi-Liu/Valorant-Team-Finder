@@ -3,6 +3,7 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
+  useContext,
   useState,
 } from "react";
 
@@ -25,15 +26,22 @@ const defaultState = {
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setUser: (user: User) => {},
+  loggedIn: false,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setLoggedIn: (loggedIn: boolean) => {},
 } as UserContextInterface;
 
-export const UserContext = createContext<UserContextInterface>(defaultState);
+const UserContext = createContext<UserContextInterface>(defaultState);
+
+export function useUserContext() {
+  return useContext(UserContext);
+}
 
 type UserProviderProps = {
   children: ReactNode;
 };
 
-export function UserProvider({ children }: UserProviderProps) {
+export default function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState<User>({
     ign: "",
     _id: "",

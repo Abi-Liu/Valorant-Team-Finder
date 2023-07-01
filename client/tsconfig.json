@@ -21,6 +21,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "src/contexts/UserContext.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
