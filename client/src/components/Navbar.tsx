@@ -15,6 +15,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
 import { NavBarProps } from "../interfaces/common";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ pages, settings }: NavBarProps) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -89,7 +90,9 @@ const Navbar = ({ pages, settings }: NavBarProps) => {
             >
               {pages.map((page: string) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">
+                    <Link to={`/${page}`}>{page}</Link>
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -120,7 +123,7 @@ const Navbar = ({ pages, settings }: NavBarProps) => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                <Link to={`/${page}`}>{page}</Link>
               </Button>
             ))}
           </Box>
