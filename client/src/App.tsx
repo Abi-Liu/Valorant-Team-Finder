@@ -4,19 +4,17 @@ import Login from "./pages/Login";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import UserProvider from "./contexts/UserContext";
-import Another from "./components/Another";
-import Test from "./components/Test";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <UserProvider>
-      {/* <Routes> */}
-      <Another />
-      <Test />
-      {/* <Route path="/" element={<Home />} />
+      <Navbar pages={["login", "signup"]} settings={["profile"]} />
+      <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} /> */}
-      {/* </Routes> */}
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </UserProvider>
   );
 }
