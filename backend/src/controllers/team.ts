@@ -22,6 +22,20 @@ export default {
   },
   join: async (req: Request, res: Response) => {
     const { userId, teamId } = req.body;
+    const user = await User.findById(userId);
+    if (user.team) {
+      console.log("user is already in a team");
+      res
+        .status(500)
+        .json({
+          message: "You are already in a team! Please leave to join another",
+        });
+    } else {
+      const team = await Team.findByIdAndUpdate(teamId, {
+        $push: { teammates: user?.ign },
+      });
+      await User.findByIdAndUpdate(userId, { team: teamId });
+    }
   },
   leave: async (req: Request, res: Response) => {},
   getTeams: async (req: Request, res: Response) => {},
