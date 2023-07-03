@@ -71,5 +71,13 @@ export default {
       res.status(500).json({ message: error });
     }
   },
-  getTeams: async (req: Request, res: Response) => {},
+  getTeams: async (req: Request, res: Response) => {
+    try {
+      //returns a list of all teams in the collection
+      const teams = await Team.find().lean(); //lean just gives POJO which improves performance makes it less memory intensive.
+    } catch (error) {
+      console.error(error);
+      res.status(500).json(error);
+    }
+  },
 };
