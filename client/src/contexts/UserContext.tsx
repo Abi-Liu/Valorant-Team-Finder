@@ -10,6 +10,8 @@ import {
 export type User = {
   ign: string;
   team: string;
+  cardSmall: string;
+  cardLarge: string;
   _id: string;
 };
 
@@ -24,6 +26,8 @@ const defaultState = {
   user: {
     ign: "",
     team: "",
+    cardSmall: "",
+    cardLarge: "",
     _id: "",
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -47,6 +51,8 @@ export default function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState<User>({
     ign: "",
     team: "",
+    cardSmall: "",
+    cardLarge: "",
     _id: "",
   });
   const [loggedIn, setLoggedIn] = useState(false);

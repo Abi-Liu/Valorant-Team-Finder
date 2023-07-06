@@ -28,11 +28,11 @@ const Login = () => {
         formData
       );
       setLoggedIn(true);
-      setUser({
+      setUser((prev) => ({
+        ...prev,
         ign: user.ign,
-        team: "",
         _id: user._id,
-      });
+      }));
     } catch (error) {
       console.log(error);
     }
