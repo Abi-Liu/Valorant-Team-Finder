@@ -63,6 +63,10 @@ export default {
         const team = await Team.findByIdAndUpdate(teamId, {
           $pull: { teammates: user.ign },
         });
+        if (team?.teammates.length === 0) {
+          await Team.findByIdAndDelete(teamId);
+          console.log("Team disbanded");
+        }
         console.log("Successfully left");
         res.status(200).json(team);
       }
@@ -75,6 +79,7 @@ export default {
     try {
       //returns a list of all teams in the collection
       const teams = await Team.find().lean(); //lean just gives POJO which improves performance makes it less memory intensive.
+      res.status(200).json(teams);
     } catch (error) {
       console.error(error);
       res.status(500).json(error);
