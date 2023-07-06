@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import axios from "axios";
+import { useUserContext, User } from "../contexts/UserContext";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,8 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const { setLoggedIn, setUser } = useUserContext();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value, id } = event.target;
@@ -22,8 +25,16 @@ const Register = () => {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      console.log(formData);
-      await axios.post("http://localhost:8000/auth/register", formData);
+      const user: User = await axios.post(
+        "http://localhost:8000/auth/register",
+        formData
+      );
+      setLoggedIn(true);
+      setUser((prev) => ({
+        ...prev,
+        ign: user.ign,
+        _id: user._id,
+      }));
     } catch (err) {
       console.error(err);
     }

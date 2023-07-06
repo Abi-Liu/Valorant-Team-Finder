@@ -11,12 +11,13 @@ const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 function App() {
   const { loggedIn } = useUserContext();
+  console.log(loggedIn);
   const pages = loggedIn
-    ? ["Login", "Signup"]
-    : ["Active Teams", "Search Users", "Shop"];
+    ? ["Active Teams", "Search Users", "Shop"]
+    : ["Login", "Signup"];
   return (
     <>
-      <Navbar pages={pages} settings={["profile"]} />
+      <Navbar pages={pages} settings={["Profile"]} />
       <Offset />
       <Routes>
         <Route path="/" element={<Home />} />
