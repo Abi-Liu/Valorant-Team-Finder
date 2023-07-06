@@ -9,6 +9,7 @@ import {
 
 export type User = {
   ign: string;
+  team: string;
   _id: string;
 };
 
@@ -22,6 +23,7 @@ export interface UserContextInterface {
 const defaultState = {
   user: {
     ign: "",
+    team: "",
     _id: "",
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -44,6 +46,7 @@ type UserProviderProps = {
 export default function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState<User>({
     ign: "",
+    team: "",
     _id: "",
   });
   const [loggedIn, setLoggedIn] = useState(false);
