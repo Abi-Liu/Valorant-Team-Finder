@@ -51,7 +51,7 @@ const Navbar = ({ pages, settings }: NavBarProps) => {
   }
 
   return (
-    <AppBar position="fixed">
+    <AppBar sx={{ backgroundColor: "black" }} position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />

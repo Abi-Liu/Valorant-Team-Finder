@@ -1,0 +1,8 @@
+@font-face {
+  font-family: Valorant; /*Can be any text*/
+  src: local("ValorantFont"), url("./fonts/ValorantFont.ttf") format("truetype");
+}
+
+.valorant-font {
+  font-family: Valorant;
+}

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -6,6 +5,7 @@ import Home from "./pages/Home";
 import { useUserContext } from "./contexts/UserContext";
 import Navbar from "./components/Navbar";
 import { styled } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
@@ -17,6 +17,7 @@ function App() {
     : ["Login", "Signup"];
   return (
     <>
+      <CssBaseline />
       <Navbar pages={pages} settings={["Profile"]} />
       <Offset />
       <Routes>
