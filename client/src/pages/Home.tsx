@@ -1,12 +1,17 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
-import BackgroundImage from "../assets/Valorant1.png";
+import BackgroundImage from "../assets/Valorant.png";
 import "../fonts/ValorantFont.ttf";
 
 const Home = () => {
   return (
     <Box>
-      <Box sx={{ display: "flex", backgroundColor: "#0e1923", pl: "5rem" }}>
+      <Box
+        sx={{
+          display: "flex",
+          backgroundColor: "#101823",
+          pl: "5rem",
+        }}
+      >
         <Box sx={{ pt: "12rem" }}>
           <Typography
             className="valorant-font"

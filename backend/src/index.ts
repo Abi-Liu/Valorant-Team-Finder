@@ -1,41 +1,14 @@
-import mongoose from "mongoose";
-import express from "express";
-import cors from "cors";
 import passport from "passport";
 import passportLocal from "passport-local";
-import cookieParser from "cookie-parser";
-import session from "express-session";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
-import MongoStore from "connect-mongo";
-import authRoutes from "./routes/auth";
-import teamRoutes from "./routes/team";
-import connectDB from "./config/database";
 import User from "./models/User";
 import { DatabaseUserInterface } from "./Interfaces/UserInterface";
+import createServer from "./config/server";
 
 dotenv.config();
 
-const app = express();
-app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-connectDB();
-app.use(
-  session({
-    secret: "secretcode",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 60 * 60 * 1000,
-    },
-    rolling: true,
-    store: MongoStore.create({ mongoUrl: process.env.DB_STRING }),
-  })
-);
-
-app.use(cookieParser());
-app.use(passport.initialize());
-app.use(passport.session());
+const app = createServer();
 
 // Passport
 const LocalStrategy = passportLocal.Strategy;
@@ -80,9 +53,6 @@ passport.deserializeUser(async (id: string, done) => {
     done(err);
   }
 });
-
-app.use("/auth", authRoutes);
-app.use("/team", teamRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

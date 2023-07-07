@@ -27,7 +27,7 @@ export default {
         $or: [{ email: email }, { ign: ign }],
       });
       if (user) {
-        return res.send("User already exists");
+        return res.status(400).send("User already exists");
       }
       if (!user) {
         const hashedPassword = await bcrypt.hash(password, 10);
