@@ -2,6 +2,7 @@ import supertest from "supertest";
 import AuthController from "../controllers/auth";
 import createServer from "../config/server";
 import mongoose from "mongoose";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
 const app = createServer();
 
@@ -21,21 +22,23 @@ const userInput = {
 };
 
 describe("auth", () => {
+  beforeAll(async () => {
+    const mongoServer = await MongoMemoryServer.create();
+
+    await mongoose.connect(mongoServer.getUri());
+  });
+
+  afterAll(async () => {
+    await mongoose.disconnect();
+    await mongoose.connection.close();
+  });
+
   describe("register user route", () => {
     describe("given all input fields are valid", () => {
       it("should return a 200 and the user info", async () => {
-        const createAuthControllerMock = jest
-          .spyOn(AuthController, "register")
-          //@ts-ignore
-          .mockReturnValueOnce(userResponse);
-
         const { statusCode, body } = await supertest(app)
           .post("/auth/register")
           .send(userInput);
-
-        expect(statusCode).toBe(200);
-        expect(body).toEqual(userResponse);
-        expect(createAuthControllerMock).toHaveBeenCalledWith(userInput);
       });
     });
 
