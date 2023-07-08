@@ -39,6 +39,10 @@ describe("auth", () => {
         const { statusCode, body } = await supertest(app)
           .post("/auth/register")
           .send(userInput);
+
+        expect(statusCode).toBe(200);
+
+        expect(body).toEqual({});
       });
     });
 
