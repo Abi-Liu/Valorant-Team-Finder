@@ -46,8 +46,14 @@ describe("auth", () => {
           .send(userInput);
 
         expect(statusCode).toBe(200);
-
-        expect(body).toEqual({});
+        expect(body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          email: "jane.doe@example.com",
+          ign: "JaneDoe",
+          password: expect.any(String),
+          team: "",
+        });
       });
     });
 
