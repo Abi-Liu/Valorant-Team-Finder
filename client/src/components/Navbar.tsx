@@ -5,7 +5,6 @@ import {
   Box,
   Typography,
   Menu,
-  Container,
   Avatar,
   Button,
   Tooltip,
@@ -14,11 +13,10 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
-import { NavBarProps } from "../interfaces/common";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/UserContext";
 
-const Navbar = ({ pages, settings }: NavBarProps) => {
+const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { setUser, setLoggedIn, user, loggedIn } = useUserContext();
@@ -38,6 +36,8 @@ const Navbar = ({ pages, settings }: NavBarProps) => {
     setAnchorElUser(null);
   };
 
+  const navigate = useNavigate();
+
   async function logout(): Promise<void> {
     setUser({
       _id: "",
@@ -47,19 +47,41 @@ const Navbar = ({ pages, settings }: NavBarProps) => {
       cardLarge: "",
     });
     setLoggedIn(false);
+    setAnchorElUser(null);
     window.open("http://localhost:8000/auth/logout", "_self");
   }
 
+  const pages = loggedIn
+    ? [
+        { text: "Active Teams", click: () => navigate("/teams") },
+        { text: "Search Users", click: () => navigate("/search") },
+        { text: "Shop", click: () => navigate("/shop") },
+      ]
+    : [
+        { text: "Login", click: () => navigate("/login") },
+        { text: "Signup", click: () => navigate("/signup") },
+      ];
+  const settings = [
+    {
+      text: "Profile",
+      click: () => {
+        setAnchorElUser(null);
+        navigate("/profile");
+      },
+    },
+    { text: "Logout", click: logout },
+  ];
+
   return (
     <AppBar sx={{ backgroundColor: "black" }} position="fixed">
-      <Container maxWidth="xl">
+      <Box px="2rem">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            onClick={() => navigate("/")}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -102,15 +124,10 @@ const Navbar = ({ pages, settings }: NavBarProps) => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page: string) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+              {pages.map((page: { text: string; click: () => void }) => (
+                <MenuItem key={page.text} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                    <Link
-                      style={{ textDecoration: "none", color: "black" }}
-                      to={`/${page}`}
-                    >
-                      {page}
-                    </Link>
+                    <Button onClick={page.click}>{page.text}</Button>
                   </Typography>
                 </MenuItem>
               ))}
@@ -136,18 +153,13 @@ const Navbar = ({ pages, settings }: NavBarProps) => {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page: string) => (
+            {pages.map((page: { text: string; click: () => void }) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.text}
+                onClick={page.click}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                <Link
-                  style={{ textDecoration: "none", color: "white" }}
-                  to={`/${page}`}
-                >
-                  {page}
-                </Link>
+                {page.text}
               </Button>
             ))}
           </Box>
@@ -176,21 +188,18 @@ const Navbar = ({ pages, settings }: NavBarProps) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting: string) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-                <MenuItem>
-                  <Typography onClick={logout} textAlign="center">
-                    Logout
-                  </Typography>
-                </MenuItem>
+                {settings.map(
+                  (setting: { text: string; click: () => void }) => (
+                    <MenuItem key={setting.text} onClick={setting.click}>
+                      <Typography textAlign="center">{setting.text}</Typography>
+                    </MenuItem>
+                  )
+                )}
               </Menu>
             </Box>
           )}
         </Toolbar>
-      </Container>
+      </Box>
     </AppBar>
   );
 };

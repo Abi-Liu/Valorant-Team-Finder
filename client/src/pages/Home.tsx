@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import BackgroundImage from "../assets/Valorant.png";
+import BackgroundImage from "../assets/Valorant1.png";
 import "../fonts/ValorantFont.ttf";
 
 const Home = () => {
@@ -12,7 +12,7 @@ const Home = () => {
           pl: "5rem",
         }}
       >
-        <Box sx={{ pt: "12rem" }}>
+        <Box sx={{ pt: "12rem", width: "35%" }}>
           <Typography
             className="valorant-font"
             sx={{ fontSize: "50px", textAlign: "center", color: "#ff3948" }}
