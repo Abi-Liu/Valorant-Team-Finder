@@ -78,5 +78,17 @@ describe("auth", () => {
         });
       });
     });
+
+    describe("given the email/ign is already taken", () => {
+      it("should return a 400 and a message saying that the User already exists", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await supertest(app)
+          .post("/auth/register")
+          .send(userRegisterInput);
+
+        expect(statusCode).toBe(400);
+        expect(body.message).toEqual("User already exists");
+      });
+    });
   });
 });
