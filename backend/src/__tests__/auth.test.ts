@@ -1,8 +1,6 @@
 import supertest from "supertest";
-import AuthController from "../controllers/auth";
 import createServer from "../config/server";
 import mongoose from "mongoose";
-import User from "../models/User";
 import { MongoMemoryServer } from "mongodb-memory-server";
 
 const userLoginInput = {
@@ -143,6 +141,27 @@ describe("auth", () => {
 
         expect(statusCode).toBe(400);
         expect(body.message).toEqual("No user found");
+        expect(body.info.message).toEqual("Invalid email or password.");
+      });
+    });
+
+    //valid credentials and user is registered
+    describe("given valid credentials and user is registered", () => {
+      it("should return a 200 and a message saying no user found", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await supertest(app)
+          .post("/auth/login")
+          .send(userLoginInput);
+
+        expect(statusCode).toBe(200);
+        expect(body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          email: "jane.doe@example.com",
+          ign: "JaneDoe",
+          password: expect.any(String),
+          team: "",
+        });
       });
     });
   });
