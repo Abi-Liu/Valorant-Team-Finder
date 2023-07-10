@@ -91,4 +91,59 @@ describe("auth", () => {
       });
     });
   });
+
+  //POST Auth Login tests
+  describe("login user route", () => {
+    //Empty password field
+    describe("given empty password", () => {
+      it("should return a 400 and a message saying invalid email or password", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await supertest(app)
+          .post("/auth/login")
+          .send({ ...userLoginInput, password: "" });
+
+        expect(statusCode).toBe(400);
+        expect(body.message).toEqual("Invalid email or password");
+      });
+    });
+
+    //Empty email field
+    describe("given empty email", () => {
+      it("should return a 400 and a message saying invalid email or password", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await supertest(app)
+          .post("/auth/login")
+          .send({ ...userLoginInput, email: "" });
+
+        expect(statusCode).toBe(400);
+        expect(body.message).toEqual("Invalid email or password");
+      });
+    });
+
+    //invalid email format
+    describe("given invalid email format", () => {
+      it("should return a 400 and a message saying invalid email or password", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await supertest(app)
+          .post("/auth/login")
+          .send({ ...userLoginInput, email: "janedoe" });
+
+        expect(statusCode).toBe(400);
+        expect(body.message).toEqual("Invalid email or password");
+      });
+    });
+
+    //given wrong password
+    describe("given wrong password", () => {
+      it("should return a 400 and a message saying no user found", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await supertest(app)
+          .post("/auth/login")
+          .send({ ...userLoginInput, password: "janedoe" });
+
+        expect(statusCode).toBe(400);
+        expect(body.message).toEqual("No user found");
+      });
+    });
+  });
 });
