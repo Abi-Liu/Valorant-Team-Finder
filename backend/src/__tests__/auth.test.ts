@@ -165,4 +165,14 @@ describe("auth", () => {
       });
     });
   });
+
+  //Logout Route
+  describe("logout user route", () => {
+    it("should return a 302 and redirect to client url", async () => {
+      //@ts-ignore
+      const request = await supertest(app).get("/auth/logout");
+      expect(request.statusCode).toBe(302);
+      expect(request.redirect).toBe(true);
+    });
+  });
 });
