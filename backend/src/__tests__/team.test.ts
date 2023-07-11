@@ -17,6 +17,7 @@ describe("team", () => {
     process.env.DB_STRING = mongoServer.getUri();
     app = createServer();
 
+    //creates an authorized agent to test the protected routes
     agent = supertest.agent(app);
     await agent.post("/auth/register").send(userRegisterInput);
   });
@@ -43,9 +44,10 @@ describe("team", () => {
     describe("given user is authenticated", () => {
       it("should return a status code 200 and a list of all teams", async () => {
         //@ts-ignore
-        const { statusCode } = await agent.get("/team/getTeams");
+        const { statusCode, body } = await agent.get("/team/getTeams");
         //@ts-ignore
         expect(statusCode).toBe(200);
+        // expect(body).toEqual();
       });
     });
   });
