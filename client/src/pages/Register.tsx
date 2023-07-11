@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useState } from "react";
 import axios from "axios";
 import { useUserContext, User } from "../contexts/UserContext";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -40,40 +42,109 @@ const Register = () => {
     }
   }
 
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          id="ign"
-          value={formData.ign}
-          onChange={handleChange}
-          placeholder="Bob#NA1"
-        />
-        <input
-          type="email"
+    <Box
+      sx={{
+        backgroundColor: "#2E3137",
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Typography variant="h4" sx={{ fontFamily: "Poppins", color: "#9AA4B8" }}>
+        Create Your Account
+      </Typography>
+      <Box
+        component="form"
+        onSubmit={onSubmit}
+        sx={{
+          backgroundColor: "white",
+          width: "350px",
+          height: "500px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "start",
+          alignItems: "center",
+          mt: "20px",
+        }}
+      >
+        <TextField
           id="email"
+          label="E-mail"
+          type="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="valorant@riot.com"
+          sx={{ my: "1rem" }}
         />
-        <input
-          type="password"
+        <TextField
+          helperText="include your tag. i.e Bob#NA1"
+          id="ign"
+          label="In-game Name"
+          type="text"
+          value={formData.ign}
+          onChange={handleChange}
+          sx={{ my: "1rem" }}
+        />
+        <TextField
           id="password"
+          label="Password"
+          type="password"
           value={formData.password}
           onChange={handleChange}
-          placeholder="******"
+          sx={{ my: "1rem" }}
         />
-        <input
-          type="password"
+        <TextField
           id="confirmPassword"
+          label="Confirm Password"
+          type="password"
           value={formData.confirmPassword}
           onChange={handleChange}
-          placeholder="******"
+          sx={{ my: "1rem" }}
         />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "#FF4654",
+            color: "white",
+            padding: "4px 10px",
+            fontFamily: "Poppins",
+            width: "30%",
+            fontWeight: "400",
+            "&:hover": {
+              backgroundColor: "#c6000f",
+            },
+            border: "1px solid",
+            borderColor: "white",
+          }}
+          type="submit"
+        >
+          Submit
+        </Button>
+        <Box
+          sx={{
+            paddingTop: "18px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            variant="subtitle2"
+            sx={{ fontFamily: "Poppins", color: "black" }}
+          >
+            Already have an account?
+          </Typography>
+          <Button size="small" onClick={() => navigate("/login")}>
+            Log in now
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
