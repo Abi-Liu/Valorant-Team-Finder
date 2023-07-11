@@ -7,6 +7,7 @@ import connectDB from "./database";
 import passport from "passport";
 import authRoutes from "../routes/auth";
 import teamRoutes from "../routes/team";
+import profileRoutes from "../routes/profile";
 import passportLocal from "passport-local";
 import User from "../models/User";
 import { DatabaseUserInterface } from "../Interfaces/UserInterface";
@@ -14,6 +15,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import logger from "morgan";
 
+//structured to allow unit testing via jest
 export default function createServer() {
   const app = express();
   dotenv.config();
@@ -37,10 +39,8 @@ export default function createServer() {
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(logger("dev"));
-  app.use("/auth", authRoutes);
-  app.use("/team", teamRoutes);
 
-  // Passport
+  // Passport Local strategy configuration
   const LocalStrategy = passportLocal.Strategy;
 
   passport.use(
@@ -83,6 +83,11 @@ export default function createServer() {
       done(err);
     }
   });
+
+  //server routes
+  app.use("/auth", authRoutes);
+  app.use("/team", teamRoutes);
+  app.use("/profile", profileRoutes);
 
   return app;
 }

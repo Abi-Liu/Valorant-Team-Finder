@@ -2,9 +2,12 @@ import { Box, Button, Typography, createTheme } from "@mui/material";
 import Background from "../assets/background.jpg";
 import Jett from "../assets/val-jett.jpg";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../contexts/UserContext";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { loggedIn } = useUserContext();
+
   return (
     <>
       <Box>
@@ -96,7 +99,6 @@ const Home = () => {
             </Typography>
           </Box>
           <Box
-            onClick={() => navigate("/login")}
             sx={{
               width: "100%",
               display: "flex",
@@ -104,22 +106,43 @@ const Home = () => {
               alignItems: "center",
             }}
           >
-            <Button
-              sx={{
-                backgroundColor: "#FF4654",
-                color: "white",
-                padding: "8px 15px",
-                fontFamily: "Poppins",
-                fontWeight: "400",
-                "&:hover": {
-                  backgroundColor: "#c6000f",
-                },
-                border: "1px solid",
-                borderColor: "white",
-              }}
-            >
-              Join Now
-            </Button>
+            {loggedIn ? (
+              <Button
+                onClick={() => navigate("/teams")}
+                sx={{
+                  backgroundColor: "#FF4654",
+                  color: "white",
+                  padding: "8px 15px",
+                  fontFamily: "Poppins",
+                  fontWeight: "400",
+                  "&:hover": {
+                    backgroundColor: "#c6000f",
+                  },
+                  border: "1px solid",
+                  borderColor: "white",
+                }}
+              >
+                Get Started
+              </Button>
+            ) : (
+              <Button
+                onClick={() => navigate("/login")}
+                sx={{
+                  backgroundColor: "#FF4654",
+                  color: "white",
+                  padding: "8px 15px",
+                  fontFamily: "Poppins",
+                  fontWeight: "400",
+                  "&:hover": {
+                    backgroundColor: "#c6000f",
+                  },
+                  border: "1px solid",
+                  borderColor: "white",
+                }}
+              >
+                Join Now
+              </Button>
+            )}
           </Box>
         </Box>
       </Box>

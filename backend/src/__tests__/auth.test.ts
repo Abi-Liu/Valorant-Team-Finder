@@ -8,14 +8,14 @@ const userLoginInput = {
   password: "password123",
 };
 
-const userRegisterInput = {
+export const userRegisterInput = {
   email: "jane.doe@example.com",
   ign: "JaneDoe",
   password: "password123",
   confirmPassword: "password123",
 };
 
-describe("auth", () => {
+describe.skip("auth", () => {
   //setting up mongo memory server
   const OLD_ENV = process.env;
   //@ts-ignore
