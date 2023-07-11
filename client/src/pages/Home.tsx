@@ -92,7 +92,7 @@ const Home = () => {
             >
               Join a vast network of like minded gamers, who are ready to take
               their skills to the next level. Find teammates based on their
-              preferred roles and agents, or by rank to make the perfect team.
+              preferred roles and agents, or by rank to form the perfect team.
             </Typography>
           </Box>
           <Box

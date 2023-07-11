@@ -142,7 +142,12 @@ const Navbar = () => {
               {pages.map((page: { text: string; click: () => void }) => (
                 <MenuItem key={page.text} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                    <Button onClick={page.click}>{page.text}</Button>
+                    <Button
+                      sx={{ fontFamily: "Poppins", color: "black" }}
+                      onClick={page.click}
+                    >
+                      {page.text}
+                    </Button>
                   </Typography>
                 </MenuItem>
               ))}
@@ -172,7 +177,7 @@ const Navbar = () => {
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
+              fontFamily: "Poppins",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
@@ -184,7 +189,12 @@ const Navbar = () => {
               <Button
                 key={page.text}
                 onClick={page.click}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  fontFamily: "Poppins",
+                }}
               >
                 {page.text}
               </Button>
@@ -218,7 +228,12 @@ const Navbar = () => {
                 {settings.map(
                   (setting: { text: string; click: () => void }) => (
                     <MenuItem key={setting.text} onClick={setting.click}>
-                      <Typography textAlign="center">{setting.text}</Typography>
+                      <Typography
+                        textAlign="center"
+                        sx={{ fontFamily: "Poppins" }}
+                      >
+                        {setting.text}
+                      </Typography>
                     </MenuItem>
                   )
                 )}
