@@ -8,7 +8,6 @@ import { styled } from "@mui/material";
 import { CssBaseline, createTheme } from "@mui/material";
 import Teams from "./pages/Teams";
 import ValorantFont from "./fonts/ValorantFont.ttf";
-import Tungsten from "./fonts/Tungsten.ttf";
 import { ThemeProvider } from "@emotion/react";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
