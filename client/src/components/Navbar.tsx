@@ -12,7 +12,7 @@ import {
   IconButton,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import AdbIcon from "@mui/icons-material/Adb";
+import LogoWhite from "../assets/LogoWhite.svg";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/UserContext";
 
@@ -76,8 +76,23 @@ const Navbar = () => {
     <AppBar sx={{ backgroundColor: "black" }} position="fixed">
       <Box px="2rem">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
+          <a></a>
+          <Box
+            component="img"
+            onClick={() => navigate("/")}
+            sx={{
+              height: 50,
+              display: { xs: "none", md: "flex" },
+              mr: 1,
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
+            alt="Valorant logo."
+            src={LogoWhite}
+          />
+          {/* <Typography
             variant="h6"
             noWrap
             component="a"
@@ -93,7 +108,7 @@ const Navbar = () => {
             }}
           >
             LOGO
-          </Typography>
+          </Typography> */}
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -133,7 +148,21 @@ const Navbar = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
+          <Box
+            component="img"
+            sx={{
+              height: 50,
+              display: { xs: "flex", md: "none" },
+              mr: 1,
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
+            alt="Valorant logo."
+            src={LogoWhite}
+            onClick={() => navigate("/")}
+          />
           <Typography
             variant="h5"
             noWrap
@@ -149,9 +178,7 @@ const Navbar = () => {
               color: "inherit",
               textDecoration: "none",
             }}
-          >
-            LOGO
-          </Typography>
+          ></Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page: { text: string; click: () => void }) => (
               <Button

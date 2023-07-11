@@ -29,7 +29,7 @@ const Home = () => {
 
             <Typography
               sx={{
-                fontSize: "3rem",
+                fontSize: "2rem",
                 textAlign: "center",
                 color: "#FC3C4D",
                 fontFamily: "Valorant",
@@ -45,7 +45,7 @@ const Home = () => {
                 textAlign: "center",
                 fontFamily: "Tungsten",
                 fontWeight: "bold",
-                fontSize: "7rem",
+                fontSize: "8rem",
               }}
               variant="h2"
             >
