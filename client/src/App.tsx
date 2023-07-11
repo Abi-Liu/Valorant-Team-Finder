@@ -6,6 +6,7 @@ import { useUserContext } from "./contexts/UserContext";
 import Navbar from "./components/Navbar";
 import { styled } from "@mui/material";
 import { CssBaseline } from "@mui/material";
+import Teams from "./pages/Teams";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
@@ -26,6 +27,10 @@ function App() {
         <Route
           path="/signup"
           element={!loggedIn ? <Register /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/teams"
+          element={loggedIn ? <Teams /> : <Navigate to="/login" />}
         />
       </Routes>
     </>
