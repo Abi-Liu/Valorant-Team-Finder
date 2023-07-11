@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../utils/axios";
 import { useEffect, useState } from "react";
 
 const Teams = () => {
@@ -8,7 +8,9 @@ const Teams = () => {
     let ignore = false;
 
     async function getTeams() {
-      const response = await axios.get("http://localhost:8000/team/getTeams");
+      const response = await axiosInstance.get(
+        "http://localhost:8000/team/getTeams"
+      );
       console.log(response);
       if (ignore === false) {
         setTeams(response.data);

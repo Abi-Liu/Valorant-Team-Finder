@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axios";
 import { useUserContext, User } from "../contexts/UserContext";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ const Register = () => {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const user: User = await axios.post(
+      const user: User = await axiosInstance.post(
         "http://localhost:8000/auth/register",
         formData
       );

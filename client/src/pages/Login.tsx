@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../utils/axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useUserContext } from "../contexts/UserContext";
 import { User } from "../contexts/UserContext";
@@ -25,7 +25,7 @@ const Login = () => {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const user: User = await axios.post(
+      const user: User = await axiosInstance.post(
         "http://localhost:8000/auth/login",
         formData
       );
