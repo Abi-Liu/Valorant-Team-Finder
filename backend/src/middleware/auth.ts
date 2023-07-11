@@ -7,7 +7,7 @@ export default {
     if (req.isAuthenticated()) {
       return next();
     } else {
-      return res.send({ message: "User not logged in" });
+      return res.status(401).json({ message: "User not authorized" });
     }
   },
 };

@@ -84,11 +84,5 @@ export default function createServer() {
     }
   });
 
-  app.use((req, res, next) => {
-    console.log(req.session);
-    console.log(req.user);
-    next();
-  });
-
   return app;
 }

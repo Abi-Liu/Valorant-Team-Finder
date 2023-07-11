@@ -16,6 +16,7 @@ const userRegisterInput = {
 };
 
 describe("auth", () => {
+  //setting up mongo memory server
   const OLD_ENV = process.env;
   //@ts-ignore
   let app;
