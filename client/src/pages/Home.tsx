@@ -1,8 +1,10 @@
-import { Box, Typography, createTheme } from "@mui/material";
+import { Box, Button, Typography, createTheme } from "@mui/material";
 import Background from "../assets/background.jpg";
 import Jett from "../assets/val-jett.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Box>
@@ -68,7 +70,7 @@ const Home = () => {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <Box sx={{ width: "40%", ml: "auto", py: "8rem" }}>
+          <Box sx={{ width: "40%", ml: "auto", py: "8rem", mr: "2rem" }}>
             <Typography
               variant="h2"
               sx={{
@@ -85,13 +87,39 @@ const Home = () => {
               sx={{
                 color: "white",
                 fontFamily: "Poppins",
-                fontWeight: "normal",
+                fontWeight: "400",
               }}
             >
               Join a vast network of like minded gamers, who are ready to take
               their skills to the next level. Find teammates based on their
               preferred roles and agents, or by rank to make the perfect team.
             </Typography>
+          </Box>
+          <Box
+            onClick={() => navigate("/login")}
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              sx={{
+                backgroundColor: "#FF4654",
+                color: "white",
+                padding: "8px 15px",
+                fontFamily: "Poppins",
+                fontWeight: "400",
+                "&:hover": {
+                  backgroundColor: "#c6000f",
+                },
+                border: "1px solid",
+                borderColor: "white",
+              }}
+            >
+              Join Now
+            </Button>
           </Box>
         </Box>
       </Box>
