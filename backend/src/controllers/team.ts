@@ -79,6 +79,8 @@ export default {
     try {
       //returns a list of all teams in the collection
       const teams = await Team.find().lean(); //lean just gives POJO which improves performance makes it less memory intensive.
+      console.log(req.user);
+      console.log(req.isAuthenticated());
       res.status(200).json(teams);
     } catch (error) {
       console.error(error);

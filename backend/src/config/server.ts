@@ -12,6 +12,7 @@ import User from "../models/User";
 import { DatabaseUserInterface } from "../Interfaces/UserInterface";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+import logger from "morgan";
 
 export default function createServer() {
   const app = express();
@@ -35,7 +36,7 @@ export default function createServer() {
   app.use(cookieParser());
   app.use(passport.initialize());
   app.use(passport.session());
-
+  app.use(logger("dev"));
   app.use("/auth", authRoutes);
   app.use("/team", teamRoutes);
 
@@ -81,6 +82,12 @@ export default function createServer() {
     } catch (err) {
       done(err);
     }
+  });
+
+  app.use((req, res, next) => {
+    console.log(req.session);
+    console.log(req.user);
+    next();
   });
 
   return app;
