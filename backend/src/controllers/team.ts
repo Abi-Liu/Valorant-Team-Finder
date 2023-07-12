@@ -34,48 +34,54 @@ export default {
   },
   join: async (req: Request, res: Response) => {
     try {
-      const { teamId } = req.body;
+      const { id } = req.params;
       const user = req.user as DatabaseUserInterface;
-
       //if user is in a team they can't join another
       if (user.team) {
         console.log("user is already in a team");
-        res.status(500).json({
+        return res.status(500).json({
           message: "You are already in a team! Please leave to join another",
         });
       } else {
         //update team and user documents if user is currently not in a team
-        const team = await Team.findByIdAndUpdate(teamId, {
-          $push: { teammates: user.ign },
-        });
+        const team = await Team.findByIdAndUpdate(
+          id,
+          {
+            $push: { teammates: user.ign },
+          },
+          { new: true }
+        );
 
-        await User.findByIdAndUpdate(user._id, { team: teamId });
-
+        await User.findByIdAndUpdate(user._id, { team: id });
         console.log("joined successfully");
-        res.status(200).json(team);
+        return res.status(200).json(team);
       }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: error });
+      return res.status(500).json({ message: error });
     }
   },
   leave: async (req: Request, res: Response) => {
     try {
-      const { teamId } = req.body;
+      const { id } = req.params;
       const user = req.user as DatabaseUserInterface;
-      //checks to make sure user is currently in a team
-      if (user.team) {
+      //checks to make sure user is currently in the team
+      if (user.team === id) {
         // if so remove the team from the user document and pull the user out of the team document
-        const updatedUser = await User.findByIdAndUpdate(user._id, {
+        await User.findByIdAndUpdate(user._id, {
           team: "",
         });
-        const team = await Team.findByIdAndUpdate(teamId, {
-          $pull: { teammates: user.ign },
-        });
+        const team = await Team.findByIdAndUpdate(
+          id,
+          {
+            $pull: { teammates: user.ign },
+          },
+          { new: true }
+        );
 
         //if there are no users in the team after, delete the team document
         if (team?.teammates.length === 0) {
-          await Team.findByIdAndDelete(teamId);
+          await Team.findByIdAndDelete(id);
           console.log("Team disbanded");
           res.status(200).json({ message: "Team disbanded" });
         } else {

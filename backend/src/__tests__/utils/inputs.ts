@@ -16,3 +16,5 @@ export const userRegisterInput2 = {
   password: "password123",
   confirmPassword: "password123",
 };
+
+export const createTeamInput = { teamName: "best team" };
