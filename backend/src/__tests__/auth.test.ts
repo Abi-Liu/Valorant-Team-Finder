@@ -2,18 +2,7 @@ import supertest from "supertest";
 import createServer from "../config/server";
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
-
-const userLoginInput = {
-  email: "jane.doe@example.com",
-  password: "password123",
-};
-
-export const userRegisterInput = {
-  email: "jane.doe@example.com",
-  ign: "JaneDoe",
-  password: "password123",
-  confirmPassword: "password123",
-};
+import { userLoginInput, userRegisterInput } from "./utils/inputs";
 
 describe.skip("auth", () => {
   //setting up mongo memory server

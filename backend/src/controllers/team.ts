@@ -8,7 +8,10 @@ export default {
     try {
       const { teamName } = req.body;
       const user = req.user as DatabaseUserInterface;
-
+      if (!teamName) {
+        console.log("team name can not be blank");
+        return res.status(400).json({ message: "Team name cannot be blank" });
+      }
       if (!user.team) {
         const team = await Team.create({
           name: teamName,

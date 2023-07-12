@@ -2,7 +2,7 @@ import supertest from "supertest";
 import createServer from "../config/server";
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
-import { userRegisterInput } from "./auth.test";
+import { userRegisterInput, userRegisterInput2 } from "./utils/inputs";
 
 const createTeamInput = { teamName: "best team" };
 
@@ -13,6 +13,8 @@ describe("team", () => {
   let app;
   //@ts-ignore
   let agent;
+  //@ts-ignore
+  let agent2;
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
 
@@ -21,7 +23,9 @@ describe("team", () => {
 
     //creates an authorized agent to test the protected routes
     agent = supertest.agent(app);
+    agent2 = supertest.agent(app);
     await agent.post("/auth/register").send(userRegisterInput);
+    await agent2.post("/auth/register").send(userRegisterInput2);
   });
 
   afterAll(async () => {
@@ -78,6 +82,19 @@ describe("team", () => {
         expect(body.message).toEqual(
           "You are currently in a team. Please leave before making a new team"
         );
+      });
+    });
+
+    //given user is authorized but inputs are invalid
+    describe("given user is authorized but inputs are invalid", () => {
+      it("should return a status 400 and an error message.", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await agent2
+          .post("/team/createTeam")
+          .send({ teamName: "" });
+
+        expect(statusCode).toBe(400);
+        expect(body.message).toEqual("Team name cannot be blank");
       });
     });
   });
