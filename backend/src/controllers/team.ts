@@ -45,7 +45,9 @@ export default {
         const team = await Team.findByIdAndUpdate(teamId, {
           $push: { teammates: user.ign },
         });
+
         await User.findByIdAndUpdate(user._id, { team: teamId });
+
         console.log("joined successfully");
         res.status(200).json(team);
       }
@@ -56,19 +58,27 @@ export default {
   },
   leave: async (req: Request, res: Response) => {
     try {
-      const { userId, teamId } = req.body;
-      const user = await User.findByIdAndUpdate(userId, { team: "" });
-      //checks to make sure user is not null
-      if (user) {
+      const { teamId } = req.body;
+      const user = req.user as DatabaseUserInterface;
+      //checks to make sure user is currently in a team
+      if (user.team) {
+        // if so remove the team from the user document and pull the user out of the team document
+        const updatedUser = await User.findByIdAndUpdate(user._id, {
+          team: "",
+        });
         const team = await Team.findByIdAndUpdate(teamId, {
           $pull: { teammates: user.ign },
         });
+
+        //if there are no users in the team after, delete the team document
         if (team?.teammates.length === 0) {
           await Team.findByIdAndDelete(teamId);
           console.log("Team disbanded");
+          res.status(200).json({ message: "Team disbanded" });
+        } else {
+          console.log("Successfully left");
+          res.status(200).json(team);
         }
-        console.log("Successfully left");
-        res.status(200).json(team);
       }
     } catch (error) {
       console.error(error);

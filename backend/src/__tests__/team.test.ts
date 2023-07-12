@@ -28,6 +28,12 @@ describe("team", () => {
     process.env = OLD_ENV;
   });
 
+  //POST Create team route
+  describe("POST create team route", () => {
+    //given no user authorized
+    //given user is authorized and
+  });
+
   //get team route tests
   describe("get team route", () => {
     // given no user is authorized
