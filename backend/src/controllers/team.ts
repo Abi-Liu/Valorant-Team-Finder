@@ -14,7 +14,7 @@ export default {
           name: teamName,
           teammates: [user.ign],
         });
-
+        await User.findByIdAndUpdate(user._id, { team: team._id });
         console.log("team successfully created");
         res.status(200).json(team);
       } else {
