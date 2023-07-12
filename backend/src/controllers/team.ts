@@ -93,6 +93,11 @@ export default {
           console.log("Successfully left");
           res.status(200).json(team);
         }
+      } else {
+        console.log("user not in this team");
+        return res
+          .status(400)
+          .json({ message: "You are not a part of this team" });
       }
     } catch (error) {
       console.error(error);

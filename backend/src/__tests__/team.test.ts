@@ -163,14 +163,6 @@ describe("team", () => {
     });
   });
 
-  //TESTS FOR LEAVE TEAM ROUTE
-  describe("leave team route", () => {
-    //given user is unauthorized
-    describe("given user is unauthorized", () => {
-      it("should return a status 401 and a message of User not authorized");
-    });
-  });
-
   //TEST FOR GET TEAM ROUTE
   describe("get team route", () => {
     // given no user is authorized
@@ -190,7 +182,60 @@ describe("team", () => {
         const { statusCode, body } = await agent.get("/team/getTeams");
         //@ts-ignore
         expect(statusCode).toBe(200);
-        // expect(body).toEqual();
+        expect(body.length).toEqual(1);
+      });
+    });
+  });
+
+  //TESTS FOR LEAVE TEAM ROUTE
+  describe("leave team route", () => {
+    //given user is unauthorized
+    describe("given user is unauthorized", () => {
+      it("should return a status 401 and a message of User not authorized", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await supertest(app).put(
+          `/team/leave/${team._id}`
+        );
+
+        expect(statusCode).toBe(401);
+        expect(body.message).toEqual("User not authorized");
+      });
+    });
+
+    //given user is authorized and in a team but the team id does not match the users team
+    describe("given user is authorized and in a team but the team id does not match the users team", () => {
+      it("should return a status 400 and an error message", async () => {
+        const random = new mongoose.Types.ObjectId().toString();
+        //@ts-ignore
+        const { statusCode, body } = await agent2.put(`/team/leave/${random}`);
+
+        expect(statusCode).toBe(400);
+        expect(body.message).toEqual("You are not a part of this team");
+      });
+    });
+
+    //given user is authorized, in a team and the team id matches the users team and the user is not the only one in the team
+    describe("given user is authorized, in a team and the team id matches the users team and there are more than 1 users in the team", () => {
+      it("should return a status 200 and the updated team data", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await agent2.put(
+          `/team/leave/${team._id}`
+        );
+
+        expect(statusCode).toBe(200);
+        //[JaneDoe, JohnDoe] ==> [JaneDoe]
+        expect(body.teammates.length).toEqual(1);
+      });
+    });
+
+    //given user is authorized, in a team with id matching, and user is the last one in the team
+    describe("given user is authorized, in a team with id matching, and user is the last one in the team", () => {
+      it("should return a status code 200 and a message saying team disbanded", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await agent.put(`/team/leave/${team._id}`);
+
+        expect(statusCode).toBe(200);
+        expect(body.message).toEqual("Team disbanded");
       });
     });
   });
