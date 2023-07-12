@@ -126,6 +126,18 @@ describe("team", () => {
       });
     });
 
+    //Given fault URL
+    describe("given faulty URL", () => {
+      it("should return a status code 404 and the error message", async () => {
+        const random = new mongoose.Types.ObjectId().toString();
+        //@ts-ignore
+        const { statusCode, body } = await agent2.put(`/team/join/${random}`);
+
+        expect(statusCode).toBe(404);
+        expect(body.message).toEqual("Team not found");
+      });
+    });
+
     //given user is authorized and currently not in a team
     describe("given user is authorized and currently not in a team", () => {
       it("should return a status code 200 and the team document", async () => {
@@ -135,6 +147,27 @@ describe("team", () => {
         expect(statusCode).toBe(200);
         expect(body.teammates.length).toEqual(2);
       });
+    });
+
+    //given user is authorized and already in a team
+    describe("given user is authorized and currently in a team", () => {
+      it("should return a status code 500 and the error message", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await agent2.put(`/team/join/${team._id}`);
+
+        expect(statusCode).toBe(500);
+        expect(body.message).toEqual(
+          "You are already in a team! Please leave to join another"
+        );
+      });
+    });
+  });
+
+  //TESTS FOR LEAVE TEAM ROUTE
+  describe("leave team route", () => {
+    //given user is unauthorized
+    describe("given user is unauthorized", () => {
+      it("should return a status 401 and a message of User not authorized");
     });
   });
 

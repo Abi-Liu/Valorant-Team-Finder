@@ -51,6 +51,11 @@ export default {
           },
           { new: true }
         );
+        console.log(team);
+
+        if (!team) {
+          return res.status(404).json({ message: "Team not found" });
+        }
 
         await User.findByIdAndUpdate(user._id, { team: id });
         console.log("joined successfully");
