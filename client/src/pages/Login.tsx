@@ -71,7 +71,10 @@ const Login = () => {
           mt: "20px",
         }}
       >
-        <Typography variant="h6" sx={{ fontFamily: "Poppins", color: "black" }}>
+        <Typography
+          variant="h6"
+          sx={{ fontFamily: "Poppins", color: "black", mt: "1rem" }}
+        >
           Login
         </Typography>
         <TextField
@@ -80,7 +83,7 @@ const Login = () => {
           type="email"
           value={formData.email}
           onChange={handleChange}
-          sx={{ my: "2rem" }}
+          sx={{ my: "1rem" }}
         />
         <TextField
           id="password"
@@ -88,7 +91,7 @@ const Login = () => {
           type="password"
           value={formData.password}
           onChange={handleChange}
-          sx={{ mb: "2rem" }}
+          sx={{ my: "1rem" }}
         />
         <Button
           sx={{
