@@ -17,4 +17,11 @@ export const userRegisterInput2 = {
   confirmPassword: "password123",
 };
 
+export const realUserInput = {
+  email: "test@test.com",
+  ign: "Hwak Tu#on u",
+  password: "password123",
+  confirmPassword: "password123",
+};
+
 export const createTeamInput = { teamName: "best team" };
