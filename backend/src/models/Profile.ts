@@ -5,6 +5,8 @@ const ProfileSchema = new mongoose.Schema({
   region: { type: String },
   cardSmall: { type: String },
   cardLarge: { type: String },
+  rank: { type: String },
+  rankImage: { type: String },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 

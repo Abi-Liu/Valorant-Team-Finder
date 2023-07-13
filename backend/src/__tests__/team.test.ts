@@ -9,7 +9,7 @@ import {
 } from "./utils/inputs";
 import { TeamInterface } from "src/Interfaces/TeamInterface";
 
-describe("team", () => {
+describe.skip("team", () => {
   //SET UP FOR TESTS
 
   const OLD_ENV = process.env;

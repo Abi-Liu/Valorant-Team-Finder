@@ -14,6 +14,7 @@ import { DatabaseUserInterface } from "../Interfaces/UserInterface";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import logger from "morgan";
+import cron from "node-cron";
 
 //structured to allow unit testing via jest
 export default function createServer() {
@@ -88,6 +89,9 @@ export default function createServer() {
   app.use("/auth", authRoutes);
   app.use("/team", teamRoutes);
   app.use("/profile", profileRoutes);
+
+  //setting up a cron job to run once every hour
+  cron.schedule("0 * * * *", async () => {});
 
   return app;
 }
