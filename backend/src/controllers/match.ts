@@ -17,7 +17,7 @@ export default {
         size: 5,
       });
       if (response.status === 200) {
-        const matches = Match.create({
+        const matches = await Match.create({
           user: user._id,
           matches: response.data,
         });

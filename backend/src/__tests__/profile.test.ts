@@ -3,8 +3,9 @@ import createServer from "../config/server";
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { realUserInput, userRegisterInput } from "./utils/inputs";
+import { Region } from "src/Interfaces/Types";
 
-describe("Profile Routes", () => {
+describe("Profile and Matches Routes", () => {
   //SET UP FOR TESTS
   const OLD_ENV = process.env;
   //@ts-ignore
@@ -15,6 +16,8 @@ describe("Profile Routes", () => {
   let agent2;
 
   let profileId: string;
+  let puuid: string;
+  let region: Region;
 
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
@@ -61,6 +64,8 @@ describe("Profile Routes", () => {
         //@ts-ignore
         const { statusCode, body } = await agent.post("/profile/createProfile");
         profileId = body._id;
+        puuid = body.puuid;
+        region = body.region;
         expect(statusCode).toBe(200);
         expect(body).toEqual({
           __v: 0,
@@ -110,6 +115,21 @@ describe("Profile Routes", () => {
         const { statusCode, body } = await agent.get(`/profile/${random}`);
         expect(statusCode).toBe(404);
         expect(body.message).toEqual("Page not found");
+      });
+    });
+  });
+
+  //TESTING MATCHES ROUTES
+  describe("Matches routes", () => {
+    //given user is authorized, with a valid puuid
+    describe("given user is authorized, with a valid puuid", () => {
+      it("should return a 200 and the match history", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await agent
+          .post("/matches/createMatches")
+          .send({ puuid, region });
+        expect(statusCode).toBe(200);
+        expect(body).toEqual({ id: 1 });
       });
     });
   });
