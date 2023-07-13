@@ -14,6 +14,8 @@ describe("Profile Routes", () => {
   //@ts-ignore
   let agent2;
 
+  let profileId: string;
+
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
 
@@ -58,6 +60,7 @@ describe("Profile Routes", () => {
       it("should return a status of 200 and their profile data", async () => {
         //@ts-ignore
         const { statusCode, body } = await agent.post("/profile/createProfile");
+        profileId = body._id;
         expect(statusCode).toBe(200);
         expect(body).toEqual({
           __v: 0,
@@ -83,6 +86,19 @@ describe("Profile Routes", () => {
         console.log(body);
         expect(statusCode).toBe(500);
         expect(body.message).toEqual({});
+      });
+    });
+  });
+
+  //GET Profile Routes
+  describe("get profile route", () => {
+    //Given authorized user and a valid URL
+    describe("Given authorized user and a valid URL", () => {
+      it("should return a status 200 and profile and user ign", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await agent.get(`/profile/${profileId}`);
+        expect(statusCode).toBe(200);
+        expect(Object.keys(body).length).toEqual(2);
       });
     });
   });
