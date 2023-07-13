@@ -6,7 +6,7 @@ import {
   ProfileRootObject,
   RankRootObject,
 } from "src/Interfaces/ResponseInterface";
-import { DatabaseUserInterface } from "src/Interfaces/UserInterface";
+import { DatabaseUserInterface } from "src/Interfaces/DatabaseInterfaces";
 import { Region } from "src/Interfaces/Types";
 
 const VAPI = new ValorantClient();

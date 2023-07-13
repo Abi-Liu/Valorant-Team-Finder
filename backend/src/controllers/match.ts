@@ -1,7 +1,11 @@
 import express, { Request, Response } from "express";
 import Match from "../models/Match";
 import ValorantClient from "unofficial-valorant-api";
-import { DatabaseUserInterface } from "src/Interfaces/UserInterface";
+import {
+  DatabaseUserInterface,
+  MatchDBInterface,
+} from "src/Interfaces/DatabaseInterfaces";
+import MatchRootObject from "../Interfaces/MatchResponseInterface";
 
 const VAPI = new ValorantClient();
 
@@ -9,18 +13,33 @@ export default {
   createMatches: async (req: Request, res: Response) => {
     try {
       const user = req.user as DatabaseUserInterface;
+      const uid = user._id;
       const { puuid, region } = req.body;
-      const response = await VAPI.getMatchesByPUUID({
+      const response = (await VAPI.getMatchesByPUUID({
         region,
         puuid,
         filter: "competitive",
         size: 5,
-      });
-      if (response.status === 200) {
-        const matches = await Match.create({
-          user: user._id,
-          matches: response.data,
-        });
+      })) as MatchRootObject;
+      if (response.status === 200 && response.data) {
+        //array used to store necessary properties of the response object
+        const matches = new Array();
+        //loop through the response data and add the desired properties to the temp array
+        for (const match of response.data) {
+          const matchData = await Match.create({
+            user: uid,
+            redPlayers: match.players.red,
+            bluePlayers: match.players.blue,
+            redWon: match.teams.red,
+            blueWon: match.teams.blue,
+          });
+          matches.push(matchData);
+        }
+
+        // tempArr.push({
+
+        // });
+
         return res.status(200).json(matches);
       } else {
         return res.status(400).json({ message: "user not found" });

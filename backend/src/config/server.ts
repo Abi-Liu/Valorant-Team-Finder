@@ -11,7 +11,7 @@ import matchRoutes from "../routes/match";
 import profileRoutes from "../routes/profile";
 import passportLocal from "passport-local";
 import User from "../models/User";
-import { DatabaseUserInterface } from "../Interfaces/UserInterface";
+import { DatabaseUserInterface } from "../Interfaces/DatabaseInterfaces";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import logger from "morgan";

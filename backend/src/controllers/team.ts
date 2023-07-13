@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import Team from "../models/Team";
 import User from "../models/User";
-import { DatabaseUserInterface } from "src/Interfaces/UserInterface";
+import { DatabaseUserInterface } from "src/Interfaces/DatabaseInterfaces";
 
 export default {
   create: async (req: Request, res: Response) => {

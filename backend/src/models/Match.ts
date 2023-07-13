@@ -5,10 +5,17 @@ const MatchSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  matches: {
+  redPlayers: {
     type: [Object],
-    require: true,
-    default: [],
+  },
+  bluePlayers: {
+    type: [Object],
+  },
+  redWon: {
+    type: Object,
+  },
+  blueWon: {
+    type: Object,
   },
 });
 
