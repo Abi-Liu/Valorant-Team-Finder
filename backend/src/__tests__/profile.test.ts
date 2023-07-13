@@ -101,6 +101,17 @@ describe("Profile Routes", () => {
         expect(Object.keys(body).length).toEqual(2);
       });
     });
+
+    //Given authorized user and an invalid URL
+    describe("Given authorized user and an invalid URL", () => {
+      it("should return a status 404 and an error message", async () => {
+        const random = new mongoose.Types.ObjectId().toString();
+        //@ts-ignore
+        const { statusCode, body } = await agent.get(`/profile/${random}`);
+        expect(statusCode).toBe(404);
+        expect(body.message).toEqual("Page not found");
+      });
+    });
   });
 });
 
