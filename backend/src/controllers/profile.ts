@@ -48,7 +48,7 @@ export default {
             rankImage: rankResponse.data.images.small,
             user: user._id,
           });
-          return res.status(200).json(response);
+          return res.status(200).json(profile);
         }
       } else {
         return res.status(400).json({ message: "Incorrect IGN provided" });
@@ -58,7 +58,22 @@ export default {
       return res.status(500).json({ message: err });
     }
   },
-  getUserProfile: async (req: Request, res: Response) => {},
+  getUserProfile: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const profile = await Profile.findById(id);
+      //makes sure profile exists
+      if (profile) {
+        const ign = await User.findById(profile.user).select("ign");
+        return res.status(200).json({ profile: profile, ign: ign });
+      } else {
+        return res.status(404).json({ message: "Page not found" });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 // {
