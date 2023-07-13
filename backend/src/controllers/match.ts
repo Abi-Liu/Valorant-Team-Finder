@@ -40,7 +40,6 @@ export default {
 
           //adding match data to db
           const matchData = {
-            user: uid,
             adr,
             playerStats: player.stats,
             character: player.character,
@@ -52,7 +51,7 @@ export default {
           matchesArr.push(matchData);
         }
 
-        const matches = await Match.create({ matches: matchesArr });
+        const matches = await Match.create({ matches: matchesArr, user: uid });
 
         return res.status(200).json(matches);
       } else {

@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const MatchSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
   playerTeam: {
     type: String,
   },
@@ -33,6 +29,10 @@ const MatchSchema = new mongoose.Schema({
 
 const MatchArraySchema = new mongoose.Schema({
   matches: [MatchSchema], // Array of MatchSchema
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 export default mongoose.model("MatchArray", MatchArraySchema);

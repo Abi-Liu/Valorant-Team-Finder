@@ -129,7 +129,7 @@ describe("Profile and Matches Routes", () => {
           .post("/matches/createMatches")
           .send({ puuid, region });
         expect(statusCode).toBe(200);
-        expect(body).toEqual({ id: 1 });
+        expect(body.matches.length).toEqual(5);
       });
     });
   });
