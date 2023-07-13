@@ -5,11 +5,17 @@ const MatchSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  redPlayers: {
-    type: [Object],
+  playerTeam: {
+    type: String,
   },
-  bluePlayers: {
-    type: [Object],
+  playerStats: {
+    type: Object,
+  },
+  adr: {
+    type: Number,
+  },
+  character: {
+    type: String,
   },
   redWon: {
     type: Object,
@@ -17,6 +23,16 @@ const MatchSchema = new mongoose.Schema({
   blueWon: {
     type: Object,
   },
+  // redPlayers: {
+  //   type: [Object],
+  // },
+  // bluePlayers: {
+  //   type: [Object],
+  // },
 });
 
-export default mongoose.model("Match", MatchSchema);
+const MatchArraySchema = new mongoose.Schema({
+  matches: [MatchSchema], // Array of MatchSchema
+});
+
+export default mongoose.model("MatchArray", MatchArraySchema);

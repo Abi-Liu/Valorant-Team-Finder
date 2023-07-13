@@ -22,23 +22,37 @@ export default {
         size: 5,
       })) as MatchRootObject;
       if (response.status === 200 && response.data) {
-        //array used to store necessary properties of the response object
-        const matches = new Array();
-        //loop through the response data and add the desired properties to the temp array
+        //array used to store the match data
+        const matchesArr = new Array();
+
+        //loop through the response data create a new document in the DB with only the desired properties
         for (const match of response.data) {
-          const matchData = await Match.create({
+          //filter through all players to find only the user's data
+          const filter = match.players.all_players.filter(
+            (x) => x.puuid === puuid
+          );
+          const player = filter[0];
+
+          //total damage done divided by rounds played
+          const adr =
+            player.damage_made / match.teams.red.rounds_lost +
+            match.teams.red.rounds_won;
+
+          //adding match data to db
+          const matchData = {
             user: uid,
-            redPlayers: match.players.red,
-            bluePlayers: match.players.blue,
+            adr,
+            playerStats: player.stats,
+            character: player.character,
             redWon: match.teams.red,
             blueWon: match.teams.blue,
-          });
-          matches.push(matchData);
+            // redPlayers: match.players.red,
+            // bluePlayers: match.players.blue,
+          };
+          matchesArr.push(matchData);
         }
 
-        // tempArr.push({
-
-        // });
+        const matches = await Match.create({ matches: matchesArr });
 
         return res.status(200).json(matches);
       } else {
