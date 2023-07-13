@@ -61,10 +61,10 @@ export default {
   getUserProfile: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const profile = await Profile.findById(id);
+      const profile = await Profile.findOne({ user: id });
       //makes sure profile exists
       if (profile) {
-        const ign = await User.findById(profile.user).select("ign");
+        const ign = await User.findById(id).select("ign");
         return res.status(200).json({ profile: profile, ign: ign });
       } else {
         return res.status(404).json({ message: "Page not found" });

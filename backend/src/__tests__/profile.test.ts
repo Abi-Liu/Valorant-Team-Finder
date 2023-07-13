@@ -15,7 +15,7 @@ describe("Profile and Matches Routes", () => {
   //@ts-ignore
   let agent2;
 
-  let profileId: string;
+  let uid: string;
   let puuid: string;
   let region: Region;
 
@@ -63,7 +63,7 @@ describe("Profile and Matches Routes", () => {
       it("should return a status of 200 and their profile data", async () => {
         //@ts-ignore
         const { statusCode, body } = await agent.post("/profile/createProfile");
-        profileId = body._id;
+        uid = body.user;
         puuid = body.puuid;
         region = body.region;
         expect(statusCode).toBe(200);
@@ -101,7 +101,7 @@ describe("Profile and Matches Routes", () => {
     describe("Given authorized user and a valid URL", () => {
       it("should return a status 200 and profile and user ign", async () => {
         //@ts-ignore
-        const { statusCode, body } = await agent.get(`/profile/${profileId}`);
+        const { statusCode, body } = await agent.get(`/profile/${uid}`);
         expect(statusCode).toBe(200);
         expect(Object.keys(body).length).toEqual(2);
       });
@@ -121,7 +121,7 @@ describe("Profile and Matches Routes", () => {
 
   //TESTING MATCHES ROUTES
   describe("Matches routes", () => {
-    //given user is authorized, with a valid puuid
+    //POST createMatch route given user is authorized, with a valid puuid
     describe("given user is authorized, with a valid puuid", () => {
       it("should return a 200 and the match history", async () => {
         //@ts-ignore
@@ -132,14 +132,16 @@ describe("Profile and Matches Routes", () => {
         expect(body.matches.length).toEqual(5);
       });
     });
+
+    //GET Matches route
+    describe("given user is authorized, and a valid URL", () => {
+      it("should return a 200 and the match history", async () => {
+        //@ts-ignore
+        const { statusCode, body } = await agent.get(`/matches/${uid}`);
+
+        expect(statusCode).toBe(200);
+        expect(body.matches.length).toEqual(5);
+      });
+    });
   });
 });
-
-// describe("get profile", () => {
-//   it("should return 200 and the users profile", async () => {
-//     const app = createServer();
-//     const { statusCode, body } = await supertest(app).get("/profile");
-//     expect(statusCode).toBe(200);
-//     expect(body).toEqual({});
-//   });
-// });
