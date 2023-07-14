@@ -44,50 +44,58 @@ function App() {
   useEffect(() => {
     const getUserData = async () => {
       if (loggedIn) {
-        let profileData = (await axiosInstance.get(
-          `/profile/${user._id}`
-        )) as ProfileResponse;
-        let matchHistory = (await axiosInstance.get(
-          `/matches/${user._id}`
-        )) as MatchArrayResponse;
-
-        console.log(profileData);
-        console.log(matchHistory);
-        if (profileData && matchHistory) {
+        try {
+          const profileData = await axiosInstance.get(`/profile/${user._id}`);
+          const matchHistory = await axiosInstance.post(
+            `/matches/createMatches`,
+            {
+              puuid: profileData.data.puuid,
+              region: profileData.data.region,
+            }
+          );
+          console.log(profileData);
+          console.log(matchHistory);
           setUser((prev) => ({
             ...prev,
-            puuid: profileData.puuid,
-            region: profileData.region,
-            cardLarge: profileData.cardLarge,
-            cardSmall: profileData.cardSmall,
-            rank: profileData.rank,
-            rankImage: profileData.rankImage,
-            matches: matchHistory.matches,
+            puuid: profileData.data.profile.puuid,
+            region: profileData.data.profile.region,
+            cardLarge: profileData.data.profile.cardLarge,
+            cardSmall: profileData.data.profile.cardSmall,
+            rank: profileData.data.profile.rank,
+            rankImage: profileData.data.profile.rankImage,
+            matches: matchHistory.data.matches,
           }));
-        } else {
-          profileData = (await axiosInstance.post(
-            "/profile/createProfile"
-          )) as ProfileResponse;
-          matchHistory = (await axiosInstance.post(`/matches/createMatches}`, {
-            puuid: profileData.puuid,
-            region: profileData.region,
-          })) as MatchArrayResponse;
-          setUser((prev) => ({
-            ...prev,
-            puuid: profileData.puuid,
-            region: profileData.region,
-            cardLarge: profileData.cardLarge,
-            cardSmall: profileData.cardSmall,
-            rank: profileData.rank,
-            rankImage: profileData.rankImage,
-            matches: matchHistory.matches,
-          }));
+        } catch (error) {
+          console.error(error);
+          try {
+            const profileData = await axiosInstance.post(
+              "/profile/createProfile"
+            );
+            const matchHistory = await axiosInstance.post(
+              `/matches/createMatches`,
+              {
+                puuid: profileData.data.puuid,
+                region: profileData.data.region,
+              }
+            );
+            setUser((prev) => ({
+              ...prev,
+              puuid: profileData.data.puuid,
+              region: profileData.data.region,
+              cardLarge: profileData.data.cardLarge,
+              cardSmall: profileData.data.cardSmall,
+              rank: profileData.data.rank,
+              rankImage: profileData.data.rankImage,
+              matches: matchHistory.data.matches,
+            }));
+          } catch (error) {
+            console.error(error);
+          }
         }
       }
     };
     getUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user._id, loggedIn]);
+  }, [user._id, loggedIn, setUser]);
 
   return (
     <>
