@@ -24,7 +24,10 @@ export default {
     try {
       const { id } = req.params;
       const matches = await Match.findOne({ user: id });
+      const currentTime = new Date();
       if (matches) {
+        console.log(currentTime);
+        console.log(matches);
         return res.status(200).json(matches);
       } else {
         return res.status(404).json({ message: "user not found" });

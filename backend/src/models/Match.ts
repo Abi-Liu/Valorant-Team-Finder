@@ -29,6 +29,17 @@ const MatchSchema = new mongoose.Schema({
 
 const MatchArraySchema = new mongoose.Schema({
   matches: [MatchSchema], // Array of MatchSchema
+
+  //used to let my server know when the data is stale and to refresh and update the document.
+  //once an hour
+  expiryTime: {
+    type: Date,
+    default: () => {
+      const currentTime = new Date();
+      currentTime.setHours(currentTime.getHours() + 1);
+      return currentTime;
+    },
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
