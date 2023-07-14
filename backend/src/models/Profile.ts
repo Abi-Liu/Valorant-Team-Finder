@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const ProfileSchema = new mongoose.Schema({
   puuid: { type: String, unique: true },
-  region: { type: String },
+  region: { type: String, enum: ["na", "br", "eu", "ap", "kr", "latam"] },
   cardSmall: { type: String },
   cardLarge: { type: String },
   rank: { type: String },

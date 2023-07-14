@@ -14,3 +14,14 @@ export interface MatchDBInterface {
   blueWon: Object;
   _id: string;
 }
+
+export interface ProfileInterface {
+  puuid: string;
+  region: string;
+  cardSmall: string;
+  cardLarge: string;
+  rank: string;
+  rankImage: string;
+  user: string;
+  _id: string;
+}
