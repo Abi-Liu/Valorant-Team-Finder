@@ -1,13 +1,10 @@
-import {
-  DatabaseUserInterface,
-  ProfileInterface,
-} from "src/Interfaces/DatabaseInterfaces";
-import MatchRootObject from "src/Interfaces/MatchResponseInterface";
+import { DatabaseUserInterface } from "../Interfaces/DatabaseInterfaces";
+import MatchRootObject from "../Interfaces/MatchResponseInterface";
 import {
   ProfileRootObject,
   RankRootObject,
-} from "src/Interfaces/ResponseInterface";
-import { Region } from "src/Interfaces/Types";
+} from "../Interfaces/ResponseInterface";
+import { Region } from "../Interfaces/Types";
 import ValorantClient from "unofficial-valorant-api";
 
 const VAPI = new ValorantClient();

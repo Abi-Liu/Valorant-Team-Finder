@@ -1,12 +1,8 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 import Match from "../models/Match";
 import ValorantClient from "unofficial-valorant-api";
-import {
-  DatabaseUserInterface,
-  MatchDBInterface,
-} from "src/Interfaces/DatabaseInterfaces";
-import MatchRootObject from "../Interfaces/MatchResponseInterface";
-import { updateMatchData } from "../Service/UpdateUserData";
+import { DatabaseUserInterface } from "src/Interfaces/DatabaseInterfaces";
+import { updateMatchData } from "../services/UpdateUserData";
 
 const VAPI = new ValorantClient();
 
