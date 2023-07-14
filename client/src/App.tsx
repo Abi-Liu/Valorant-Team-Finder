@@ -45,13 +45,7 @@ function App() {
       if (loggedIn) {
         try {
           const profileData = await axiosInstance.get(`/profile/${user._id}`);
-          const matchHistory = await axiosInstance.post(
-            `/matches/createMatches`,
-            {
-              puuid: profileData.data.puuid,
-              region: profileData.data.region,
-            }
-          );
+          const matchHistory = await axiosInstance.get(`/matches/${user._id}`);
           console.log(profileData);
           console.log(matchHistory);
           setUser((prev) => ({

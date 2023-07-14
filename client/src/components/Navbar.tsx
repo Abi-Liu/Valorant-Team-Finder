@@ -45,6 +45,11 @@ const Navbar = () => {
       team: "",
       cardSmall: "",
       cardLarge: "",
+      rank: "",
+      rankImage: "",
+      puuid: "",
+      region: "",
+      matches: [{}],
     });
     setLoggedIn(false);
     setAnchorElUser(null);
@@ -206,7 +211,7 @@ const Navbar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Valorant Banner" src={user.cardSmall} />
                 </IconButton>
               </Tooltip>
               <Menu

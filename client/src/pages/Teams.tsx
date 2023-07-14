@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import axiosInstance from "../utils/axios";
 import { useEffect, useState } from "react";
 
@@ -21,7 +22,11 @@ const Teams = () => {
       ignore = true;
     };
   }, []);
-  return <div>Teams</div>;
+  return (
+    <Box sx={{ width: "100%", height: "100vh", backgroundColor: "#101823" }}>
+      Teams
+    </Box>
+  );
 };
 
 export default Teams;
