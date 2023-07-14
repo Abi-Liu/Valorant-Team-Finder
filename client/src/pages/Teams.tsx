@@ -8,9 +8,7 @@ const Teams = () => {
     let ignore = false;
 
     async function getTeams() {
-      const response = await axiosInstance.get(
-        "http://localhost:8000/team/getTeams"
-      );
+      const response = await axiosInstance.get("/team/getTeams");
       console.log(response);
       if (ignore === false) {
         setTeams(response.data);

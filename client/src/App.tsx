@@ -9,11 +9,16 @@ import { CssBaseline, createTheme } from "@mui/material";
 import Teams from "./pages/Teams";
 import ValorantFont from "./fonts/ValorantFont.ttf";
 import { ThemeProvider } from "@emotion/react";
+import { useEffect } from "react";
+import axiosInstance from "./utils/axios";
+import { MatchArrayResponse, ProfileResponse } from "./interfaces/Response";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 function App() {
-  const { loggedIn } = useUserContext();
+  const { user, loggedIn, setUser } = useUserContext();
+  console.log(user);
+  console.log(loggedIn);
 
   //used to create the custom Valorant font
   const theme = createTheme({
@@ -35,6 +40,54 @@ function App() {
       },
     },
   });
+
+  useEffect(() => {
+    const getUserData = async () => {
+      if (loggedIn) {
+        let profileData = (await axiosInstance.get(
+          `/profile/${user._id}`
+        )) as ProfileResponse;
+        let matchHistory = (await axiosInstance.get(
+          `/matches/${user._id}`
+        )) as MatchArrayResponse;
+
+        console.log(profileData);
+        console.log(matchHistory);
+        if (profileData && matchHistory) {
+          setUser((prev) => ({
+            ...prev,
+            puuid: profileData.puuid,
+            region: profileData.region,
+            cardLarge: profileData.cardLarge,
+            cardSmall: profileData.cardSmall,
+            rank: profileData.rank,
+            rankImage: profileData.rankImage,
+            matches: matchHistory.matches,
+          }));
+        } else {
+          profileData = (await axiosInstance.post(
+            "/profile/createProfile"
+          )) as ProfileResponse;
+          matchHistory = (await axiosInstance.post(`/matches/createMatches}`, {
+            puuid: profileData.puuid,
+            region: profileData.region,
+          })) as MatchArrayResponse;
+          setUser((prev) => ({
+            ...prev,
+            puuid: profileData.puuid,
+            region: profileData.region,
+            cardLarge: profileData.cardLarge,
+            cardSmall: profileData.cardSmall,
+            rank: profileData.rank,
+            rankImage: profileData.rankImage,
+            matches: matchHistory.matches,
+          }));
+        }
+      }
+    };
+    getUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user._id, loggedIn]);
 
   return (
     <>

@@ -25,15 +25,13 @@ const Login = () => {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const user: User = await axiosInstance.post(
-        "http://localhost:8000/auth/login",
-        formData
-      );
+      const user = await axiosInstance.post("/auth/login", formData);
+
       setLoggedIn(true);
       setUser((prev) => ({
         ...prev,
-        ign: user.ign,
-        _id: user._id,
+        ign: user.data.ign,
+        _id: user.data._id,
       }));
     } catch (error) {
       console.log(error);

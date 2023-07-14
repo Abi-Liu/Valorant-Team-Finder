@@ -27,15 +27,12 @@ const Register = () => {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const user: User = await axiosInstance.post(
-        "http://localhost:8000/auth/register",
-        formData
-      );
+      const user = await axiosInstance.post("/auth/register", formData);
       setLoggedIn(true);
       setUser((prev) => ({
         ...prev,
-        ign: user.ign,
-        _id: user._id,
+        ign: user.data.ign,
+        _id: user.data._id,
       }));
     } catch (err) {
       console.error(err);
@@ -112,25 +109,48 @@ const Register = () => {
           onChange={handleChange}
           sx={{ my: "1rem" }}
         />
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#FF4654",
-            color: "white",
-            padding: "4px 10px",
-            fontFamily: "Poppins",
-            width: "30%",
-            fontWeight: "400",
-            "&:hover": {
-              backgroundColor: "#c6000f",
-            },
-            border: "1px solid",
-            borderColor: "white",
-          }}
-          type="submit"
-        >
-          Submit
-        </Button>
+        {formData.ign.includes("#") ? (
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#FF4654",
+              color: "white",
+              padding: "4px 10px",
+              fontFamily: "Poppins",
+              width: "30%",
+              fontWeight: "400",
+              "&:hover": {
+                backgroundColor: "#c6000f",
+              },
+              border: "1px solid",
+              borderColor: "white",
+            }}
+            type="submit"
+          >
+            Submit
+          </Button>
+        ) : (
+          <Button
+            disabled
+            variant="contained"
+            sx={{
+              backgroundColor: "#FF4654",
+              color: "white",
+              padding: "4px 10px",
+              fontFamily: "Poppins",
+              width: "30%",
+              fontWeight: "400",
+              "&:hover": {
+                backgroundColor: "#c6000f",
+              },
+              border: "1px solid",
+              borderColor: "white",
+            }}
+            type="submit"
+          >
+            Submit
+          </Button>
+        )}
         <Box
           sx={{
             paddingTop: "18px",

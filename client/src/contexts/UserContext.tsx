@@ -13,6 +13,11 @@ export type User = {
   cardSmall: string;
   cardLarge: string;
   _id: string;
+  rank: string;
+  rankImage: string;
+  puuid: string;
+  region: string;
+  matches: [object];
 };
 
 export interface UserContextInterface {
@@ -28,6 +33,11 @@ const defaultState = {
     team: "",
     cardSmall: "",
     cardLarge: "",
+    rank: "",
+    rankImage: "",
+    puuid: "",
+    region: "",
+    matches: [{}],
     _id: "",
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -54,6 +64,11 @@ export default function UserProvider({ children }: UserProviderProps) {
     cardSmall: "",
     cardLarge: "",
     _id: "",
+    rank: "",
+    rankImage: "",
+    puuid: "",
+    region: "",
+    matches: [{}],
   });
   const [loggedIn, setLoggedIn] = useState(false);
   return (
