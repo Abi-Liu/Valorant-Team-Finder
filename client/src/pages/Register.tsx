@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import axiosInstance from "../utils/axios";
-import { useUserContext, User } from "../contexts/UserContext";
+import { useUserContext } from "../contexts/UserContext";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 

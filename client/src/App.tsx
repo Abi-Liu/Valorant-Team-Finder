@@ -11,7 +11,6 @@ import ValorantFont from "./fonts/ValorantFont.ttf";
 import { ThemeProvider } from "@emotion/react";
 import { useEffect } from "react";
 import axiosInstance from "./utils/axios";
-import { MatchArrayResponse, ProfileResponse } from "./interfaces/Response";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 

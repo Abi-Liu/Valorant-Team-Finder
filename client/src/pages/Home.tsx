@@ -1,4 +1,4 @@
-import { Box, Button, Typography, createTheme } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Background from "../assets/background.jpg";
 import Jett from "../assets/val-jett.jpg";
 import { useNavigate } from "react-router-dom";

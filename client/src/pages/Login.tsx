@@ -1,7 +1,6 @@
 import axiosInstance from "../utils/axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useUserContext } from "../contexts/UserContext";
-import { User } from "../contexts/UserContext";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
