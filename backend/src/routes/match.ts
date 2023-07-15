@@ -6,5 +6,10 @@ const router = express.Router();
 
 router.get("/:id", auth.ensureAuth, matchController.getMatches);
 router.post("/createMatches", auth.ensureAuth, matchController.createMatches);
+router.put(
+  "/updateMatches/:id",
+  auth.ensureAuth,
+  matchController.updateMatches
+);
 
 export default router;

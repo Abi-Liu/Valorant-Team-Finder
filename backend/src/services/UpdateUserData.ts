@@ -10,7 +10,7 @@ import ValorantClient from "unofficial-valorant-api";
 const VAPI = new ValorantClient();
 
 export const updateMatchData = async (
-  user: DatabaseUserInterface,
+  id: string,
   puuid: string,
   region: Region
 ) => {
@@ -50,7 +50,7 @@ export const updateMatchData = async (
         };
         matchesArr.push(matchData);
       }
-      const updatedData = { matches: matchesArr, user: user._id };
+      const updatedData = { matches: matchesArr, user: id };
       return updatedData;
     }
   } catch (error) {
