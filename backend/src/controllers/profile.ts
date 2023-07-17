@@ -4,7 +4,7 @@ import User from "../models/User";
 import ValorantClient from "unofficial-valorant-api";
 import { DatabaseUserInterface } from "../Interfaces/DatabaseInterfaces";
 import { updateProfileData } from "../services/UpdateUserData";
-import calculateNewExpiryTime from "src/services/CalculateNewExpiryTime";
+import calculateNewExpiryTime from "../services/CalculateNewExpiryTime";
 
 const VAPI = new ValorantClient();
 

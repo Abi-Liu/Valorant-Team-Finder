@@ -76,6 +76,7 @@ describe("Profile and Matches Routes", () => {
           rank: expect.any(String),
           rankImage: expect.any(String),
           region: expect.any(String),
+          expiryTime: expect.any(String),
           user: expect.any(String),
         });
       });
