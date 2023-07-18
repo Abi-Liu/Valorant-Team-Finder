@@ -19,7 +19,7 @@ interface TeamItemProps {
 
 const Team: FC<TeamItemProps> = ({ team, setTeams, teams }) => {
   const { user, setUser } = useUserContext();
-  console.log(user);
+
   //Join team
   async function joinTeam() {
     try {

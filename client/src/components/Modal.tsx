@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import axiosInstance from "../utils/axios";
 import { TeamInterface } from "../interfaces/TeamInterface";
+import { useUserContext } from "../contexts/UserContext";
 
 const style = {
   position: "absolute",
@@ -20,6 +21,7 @@ const style = {
 };
 
 export default function BasicModal({ setTeams }) {
+  const { user, setUser } = useUserContext();
   const [teamName, setTeamName] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -35,6 +37,10 @@ export default function BasicModal({ setTeams }) {
       const team = await axiosInstance.post("/team/createTeam", { teamName });
       console.log(team);
       setTeams((prev) => [...prev, team.data]);
+      setUser((prev) => ({
+        ...prev,
+        team: team.data._id,
+      }));
     } catch (error) {
       console.log(error);
     }
@@ -81,6 +87,8 @@ export default function BasicModal({ setTeams }) {
             onChange={onChange}
           />
           <Button
+            disabled={Boolean(user?.team)}
+            variant="contained"
             sx={{
               backgroundColor: "#FF4654",
               color: "white",

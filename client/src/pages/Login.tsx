@@ -30,6 +30,7 @@ const Login = () => {
       setUser((prev) => ({
         ...prev,
         ign: user.data.ign,
+        team: user.data.team,
         _id: user.data._id,
       }));
     } catch (error) {
