@@ -19,7 +19,7 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal({ teams, setTeams }) {
+export default function BasicModal({ setTeams }) {
   const [teamName, setTeamName] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -34,14 +34,7 @@ export default function BasicModal({ teams, setTeams }) {
     try {
       const team = await axiosInstance.post("/team/createTeam", { teamName });
       console.log(team);
-      setTeams((prev) => [
-        ...prev,
-        {
-          teamName: team.data.name,
-          teammates: team.data.teammates,
-          _id: team.data._id,
-        },
-      ]);
+      setTeams((prev) => [...prev, team.data]);
     } catch (error) {
       console.log(error);
     }

@@ -9,7 +9,7 @@ const Teams = () => {
   const [teams, setTeams] = useState<TeamInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  console.log(teams);
+
   useEffect(() => {
     let ignore = false;
 
@@ -33,6 +33,7 @@ const Teams = () => {
       ignore = true;
     };
   }, []);
+
   return (
     <Box
       component="main"
@@ -47,7 +48,14 @@ const Teams = () => {
         ) : error ? (
           <div>{error}</div>
         ) : (
-          teams.map((team) => <Team key={team._id} team={team} />)
+          teams.map((team) => (
+            <Team
+              key={team._id}
+              setTeams={setTeams}
+              team={team}
+              teams={teams}
+            />
+          ))
         )}
       </Grid>
     </Box>
