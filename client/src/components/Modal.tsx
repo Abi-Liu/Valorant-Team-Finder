@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -20,7 +20,11 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal({ setTeams }) {
+export default function BasicModal({
+  setTeams,
+}: {
+  setTeams: Dispatch<SetStateAction<TeamInterface[]>>;
+}) {
   const { user, setUser } = useUserContext();
   const [teamName, setTeamName] = React.useState("");
   const [open, setOpen] = React.useState(false);
@@ -41,6 +45,7 @@ export default function BasicModal({ setTeams }) {
         ...prev,
         team: team.data._id,
       }));
+      handleClose();
     } catch (error) {
       console.log(error);
     }
