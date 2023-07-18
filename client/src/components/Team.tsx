@@ -59,12 +59,23 @@ const Team: FC<TeamItemProps> = ({ team, setTeams, teams }) => {
 
       // Find the index of the team in the current teams state array
       const teamIndex = teams.findIndex((t) => t._id === response.data._id);
-
+      console.log(teamIndex);
       if (teamIndex !== -1) {
         // If the team is found in the current teams state, update it
         const updatedTeams = [...teams];
-        updatedTeams[teamIndex] = response.data;
-        setTeams(updatedTeams);
+        //checks to see if team has disbanded due to no one being in the team
+        if (!response.data.teammates) {
+          console.log("true");
+          //removes the team from state array
+          updatedTeams.splice(teamIndex, 1);
+          console.log(updatedTeams);
+          setTeams(updatedTeams);
+        } else {
+          console.log("false");
+          updatedTeams[teamIndex] = response.data;
+          console.log(updatedTeams);
+          setTeams(updatedTeams);
+        }
       }
     } catch (error) {
       console.error(error);

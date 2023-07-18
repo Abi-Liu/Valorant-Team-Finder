@@ -16,8 +16,6 @@ const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 function App() {
   const { user, loggedIn, setUser } = useUserContext();
-  console.log(user);
-  console.log(loggedIn);
 
   //used to create the custom Valorant font
   const theme = createTheme({
@@ -46,8 +44,8 @@ function App() {
         try {
           const profileData = await axiosInstance.get(`/profile/${user._id}`);
           const matchHistory = await axiosInstance.get(`/matches/${user._id}`);
-          console.log(profileData);
-          console.log(matchHistory);
+          // console.log(profileData);
+          // console.log(matchHistory);
           setUser((prev) => ({
             ...prev,
             puuid: profileData.data.profile.puuid,
