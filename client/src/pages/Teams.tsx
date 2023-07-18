@@ -1,18 +1,29 @@
-import { Box } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import axiosInstance from "../utils/axios";
 import { useEffect, useState } from "react";
+import BasicModal from "../components/Modal";
+import { TeamInterface } from "../interfaces/TeamInterface";
+import Team from "../components/Team";
 
 const Teams = () => {
-  const [teams, setTeams] = useState({});
+  const [teams, setTeams] = useState<TeamInterface[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   console.log(teams);
   useEffect(() => {
     let ignore = false;
 
     async function getTeams() {
-      const response = await axiosInstance.get("/team/getTeams");
-      console.log(response);
-      if (ignore === false) {
-        setTeams(response.data);
+      try {
+        const response = await axiosInstance.get("/team/getTeams");
+        console.log(response);
+        if (!ignore) {
+          setTeams(response.data);
+        }
+      } catch (error) {
+        setError("Failed to fetch teams.");
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -23,8 +34,22 @@ const Teams = () => {
     };
   }, []);
   return (
-    <Box sx={{ width: "100%", height: "100vh", backgroundColor: "#101823" }}>
-      Teams
+    <Box
+      component="main"
+      sx={{ width: "100%", height: "100vh", backgroundColor: "#101823" }}
+    >
+      <Box>
+        <BasicModal setTeams={setTeams} />
+      </Box>
+      <Grid container spacing={4}>
+        {loading ? (
+          <div>Loading...</div>
+        ) : error ? (
+          <div>{error}</div>
+        ) : (
+          teams.map((team) => <Team key={team._id} team={team} />)
+        )}
+      </Grid>
     </Box>
   );
 };
