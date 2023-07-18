@@ -71,7 +71,7 @@ const Navbar = () => {
       text: "Profile",
       click: () => {
         setAnchorElUser(null);
-        navigate("/profile");
+        navigate(`/profile/${user._id}`);
       },
     },
     { text: "Logout", click: logout },
@@ -211,7 +211,11 @@ const Navbar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Valorant Banner" src={user.cardSmall} />
+                  <Avatar
+                    alt="Valorant Banner"
+                    src={user.cardSmall}
+                    sx={{ border: "1px solid white" }}
+                  />
                 </IconButton>
               </Tooltip>
               <Menu

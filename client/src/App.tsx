@@ -9,13 +9,16 @@ import { CssBaseline, createTheme } from "@mui/material";
 import Teams from "./pages/Teams";
 import ValorantFont from "./fonts/ValorantFont.ttf";
 import { ThemeProvider } from "@emotion/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "./utils/axios";
+import Profile from "./pages/Profile";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 function App() {
   const { user, loggedIn, setUser } = useUserContext();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   //used to create the custom Valorant font
   const theme = createTheme({
@@ -44,8 +47,8 @@ function App() {
         try {
           const profileData = await axiosInstance.get(`/profile/${user._id}`);
           const matchHistory = await axiosInstance.get(`/matches/${user._id}`);
-          // console.log(profileData);
-          // console.log(matchHistory);
+          console.log(profileData);
+          console.log(matchHistory);
           setUser((prev) => ({
             ...prev,
             puuid: profileData.data.profile.puuid,
@@ -81,7 +84,10 @@ function App() {
             }));
           } catch (error) {
             console.error(error);
+            setError("Failed to fetch data, did you enter a real Riot ID?");
           }
+        } finally {
+          setLoading(false);
         }
       }
     };
@@ -107,6 +113,10 @@ function App() {
           <Route
             path="/teams"
             element={loggedIn ? <Teams /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/profile/:id"
+            element={loggedIn ? <Profile /> : <Navigate to="/login" />}
           />
         </Routes>
       </ThemeProvider>
