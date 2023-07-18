@@ -6,7 +6,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import React, { FC, Dispatch, SetStateAction } from "react";
+import { FC, Dispatch, SetStateAction } from "react";
 import { TeamInterface } from "../interfaces/TeamInterface";
 import axiosInstance from "../utils/axios";
 import { useUserContext } from "../contexts/UserContext";
@@ -79,7 +79,7 @@ const Team: FC<TeamItemProps> = ({ team, setTeams, teams }) => {
   }
 
   return (
-    <Grid item sx={{ minWidth: "275px" }}>
+    <Grid item xs={12} sm={6} md={3}>
       <Card variant="outlined">
         <CardContent>
           <Typography

@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import axiosInstance from "../utils/axios";
 import { useEffect, useState } from "react";
 import BasicModal from "../components/Modal";
@@ -39,7 +39,14 @@ const Teams = () => {
       component="main"
       sx={{ width: "100%", height: "100vh", backgroundColor: "#101823" }}
     >
-      <Box>
+      <Box
+        sx={{
+          py: "2rem",
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
         <BasicModal setTeams={setTeams} />
       </Box>
       <Grid container spacing={4}>

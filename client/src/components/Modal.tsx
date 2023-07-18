@@ -59,7 +59,7 @@ export default function BasicModal({
           color: "white",
           padding: "4px 10px",
           fontFamily: "Poppins",
-          width: "30%",
+          width: "100%",
           fontWeight: "400",
           "&:hover": {
             backgroundColor: "#c6000f",
@@ -78,12 +78,15 @@ export default function BasicModal({
         aria-describedby="modal-modal-description"
       >
         <Box component="form" onSubmit={submit} sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            sx={{ mb: "30px" }}
+          >
             Create a New Team
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+
           <TextField
             id="teamname"
             label="Team Name"
