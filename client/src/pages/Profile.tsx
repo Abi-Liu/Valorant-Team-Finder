@@ -1,9 +1,13 @@
 import { Avatar, Box, Container, Typography } from "@mui/material";
-import React from "react";
+// import React from "react";
 import { useUserContext } from "../contexts/UserContext";
+// import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useUserContext();
+
+  //   const navigate = useNavigate();
+
   return (
     <Box
       component={"main"}
@@ -17,12 +21,25 @@ const Profile = () => {
           backgroundRepeat: "no-repeat",
         }}
       ></Box>
-      <Container sx={{ display: "flex", gap: 10 }}>
+      <Container
+        sx={{
+          display: "flex",
+          gap: 10,
+          alignItems: "center",
+          mb: "20px",
+          py: "10px",
+        }}
+      >
         <Box>
           <Avatar
             src={user.cardSmall}
             alt="Valorant Banner Avatar"
-            sx={{ height: "80px", width: "80px", border: "3px solid white" }}
+            sx={{
+              height: "80px",
+              width: "80px",
+              border: "3px solid white",
+              zIndex: "1",
+            }}
           />
         </Box>
         <Box>
@@ -45,10 +62,16 @@ const Profile = () => {
           >
             #{user.ign.split("#")[1]}
           </Typography>
-          <Box
-            sx={{ backgroundColor: "#ffffff", height: "10vh", width: "100vw" }}
-          ></Box>
         </Box>
+      </Container>
+      {/* container for rank, data, and match history */}
+      <Container sx={{ display: "flex", gap: 4 }}>
+        <Box
+          sx={{ width: "300px", height: "200px", backgroundColor: "white" }}
+        ></Box>
+        <Box
+          sx={{ width: "100%", height: "200px", backgroundColor: "white" }}
+        ></Box>
       </Container>
     </Box>
   );
