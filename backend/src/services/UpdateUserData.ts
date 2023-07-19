@@ -35,8 +35,8 @@ export const updateMatchData = async (
 
         //total damage done divided by rounds played
         const adr =
-          player.damage_made / match.teams.red.rounds_lost +
-          match.teams.red.rounds_won;
+          player.damage_made /
+          (match.teams.red.rounds_lost + match.teams.red.rounds_won);
 
         //adding match data to db
         const matchData = {

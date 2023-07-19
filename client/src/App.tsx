@@ -47,6 +47,8 @@ function App() {
         try {
           const profileData = await axiosInstance.get(`/profile/${user._id}`);
           const matchHistory = await axiosInstance.get(`/matches/${user._id}`);
+          console.log(profileData);
+          console.log(matchHistory);
           if (!profileData.data.message && !matchHistory.data.message) {
             setUser((prev) => ({
               ...prev,
