@@ -8,6 +8,9 @@ const Profile = () => {
 
   //   const navigate = useNavigate();
 
+  //stat calculations
+  console.log(user.matches);
+
   return (
     <Box
       component={"main"}

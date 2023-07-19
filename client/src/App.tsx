@@ -47,18 +47,48 @@ function App() {
         try {
           const profileData = await axiosInstance.get(`/profile/${user._id}`);
           const matchHistory = await axiosInstance.get(`/matches/${user._id}`);
-          console.log(profileData);
-          console.log(matchHistory);
-          setUser((prev) => ({
-            ...prev,
-            puuid: profileData.data.profile.puuid,
-            region: profileData.data.profile.region,
-            cardLarge: profileData.data.profile.cardLarge,
-            cardSmall: profileData.data.profile.cardSmall,
-            rank: profileData.data.profile.rank,
-            rankImage: profileData.data.profile.rankImage,
-            matches: matchHistory.data.matches,
-          }));
+          if (!profileData.data.message && !matchHistory.data.message) {
+            setUser((prev) => ({
+              ...prev,
+              puuid: profileData.data.profile.puuid,
+              region: profileData.data.profile.region,
+              cardLarge: profileData.data.profile.cardLarge,
+              cardSmall: profileData.data.profile.cardSmall,
+              rank: profileData.data.profile.rank,
+              rankImage: profileData.data.profile.rankImage,
+              matches: matchHistory.data.matches,
+            }));
+          } else if (matchHistory.data.message && !profileData.data.message) {
+            const profileData = await axiosInstance.get(`/profile/${user._id}`);
+            const matchHistory = await axiosInstance.put(
+              `/matches/${user._id}`
+            );
+            setUser((prev) => ({
+              ...prev,
+              puuid: profileData.data.profile.puuid,
+              region: profileData.data.profile.region,
+              cardLarge: profileData.data.profile.cardLarge,
+              cardSmall: profileData.data.profile.cardSmall,
+              rank: profileData.data.profile.rank,
+              rankImage: profileData.data.profile.rankImage,
+              matches: matchHistory.data.matches,
+            }));
+          } else if (!matchHistory.data.message && profileData.data.message) {
+            const profileData = await axiosInstance.put(`/profile/${user._id}`);
+            const matchHistory = await axiosInstance.get(
+              `/matches/${user._id}`
+            );
+            setUser((prev) => ({
+              ...prev,
+              puuid: profileData.data.profile.puuid,
+              region: profileData.data.profile.region,
+              cardLarge: profileData.data.profile.cardLarge,
+              cardSmall: profileData.data.profile.cardSmall,
+              rank: profileData.data.profile.rank,
+              rankImage: profileData.data.profile.rankImage,
+              matches: matchHistory.data.matches,
+            }));
+          }
         } catch (error) {
           console.error(error);
           try {
