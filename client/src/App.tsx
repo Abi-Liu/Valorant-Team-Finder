@@ -48,6 +48,7 @@ function App() {
       if (loggedIn) {
         try {
           const { profileData, matchHistory } = await getProfileData(user._id);
+          console.log(profileData);
           setUser((prev) => ({
             ...prev,
             puuid: profileData.data.profile.puuid,

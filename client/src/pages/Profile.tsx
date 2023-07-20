@@ -3,31 +3,52 @@ import { useUserContext } from "../contexts/UserContext";
 import { Match } from "../interfaces/MatchResponse";
 import StatCard from "../components/StatCard";
 import MatchCard from "../components/MatchCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axios";
+import getProfileData from "../utils/GetUserData";
+import { useParams } from "react-router-dom";
+import { ProfileResponse } from "../interfaces/Response";
 // import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const { user } = useUserContext();
+  const { id } = useParams();
+  const [matches, setMatches] = useState<Match[]>([]);
+  const [profileData, setProfileData] = useState<ProfileResponse>();
+  const [ign, setIgn] = useState<string>("");
 
-  // useEffect(() => {
-  //   async function fetchProfileData() {
-  //     const [profileData, matchData] = await Promise.all[
-  //       axiosInstance.
-  //     ]
-  //   }
-  // })
+  useEffect(() => {
+    let ignore = false;
+    async function fetchProfileData() {
+      if (!id) {
+        // Handle the case where id is undefined or not present in the URL
+        console.error("ID not found in URL.");
+        return;
+      } else {
+        if (!ignore) {
+          const { profileData, matchHistory } = await getProfileData(id);
+          setProfileData(profileData.data.profile);
+          setIgn(profileData.data.ign.ign);
+          setMatches(matchHistory.data.matches);
+        }
+      }
+    }
+
+    fetchProfileData();
+
+    return () => {
+      ignore = true;
+    };
+  }, [id]);
   //   const navigate = useNavigate();
 
   //Overall headshot %, K/D ratio, Winrate calculations
-  const matches = user.matches as Match[];
+  // const matches = user.matches as Match[];
   let kills = 0;
   let deaths = 0;
   let wins = 0;
   let headshots = 0;
   let total = 0;
   let damage = 0;
-  console.log(user.matches);
   matches.forEach((match) => {
     headshots += match.playerStats.headshots;
     total +=
@@ -79,7 +100,7 @@ const Profile = () => {
       >
         <Box>
           <Avatar
-            src={user.cardSmall}
+            src={profileData?.cardSmall}
             alt="Valorant Banner Avatar"
             sx={{
               height: "80px",
@@ -95,7 +116,7 @@ const Profile = () => {
             component="span"
             sx={{ color: "white", fontFamily: "Poppins" }}
           >
-            {user.ign.split("#")[0]}
+            {ign.split("#")[0]}
           </Typography>
           <Typography
             variant="h5"
@@ -107,7 +128,7 @@ const Profile = () => {
               backgroundColor: "rgba(255, 255, 255, 0.1)",
             }}
           >
-            #{user.ign.split("#")[1]}
+            #{ign.split("#")[1]}
           </Typography>
         </Box>
       </Container>
@@ -123,8 +144,13 @@ const Profile = () => {
             ))}
           </Grid>
           <Grid>
-            {user.matches.map((match) => (
-              <MatchCard key={match._id} matchData={match} />
+            {matches.map((match) => (
+              <MatchCard
+                key={match._id}
+                matchData={match}
+                rank={profileData?.rank}
+                rankImage={profileData?.rankImage}
+              />
             ))}
           </Grid>
         </Box>
