@@ -1,5 +1,5 @@
 import { Grid, Card, Typography, CardContent } from "@mui/material";
-import React, { FC } from "react";
+import { FC } from "react";
 
 interface StatCardProps {
   name: string;

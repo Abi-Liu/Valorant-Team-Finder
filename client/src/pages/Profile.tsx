@@ -117,6 +117,7 @@ const Profile = () => {
               <StatCard name={stat.name} value={stat.value} />
             ))}
           </Grid>
+          <Grid></Grid>
         </Box>
       </Container>
     </Box>

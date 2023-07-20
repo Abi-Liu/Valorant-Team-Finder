@@ -45,11 +45,16 @@ function App() {
     const getUserData = async () => {
       if (loggedIn) {
         try {
-          const profileData = await axiosInstance.get(`/profile/${user._id}`);
-          const matchHistory = await axiosInstance.get(`/matches/${user._id}`);
+          const [profileData, matchHistory] = await Promise.all([
+            axiosInstance.get(`/profile/${user._id}`),
+            axiosInstance.get(`/matches/${user._id}`),
+          ]);
+
+          const hasProfileDataError = !!profileData.data.message;
+          const hasMatchHistoryError = !!matchHistory.data.message;
           console.log(profileData);
           console.log(matchHistory);
-          if (!profileData.data.message && !matchHistory.data.message) {
+          if (!profileData.data.message && !hasMatchHistoryError) {
             setUser((prev) => ({
               ...prev,
               puuid: profileData.data.profile.puuid,
@@ -60,35 +65,31 @@ function App() {
               rankImage: profileData.data.profile.rankImage,
               matches: matchHistory.data.matches,
             }));
-          } else if (matchHistory.data.message && !profileData.data.message) {
-            const profileData = await axiosInstance.get(`/profile/${user._id}`);
-            const matchHistory = await axiosInstance.put(
-              `/matches/${user._id}`
+          } else {
+            if (hasProfileDataError) {
+              await axiosInstance.put(`/profile/${user._id}`);
+            }
+
+            if (hasMatchHistoryError) {
+              await axiosInstance.put(`/matches/${user._id}`);
+            }
+
+            const [updatedProfileData, updatedMatchHistory] = await Promise.all(
+              [
+                axiosInstance.get(`/profile/${user._id}`),
+                axiosInstance.get(`/matches/${user._id}`),
+              ]
             );
+
             setUser((prev) => ({
               ...prev,
-              puuid: profileData.data.profile.puuid,
-              region: profileData.data.profile.region,
-              cardLarge: profileData.data.profile.cardLarge,
-              cardSmall: profileData.data.profile.cardSmall,
-              rank: profileData.data.profile.rank,
-              rankImage: profileData.data.profile.rankImage,
-              matches: matchHistory.data.matches,
-            }));
-          } else if (!matchHistory.data.message && profileData.data.message) {
-            const profileData = await axiosInstance.put(`/profile/${user._id}`);
-            const matchHistory = await axiosInstance.get(
-              `/matches/${user._id}`
-            );
-            setUser((prev) => ({
-              ...prev,
-              puuid: profileData.data.profile.puuid,
-              region: profileData.data.profile.region,
-              cardLarge: profileData.data.profile.cardLarge,
-              cardSmall: profileData.data.profile.cardSmall,
-              rank: profileData.data.profile.rank,
-              rankImage: profileData.data.profile.rankImage,
-              matches: matchHistory.data.matches,
+              puuid: updatedProfileData.data.profile.puuid,
+              region: updatedProfileData.data.profile.region,
+              cardLarge: updatedProfileData.data.profile.cardLarge,
+              cardSmall: updatedProfileData.data.profile.cardSmall,
+              rank: updatedProfileData.data.profile.rank,
+              rankImage: updatedProfileData.data.profile.rankImage,
+              matches: updatedMatchHistory.data.matches,
             }));
           }
         } catch (error) {
