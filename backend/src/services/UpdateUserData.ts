@@ -33,10 +33,13 @@ export const updateMatchData = async (
         );
         const player = filter[0];
 
-        //total damage done divided by rounds played
+        //total damage done divided by rounds played rounded to nearest tenth
         const adr =
-          player.damage_made /
-          (match.teams.red.rounds_lost + match.teams.red.rounds_won);
+          Math.round(
+            (player.damage_made /
+              (match.teams.red.rounds_lost + match.teams.red.rounds_won)) *
+              10
+          ) / 10;
 
         //adding match data to db
         const matchData = {
