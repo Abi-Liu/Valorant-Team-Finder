@@ -53,10 +53,10 @@ export default {
           profile.puuid,
           profile.region as Region
         );
-        console.log(matchArr);
+
         const matches = await Match.findOneAndUpdate(
           { user: id },
-          { matches: matchArr, expiryTime },
+          { matches: matchArr?.matches, expiryTime },
           { new: true }
         );
         res.status(200).json(matches);

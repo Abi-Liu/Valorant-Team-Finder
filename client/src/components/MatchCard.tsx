@@ -1,7 +1,7 @@
 import React from "react";
 
-const Match = () => {
+const MatchCard = () => {
   return <div>Match</div>;
 };
 
-export default Match;
+export default MatchCard;

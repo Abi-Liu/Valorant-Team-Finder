@@ -3,6 +3,7 @@ import { Avatar, Box, Container, Grid, Typography } from "@mui/material";
 import { useUserContext } from "../contexts/UserContext";
 import { Match } from "../interfaces/MatchResponse";
 import StatCard from "../components/StatCard";
+import MatchCard from "../components/MatchCard";
 // import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
@@ -117,7 +118,9 @@ const Profile = () => {
               <StatCard name={stat.name} value={stat.value} />
             ))}
           </Grid>
-          <Grid></Grid>
+          <Grid>
+            <MatchCard />
+          </Grid>
         </Box>
       </Container>
     </Box>
