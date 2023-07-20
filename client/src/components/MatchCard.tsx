@@ -11,10 +11,30 @@ interface MatchDataProps {
 
 const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
   console.log(matchData);
+  //headshot %
+  const headshots = matchData.playerStats.headshots;
+  const total =
+    matchData.playerStats.headshots +
+    matchData.playerStats.bodyshots +
+    matchData.playerStats.legshots;
+  const headshotPercent = Math.round(100 * (headshots / total));
+
+  //K/D Ratio
+  const kills = matchData.playerStats.kills;
+  const deaths = matchData.playerStats.deaths;
+  const kd = Math.round((kills / deaths) * 10) / 10;
 
   return (
-    <Grid item xs={12} sx={{ backgroundColor: "#1B2733" }}>
-      <Box sx={{ display: "flex" }}>
+    <Grid
+      item
+      xs={12}
+      sx={{
+        backgroundColor: "#1B2733",
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box sx={{ display: "flex", gap: 3 }}>
         <Box>
           <Avatar
             src={matchData.image}
@@ -30,7 +50,27 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
           <Typography variant="caption">{rank}</Typography>
         </Box>
       </Box>
-      <Box></Box>
+      <Box sx={{ display: "flex", gap: 3 }}>
+        <Box>
+          <Typography variant="caption">K/D/A</Typography>
+          <Typography variant="body1">
+            {matchData.playerStats.kills}/{matchData.playerStats.deaths}/
+            {matchData.playerStats.assists}
+          </Typography>
+        </Box>
+        <Box>
+          <Typography variant="caption">K/D</Typography>
+          <Typography variant="body1">{kd}</Typography>
+        </Box>
+        <Box>
+          <Typography variant="caption">HS%</Typography>
+          <Typography variant="body1">{headshotPercent}</Typography>
+        </Box>
+        <Box>
+          <Typography variant="caption">ADR</Typography>
+          <Typography variant="body1">{Math.round(matchData.adr)}</Typography>
+        </Box>
+      </Box>
     </Grid>
   );
 };
