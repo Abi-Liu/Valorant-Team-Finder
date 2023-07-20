@@ -7,6 +7,8 @@ import {
   useState,
 } from "react";
 
+import { Match } from "../interfaces/MatchResponse";
+
 export type User = {
   ign: string;
   team: string;
@@ -17,7 +19,7 @@ export type User = {
   rankImage: string;
   puuid: string;
   region: string;
-  matches: [object];
+  matches: [Match] | [];
 };
 
 export interface UserContextInterface {
@@ -37,7 +39,7 @@ const defaultState = {
     rankImage: "",
     puuid: "",
     region: "",
-    matches: [{}],
+    matches: [],
     _id: "",
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -68,7 +70,7 @@ export default function UserProvider({ children }: UserProviderProps) {
     rankImage: "",
     puuid: "",
     region: "",
-    matches: [{}],
+    matches: [],
   });
   const [loggedIn, setLoggedIn] = useState(false);
   return (

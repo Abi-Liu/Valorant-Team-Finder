@@ -12,6 +12,7 @@ import { ThemeProvider } from "@emotion/react";
 import { useEffect, useState } from "react";
 import axiosInstance from "./utils/axios";
 import Profile from "./pages/Profile";
+import getProfileData from "./utils/GetUserData";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
@@ -41,57 +42,22 @@ function App() {
     },
   });
 
+  //refactored for increased reusability and readability
   useEffect(() => {
     const getUserData = async () => {
       if (loggedIn) {
         try {
-          const [profileData, matchHistory] = await Promise.all([
-            axiosInstance.get(`/profile/${user._id}`),
-            axiosInstance.get(`/matches/${user._id}`),
-          ]);
-
-          const hasProfileDataError = !!profileData.data.message;
-          const hasMatchHistoryError = !!matchHistory.data.message;
-          console.log(profileData);
-          console.log(matchHistory);
-          if (!profileData.data.message && !hasMatchHistoryError) {
-            setUser((prev) => ({
-              ...prev,
-              puuid: profileData.data.profile.puuid,
-              region: profileData.data.profile.region,
-              cardLarge: profileData.data.profile.cardLarge,
-              cardSmall: profileData.data.profile.cardSmall,
-              rank: profileData.data.profile.rank,
-              rankImage: profileData.data.profile.rankImage,
-              matches: matchHistory.data.matches,
-            }));
-          } else {
-            if (hasProfileDataError) {
-              await axiosInstance.put(`/profile/${user._id}`);
-            }
-
-            if (hasMatchHistoryError) {
-              await axiosInstance.put(`/matches/${user._id}`);
-            }
-
-            const [updatedProfileData, updatedMatchHistory] = await Promise.all(
-              [
-                axiosInstance.get(`/profile/${user._id}`),
-                axiosInstance.get(`/matches/${user._id}`),
-              ]
-            );
-
-            setUser((prev) => ({
-              ...prev,
-              puuid: updatedProfileData.data.profile.puuid,
-              region: updatedProfileData.data.profile.region,
-              cardLarge: updatedProfileData.data.profile.cardLarge,
-              cardSmall: updatedProfileData.data.profile.cardSmall,
-              rank: updatedProfileData.data.profile.rank,
-              rankImage: updatedProfileData.data.profile.rankImage,
-              matches: updatedMatchHistory.data.matches,
-            }));
-          }
+          const { profileData, matchHistory } = await getProfileData(user._id);
+          setUser((prev) => ({
+            ...prev,
+            puuid: profileData.data.profile.puuid,
+            region: profileData.data.profile.region,
+            cardLarge: profileData.data.profile.cardLarge,
+            cardSmall: profileData.data.profile.cardSmall,
+            rank: profileData.data.profile.rank,
+            rankImage: profileData.data.profile.rankImage,
+            matches: matchHistory.data.matches,
+          }));
         } catch (error) {
           console.error(error);
           try {

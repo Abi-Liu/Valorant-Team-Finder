@@ -1,15 +1,22 @@
 import { Avatar, Box, Container, Grid, Typography } from "@mui/material";
-// import React from "react";
 import { useUserContext } from "../contexts/UserContext";
 import { Match } from "../interfaces/MatchResponse";
 import StatCard from "../components/StatCard";
 import MatchCard from "../components/MatchCard";
+import { useEffect } from "react";
+import axiosInstance from "../utils/axios";
 // import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useUserContext();
-  console.log(user._id);
 
+  // useEffect(() => {
+  //   async function fetchProfileData() {
+  //     const [profileData, matchData] = await Promise.all[
+  //       axiosInstance.
+  //     ]
+  //   }
+  // })
   //   const navigate = useNavigate();
 
   //Overall headshot %, K/D ratio, Winrate calculations
@@ -52,10 +59,7 @@ const Profile = () => {
   ];
 
   return (
-    <Box
-      component={"main"}
-      sx={{ backgroundColor: "#0F141A", height: "100vh" }}
-    >
+    <Box component={"main"} sx={{ backgroundColor: "#0F141A", height: "100%" }}>
       <Box
         style={{
           height: "35vh", // Set the height of the box to 20% of the viewport height
@@ -110,16 +114,18 @@ const Profile = () => {
       {/* container for rank, data, and match history */}
       <Container sx={{ display: "flex", gap: 4 }}>
         <Box
-          sx={{ width: "300px", height: "200px", backgroundColor: "white" }}
+          sx={{ width: "300px", height: "100vh", backgroundColor: "white" }}
         ></Box>
-        <Box sx={{ width: "100%", height: "200px", backgroundColor: "white" }}>
+        <Box sx={{ width: "100%", height: "100vh", backgroundColor: "white" }}>
           <Grid container spacing={2}>
             {stats.map((stat) => (
-              <StatCard name={stat.name} value={stat.value} />
+              <StatCard key={stat.name} name={stat.name} value={stat.value} />
             ))}
           </Grid>
           <Grid>
-            <MatchCard />
+            {user.matches.map((match) => (
+              <MatchCard key={match._id} matchData={match} />
+            ))}
           </Grid>
         </Box>
       </Container>

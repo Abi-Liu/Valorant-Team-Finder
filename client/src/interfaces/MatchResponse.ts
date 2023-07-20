@@ -11,6 +11,7 @@ export interface Match {
   adr: number;
   blueWon: Won;
   character: string;
+  image: string;
   playerStats: PlayerStats;
   redWon: Won;
   team: string;
