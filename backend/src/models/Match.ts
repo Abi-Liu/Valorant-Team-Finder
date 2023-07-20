@@ -13,6 +13,9 @@ const MatchSchema = new mongoose.Schema({
   character: {
     type: String,
   },
+  image: {
+    type: String,
+  },
   team: {
     type: String,
   },

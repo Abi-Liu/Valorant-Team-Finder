@@ -46,6 +46,7 @@ export const updateMatchData = async (
           adr,
           playerStats: player.stats,
           character: player.character,
+          image: player.assets.agent.small,
           team: player.team,
           redWon: match.teams.red,
           blueWon: match.teams.blue,
