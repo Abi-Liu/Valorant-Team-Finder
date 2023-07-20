@@ -1,4 +1,4 @@
-import { Grid, Card, Typography } from "@mui/material";
+import { Grid, Card, Typography, CardContent } from "@mui/material";
 import React, { FC } from "react";
 
 interface StatCardProps {
@@ -9,13 +9,30 @@ interface StatCardProps {
 const StatCard: FC<StatCardProps> = ({ name, value }) => {
   return (
     <Grid item sm={6} md={3}>
-      <Card>
-        <Typography variant="h5" sx={{ fontFamily: "Poppins" }}>
-          {name}
-        </Typography>
-        <Typography variant="h5" sx={{ fontFamily: "Poppins" }}>
-          {value}
-        </Typography>
+      <Card sx={{ backgroundColor: "#263747" }}>
+        <CardContent>
+          <Typography
+            variant="h6"
+            sx={{ fontSize: "1rem", fontFamily: "Poppins", color: "#d3d3d3" }}
+          >
+            {name}
+          </Typography>
+          {name.includes("%") ? (
+            <Typography
+              variant="h6"
+              sx={{ fontFamily: "Poppins", color: "white" }}
+            >
+              {value}%
+            </Typography>
+          ) : (
+            <Typography
+              variant="h6"
+              sx={{ fontFamily: "Poppins", color: "white" }}
+            >
+              {value}
+            </Typography>
+          )}
+        </CardContent>
       </Card>
     </Grid>
   );
