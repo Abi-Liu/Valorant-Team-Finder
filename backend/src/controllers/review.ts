@@ -1,5 +1,7 @@
 import express, { Request, Response } from "express";
 import Review from "../models/Review";
+import User from "../models/User";
+import Profile from "../models/Profile";
 import { DatabaseUserInterface } from "src/Interfaces/DatabaseInterfaces";
 
 export default {
@@ -10,13 +12,18 @@ export default {
       const user = req.user as DatabaseUserInterface;
       let review = await Review.findOne({ user: userId });
       if (!review) {
-        const createdReview = await Review.create({
-          user: userId,
-          creatingUser: user._id,
-          message,
-          rating,
-        });
-        res.status(200).json(createdReview);
+        const profile = await Profile.findOne({ user: user._id });
+        if (profile) {
+          const createdReview = await Review.create({
+            user: userId,
+            ign: user.ign,
+            profilePicture: profile.cardSmall,
+            creatingUser: user._id,
+            message,
+            rating,
+          });
+          res.status(200).json(createdReview);
+        }
       } else {
         console.log("You have already made a review for this player");
         res

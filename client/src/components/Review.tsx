@@ -19,7 +19,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [message, setMessage] = useState("");
   const [reviews, setReviews] = useState<ReviewResponseData | null>(null);
-  console.log(reviews);
+
   useEffect(() => {
     let ignore = false;
     async function getReviews() {
@@ -28,7 +28,6 @@ const Review: FC<ReviewProps> = ({ id }) => {
         if (response.data) {
           if (!ignore) setReviews(response.data);
         }
-        console.log(response);
       } catch (error) {
         console.log(error);
         throw new Error("failed to fetch reviews");
@@ -54,7 +53,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
         message,
         rating,
       });
-      console.log(response);
+
       if (response.data && !response.data.message) {
         setReviews((prev) => ({
           ...prev,
@@ -70,7 +69,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
     setMessage("");
     setRating(null);
   };
-  console.log(rating);
+
   return (
     <Box>
       <Box
@@ -131,8 +130,19 @@ const Review: FC<ReviewProps> = ({ id }) => {
             backgroundColor: "white",
           }}
         />
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          Send Message
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          sx={{
+            fontFamily: "Poppins",
+            backgroundColor: "#FF4654",
+            "&:hover": {
+              backgroundColor: "#c6000f",
+            },
+          }}
+        >
+          Create Review
         </Button>
       </Box>
     </Box>

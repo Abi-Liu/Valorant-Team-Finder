@@ -24,7 +24,7 @@ function App() {
   //used to create the custom Valorant font
   const theme = createTheme({
     typography: {
-      fontFamily: "Raleway, Arial, Poppins",
+      fontFamily: "Poppins, Tungsten, Raleway, Arial",
     },
     components: {
       MuiCssBaseline: {
