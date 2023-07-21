@@ -1,10 +1,8 @@
 import { Avatar, Box, Container, Grid, Typography } from "@mui/material";
-import { useUserContext } from "../contexts/UserContext";
 import { Match } from "../interfaces/MatchResponse";
 import StatCard from "../components/StatCard";
 import MatchCard from "../components/MatchCard";
 import { useEffect, useState } from "react";
-import axiosInstance from "../utils/axios";
 import getProfileData from "../utils/GetUserData";
 import { useParams } from "react-router-dom";
 import { ProfileResponse } from "../interfaces/Response";
@@ -135,15 +133,17 @@ const Profile = () => {
       {/* container for rank, data, and match history */}
       <Container sx={{ display: "flex", gap: 4 }}>
         <Box
-          sx={{ width: "300px", height: "100vh", backgroundColor: "white" }}
+          sx={{ width: "300px", height: "100vh", backgroundColor: "#0F141A" }}
         ></Box>
-        <Box sx={{ width: "100%", height: "100vh", backgroundColor: "white" }}>
-          <Grid container spacing={2}>
+        <Box
+          sx={{ width: "100%", height: "100vh", backgroundColor: "#0F141A" }}
+        >
+          <Grid container spacing={2} sx={{ mb: "2rem" }}>
             {stats.map((stat) => (
               <StatCard key={stat.name} name={stat.name} value={stat.value} />
             ))}
           </Grid>
-          <Grid>
+          <Grid spacing={2}>
             {matches.map((match) => (
               <MatchCard
                 key={match._id}

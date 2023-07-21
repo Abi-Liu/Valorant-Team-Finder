@@ -1,7 +1,6 @@
 import { Avatar, Box, Grid, Typography } from "@mui/material";
-import React, { FC } from "react";
+import { FC } from "react";
 import { Match } from "../interfaces/MatchResponse";
-import { ProfileResponse } from "../interfaces/Response";
 
 interface MatchDataProps {
   matchData: Match;
@@ -41,14 +40,17 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
         backgroundColor: "#1B2733",
         display: "flex",
         justifyContent: "space-between",
+        my: "2px",
+        // justifyContent: "space-between",
       }}
     >
       <Box
         sx={{
           display: "flex",
-          gap: 3,
+          gap: 4,
           justifyContent: "center",
           alignItems: "center",
+          pl: "1rem",
         }}
       >
         <Box>
@@ -76,7 +78,7 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
             {rank}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+        <Box sx={{ display: "flex", gap: 0.5, alignItems: "center" }}>
           <Typography
             variant="body1"
             sx={{ fontSize: "1.15rem", color: "#32cd32" }}
@@ -104,10 +106,11 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
           gap: 3,
           justifyContent: "center",
           alignItems: "center",
+          pr: "1rem",
         }}
       >
         <Box>
-          <Typography variant="caption" sx={{ color: "white" }}>
+          <Typography variant="caption" sx={{ color: "#dddddd" }}>
             K/D/A
           </Typography>
           <Typography variant="body1" sx={{ color: "white" }}>
@@ -116,7 +119,7 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
           </Typography>
         </Box>
         <Box>
-          <Typography variant="caption" sx={{ color: "white" }}>
+          <Typography variant="caption" sx={{ color: "#dddddd" }}>
             K/D
           </Typography>
           <Typography variant="body1" sx={{ color: "white" }}>
@@ -124,7 +127,7 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
           </Typography>
         </Box>
         <Box>
-          <Typography variant="caption" sx={{ color: "white" }}>
+          <Typography variant="caption" sx={{ color: "#dddddd" }}>
             HS%
           </Typography>
           <Typography variant="body1" sx={{ color: "white" }}>
@@ -132,7 +135,7 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
           </Typography>
         </Box>
         <Box>
-          <Typography variant="caption" sx={{ color: "white" }}>
+          <Typography variant="caption" sx={{ color: "#dddddd" }}>
             ADR
           </Typography>
           <Typography variant="body1" sx={{ color: "white" }}>
