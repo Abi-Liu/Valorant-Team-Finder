@@ -41,7 +41,7 @@ const Teams = () => {
     >
       <Box
         sx={{
-          py: "2rem",
+          py: "5rem",
           display: "flex",
           justifyContent: "center",
           width: "100%",
@@ -49,7 +49,7 @@ const Teams = () => {
       >
         <BasicModal setTeams={setTeams} />
       </Box>
-      <Grid container spacing={4}>
+      <Grid container spacing={4} sx={{ px: "1.5rem" }}>
         {loading ? (
           <div>Loading...</div>
         ) : error ? (

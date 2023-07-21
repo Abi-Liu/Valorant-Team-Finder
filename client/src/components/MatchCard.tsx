@@ -45,16 +45,7 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
         border: "1px solid #141414",
       }}
     >
-      {/* <Box
-        sx={{
-          display: "flex",
-          gap: 4,
-          justifyContent: "center",
-          alignItems: "center",
-          px: "2rem",
-        }}
-      > */}
-      <Box>
+      <Box sx={{ py: "10px" }}>
         <Avatar
           src={matchData.image}
           alt="Agent icon"
@@ -99,17 +90,7 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
           {lostRounds}
         </Typography>
       </Box>
-      {/* </Box> */}
 
-      {/* <Box
-        sx={{
-          display: "flex",
-          gap: 5,
-          justifyContent: "center",
-          alignItems: "center",
-          px: "2rem",
-        }}
-      > */}
       <Box
         sx={{
           display: "flex",
@@ -171,7 +152,6 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
           {Math.round(matchData.adr)}
         </Typography>
       </Box>
-      {/* </Box> */}
     </Grid>
   );
 };
