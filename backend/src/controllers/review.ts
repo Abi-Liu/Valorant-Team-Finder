@@ -9,7 +9,7 @@ export default {
       const { userId } = req.params;
       const { message, rating } = req.body;
       const user = req.user as DatabaseUserInterface;
-      let review = await Review.find({ user: userId });
+      let review = await Review.findOne({ user: userId });
       if (!review) {
         const createdReview = await Review.create({
           user: userId,

@@ -24,4 +24,11 @@ export const realUserInput = {
   confirmPassword: "password123",
 };
 
+export const realUserInput2 = {
+  email: "test1@test.com",
+  ign: "KumSiper#69420",
+  password: "password123",
+  confirmPassword: "password123",
+};
+
 export const createTeamInput = { teamName: "best team" };

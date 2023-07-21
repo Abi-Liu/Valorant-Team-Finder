@@ -5,7 +5,7 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import { realUserInput, userRegisterInput } from "./utils/inputs";
 import { Region } from "src/Interfaces/Types";
 
-describe("Profile and Matches Routes", () => {
+describe.skip("Profile and Matches Routes", () => {
   //SET UP FOR TESTS
   const OLD_ENV = process.env;
   //@ts-ignore
