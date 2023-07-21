@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import getProfileData from "../utils/GetUserData";
 import { useParams } from "react-router-dom";
 import { ProfileResponse } from "../interfaces/Response";
+import Review from "../components/Review";
 // import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
@@ -92,6 +93,7 @@ const Profile = () => {
           display: "flex",
           gap: 10,
           alignItems: "center",
+          // justifyContent: "center",
           mb: "20px",
           py: "10px",
         }}
@@ -130,11 +132,13 @@ const Profile = () => {
           </Typography>
         </Box>
       </Container>
-      {/* container for rank, data, and match history */}
-      <Container sx={{ display: "flex", gap: 4 }}>
+      {/* container for rank, data, reviews, and match history */}
+      <Container maxWidth="xl" sx={{ display: "flex", gap: 4 }}>
         <Box
-          sx={{ width: "300px", height: "100vh", backgroundColor: "#0F141A" }}
-        ></Box>
+          sx={{ width: "400px", height: "100vh", backgroundColor: "#1B2733" }}
+        >
+          {id && <Review id={id} />}
+        </Box>
         <Box
           sx={{ width: "100%", height: "100vh", backgroundColor: "#0F141A" }}
         >
