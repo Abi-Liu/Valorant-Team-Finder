@@ -1,29 +1,28 @@
 import { Box, Button, Rating, TextField, Typography } from "@mui/material";
 import { useState, useEffect, ChangeEvent, FC, SyntheticEvent } from "react";
+import ReviewCard from "./ReviewCard";
 import axiosInstance from "../utils/axios";
 
 interface ReviewProps {
   id: string;
 }
-interface ReviewResponseData {
+export interface ReviewResponseData {
   _id: string;
   creatingUser: string;
   dislikes: [string];
   likes: [string];
+  ign: string;
+  profilePicture: string;
   message: string;
   rating: number;
   user: string;
 }
 
-const ReviewCard: FC<ReviewResponseData> = ({ reviewData }) => {
-  return <Box>{reviewData.creatingUser}</Box>;
-};
-
 const Review: FC<ReviewProps> = ({ id }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [message, setMessage] = useState("");
   const [reviews, setReviews] = useState<ReviewResponseData[]>([]);
-  console.log(reviews);
+
   useEffect(() => {
     let ignore = false;
     async function getReviews() {
@@ -99,9 +98,13 @@ const Review: FC<ReviewProps> = ({ id }) => {
           <Typography component={"span"}>Votes</Typography>
         </Box>
       </Box>
-      <Box>
+      <Box sx={{ my: "2rem" }}>
         {reviews.map((review) => (
-          <ReviewCard key={review._id} reviewData={review} />
+          <ReviewCard
+            key={review._id}
+            review={review}
+            setReviews={setReviews}
+          />
         ))}
       </Box>
       <Box
@@ -110,7 +113,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: 3,
+          gap: 2,
           mt: "10px",
         }}
       >

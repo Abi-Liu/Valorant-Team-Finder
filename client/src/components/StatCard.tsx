@@ -9,7 +9,11 @@ interface StatCardProps {
 const StatCard: FC<StatCardProps> = ({ name, value }) => {
   return (
     <Grid item xs={6} md={3}>
-      <Card elevation={20} sx={{ backgroundColor: "#263747" }}>
+      <Card
+        variant="outlined"
+        elevation={20}
+        sx={{ backgroundColor: "#263747" }}
+      >
         <CardContent>
           <Typography
             variant="h6"
