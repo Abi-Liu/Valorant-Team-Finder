@@ -1,29 +1,76 @@
 import { Box, Button, Rating, TextField, Typography } from "@mui/material";
-import { useState, useEffect, ChangeEvent, FC } from "react";
+import { useState, useEffect, ChangeEvent, FC, SyntheticEvent } from "react";
+import axiosInstance from "../utils/axios";
 
 interface ReviewProps {
   id: string;
 }
+interface ReviewResponseData {
+  _id: string;
+  creatingUser: string;
+  dislikes: [string];
+  likes: [string];
+  message: string;
+  rating: number;
+  user: string;
+}
 
 const Review: FC<ReviewProps> = ({ id }) => {
-  const [value, setValue] = useState<number | null>(null);
+  const [rating, setRating] = useState<number | null>(null);
   const [message, setMessage] = useState("");
-
+  const [reviews, setReviews] = useState<ReviewResponseData | null>(null);
+  console.log(reviews);
   useEffect(() => {
-    console.log("hi");
-  }, []);
+    let ignore = false;
+    async function getReviews() {
+      try {
+        const response = await axiosInstance.get(`/review/getReviews/${id}`);
+        if (response.data) {
+          if (!ignore) setReviews(response.data);
+        }
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+        throw new Error("failed to fetch reviews");
+      }
+    }
+
+    getReviews();
+
+    return () => {
+      ignore = true;
+    };
+  }, [id]);
 
   const handleMessageChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (event: SyntheticEvent) => {
+    event.preventDefault();
     // Handle submitting the message (e.g., send it to a backend server, etc.)
+    try {
+      const response = await axiosInstance.post(`/review/createReview/${id}`, {
+        message,
+        rating,
+      });
+      console.log(response);
+      if (response.data && !response.data.message) {
+        setReviews((prev) => ({
+          ...prev,
+          ...response.data,
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error("failed to create review");
+    }
     console.log("Message submitted:", message);
-    // Clear the message input after submitting
+    // Clear the message and rating input after submitting
     setMessage("");
+    setRating(null);
   };
-  console.log(value);
+  console.log(rating);
   return (
     <Box>
       <Box
@@ -62,14 +109,14 @@ const Review: FC<ReviewProps> = ({ id }) => {
         }}
       >
         <Rating
-          value={value}
+          value={rating}
           sx={{
             "& .MuiRating-iconEmpty": {
               color: "grey", //set outline color to grey
             },
           }}
           onChange={(event: React.SyntheticEvent, newValue) => {
-            setValue(newValue);
+            setRating(newValue);
           }}
         />
         <TextField
