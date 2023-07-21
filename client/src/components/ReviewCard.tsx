@@ -1,4 +1,4 @@
-import { FC, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { ReviewResponseData } from "./Review";
 import {
   Card,
@@ -7,7 +7,6 @@ import {
   Typography,
   Avatar,
   Divider,
-  Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
