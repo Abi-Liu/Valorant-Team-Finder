@@ -15,16 +15,21 @@ interface ReviewResponseData {
   user: string;
 }
 
+const ReviewCard: FC<ReviewResponseData> = ({ reviewData }) => {
+  return <Box>{reviewData.creatingUser}</Box>;
+};
+
 const Review: FC<ReviewProps> = ({ id }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [message, setMessage] = useState("");
-  const [reviews, setReviews] = useState<ReviewResponseData | null>(null);
-
+  const [reviews, setReviews] = useState<ReviewResponseData[]>([]);
+  console.log(reviews);
   useEffect(() => {
     let ignore = false;
     async function getReviews() {
       try {
         const response = await axiosInstance.get(`/review/getReviews/${id}`);
+        console.log(response);
         if (response.data) {
           if (!ignore) setReviews(response.data);
         }
@@ -55,10 +60,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
       });
 
       if (response.data && !response.data.message) {
-        setReviews((prev) => ({
-          ...prev,
-          ...response.data,
-        }));
+        setReviews((prev) => [...prev, response.data]);
       }
     } catch (error) {
       console.log(error);
@@ -96,6 +98,11 @@ const Review: FC<ReviewProps> = ({ id }) => {
           <Typography component={"span"}>Stars</Typography>
           <Typography component={"span"}>Votes</Typography>
         </Box>
+      </Box>
+      <Box>
+        {reviews.map((review) => (
+          <ReviewCard key={review._id} reviewData={review} />
+        ))}
       </Box>
       <Box
         sx={{
