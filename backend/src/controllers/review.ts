@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import Review from "../models/Review";
-import User from "../models/User";
 import { DatabaseUserInterface } from "src/Interfaces/DatabaseInterfaces";
 
 export default {
@@ -33,7 +32,7 @@ export default {
     try {
       const { reviewId } = req.params;
       await Review.findByIdAndDelete(reviewId);
-      res.status(200).json({ message: "post successfully deleted" });
+      res.status(200).json({ message: "review successfully deleted" });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Error when deleting review" });
@@ -111,8 +110,8 @@ export default {
   },
   getReviews: async (req: Request, res: Response) => {
     try {
-      const { reviewId } = req.params;
-      const reviews = await Review.find({ _id: reviewId });
+      const { userId } = req.params;
+      const reviews = await Review.find({ user: userId }).lean(); //get POJO for efficiency
       if (reviews) {
         res.status(200).json(reviews);
       } else {

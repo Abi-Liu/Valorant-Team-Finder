@@ -20,10 +20,6 @@ router.put(
   auth.ensureAuth,
   reviewController.dislike
 );
-router.get(
-  "/getReviews/:reviewId",
-  auth.ensureAuth,
-  reviewController.getReviews
-);
+router.get("/getReviews/:userId", auth.ensureAuth, reviewController.getReviews);
 
 export default router;
