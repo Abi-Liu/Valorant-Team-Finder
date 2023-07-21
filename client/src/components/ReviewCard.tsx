@@ -29,7 +29,19 @@ const ReviewCard = ({
 
   async function likeReview() {
     try {
-      const response = await axiosInstance(`/review/likeReview/${review._id}`);
+      const response = await axiosInstance.put(
+        `/review/likeReview/${review._id}`
+      );
+      if (response.data) {
+        setReviews((prev) => {
+          const index = prev.findIndex((review) => review._id === review._id);
+          return [
+            ...prev.slice(0, index),
+            response.data,
+            ...prev.slice(index + 1),
+          ];
+        });
+      }
     } catch (error) {
       console.log(error);
       throw new Error("failed to add like");
@@ -38,9 +50,19 @@ const ReviewCard = ({
 
   async function dislikeReview() {
     try {
-      const response = await axiosInstance(
+      const response = await axiosInstance.put(
         `/review/dislikeReview/${review._id}`
       );
+      if (response.data) {
+        setReviews((prev) => {
+          const index = prev.findIndex((review) => review._id === review._id);
+          return [
+            ...prev.slice(0, index),
+            response.data,
+            ...prev.slice(index + 1),
+          ];
+        });
+      }
     } catch (error) {
       console.log(error);
       throw new Error("failed to add dislike");
