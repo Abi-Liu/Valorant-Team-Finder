@@ -23,6 +23,15 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
   const kills = matchData.playerStats.kills;
   const deaths = matchData.playerStats.deaths;
   const kd = Math.round((kills / deaths) * 10) / 10;
+  let wonRounds = 0;
+  let lostRounds = 0;
+  if (matchData.team === "Blue") {
+    wonRounds = matchData.blueWon.rounds_won;
+    lostRounds = matchData.blueWon.rounds_lost;
+  } else {
+    wonRounds = matchData.redWon.rounds_won;
+    lostRounds = matchData.redWon.rounds_lost;
+  }
 
   return (
     <Grid
@@ -34,7 +43,14 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
         justifyContent: "space-between",
       }}
     >
-      <Box sx={{ display: "flex", gap: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 3,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Box>
           <Avatar
             src={matchData.image}
@@ -43,32 +59,85 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
           />
         </Box>
         <Box>
-          <Typography variant="body1">Competitive</Typography>
+          <Typography variant="body1" sx={{ color: "white" }}>
+            Competitive
+          </Typography>
         </Box>
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Avatar src={rankImage} alt="Rank Image" />
-          <Typography variant="caption">{rank}</Typography>
+          <Typography variant="caption" sx={{ color: "white" }}>
+            {rank}
+          </Typography>
+        </Box>
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+          <Typography
+            variant="body1"
+            sx={{ fontSize: "1.15rem", color: "#32cd32" }}
+          >
+            {wonRounds}
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ fontSize: "1.15rem", color: "white" }}
+          >
+            :
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ fontSize: "1.15rem", color: "#ED1C24" }}
+          >
+            {lostRounds}
+          </Typography>
         </Box>
       </Box>
-      <Box sx={{ display: "flex", gap: 3 }}>
+
+      <Box
+        sx={{
+          display: "flex",
+          gap: 3,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Box>
-          <Typography variant="caption">K/D/A</Typography>
-          <Typography variant="body1">
+          <Typography variant="caption" sx={{ color: "white" }}>
+            K/D/A
+          </Typography>
+          <Typography variant="body1" sx={{ color: "white" }}>
             {matchData.playerStats.kills}/{matchData.playerStats.deaths}/
             {matchData.playerStats.assists}
           </Typography>
         </Box>
         <Box>
-          <Typography variant="caption">K/D</Typography>
-          <Typography variant="body1">{kd}</Typography>
+          <Typography variant="caption" sx={{ color: "white" }}>
+            K/D
+          </Typography>
+          <Typography variant="body1" sx={{ color: "white" }}>
+            {kd}
+          </Typography>
         </Box>
         <Box>
-          <Typography variant="caption">HS%</Typography>
-          <Typography variant="body1">{headshotPercent}</Typography>
+          <Typography variant="caption" sx={{ color: "white" }}>
+            HS%
+          </Typography>
+          <Typography variant="body1" sx={{ color: "white" }}>
+            {headshotPercent}
+          </Typography>
         </Box>
         <Box>
-          <Typography variant="caption">ADR</Typography>
-          <Typography variant="body1">{Math.round(matchData.adr)}</Typography>
+          <Typography variant="caption" sx={{ color: "white" }}>
+            ADR
+          </Typography>
+          <Typography variant="body1" sx={{ color: "white" }}>
+            {Math.round(matchData.adr)}
+          </Typography>
         </Box>
       </Box>
     </Grid>
