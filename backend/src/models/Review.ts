@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const ReviewSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  creatingUser: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   message: { type: String },
   rating: { type: Number },
   likes: { type: [String], default: [] },

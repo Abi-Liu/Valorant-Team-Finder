@@ -15,6 +15,11 @@ router.delete(
   reviewController.deleteReview
 );
 router.put("/likeReview/:reviewId", auth.ensureAuth, reviewController.like);
+router.put(
+  "/dislikeReview/:reviewId",
+  auth.ensureAuth,
+  reviewController.dislike
+);
 router.get(
   "/getReviews/:reviewId",
   auth.ensureAuth,
