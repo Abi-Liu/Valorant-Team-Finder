@@ -39,110 +39,139 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
       sx={{
         backgroundColor: "#1B2733",
         display: "flex",
-        justifyContent: "space-between",
-        my: "2px",
-        // justifyContent: "space-between",
+        justifyContent: "space-around",
+        my: "3px",
+        alignItems: "center",
+        border: "1px solid #141414",
       }}
     >
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           gap: 4,
           justifyContent: "center",
           alignItems: "center",
-          pl: "1rem",
+          px: "2rem",
         }}
-      >
-        <Box>
-          <Avatar
-            src={matchData.image}
-            alt="Agent icon"
-            sx={{ width: "48px", height: "48px" }}
-          />
-        </Box>
-        <Box>
-          <Typography variant="body1" sx={{ color: "white" }}>
-            Competitive
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Avatar src={rankImage} alt="Rank Image" />
-          <Typography variant="caption" sx={{ color: "white" }}>
-            {rank}
-          </Typography>
-        </Box>
-        <Box sx={{ display: "flex", gap: 0.5, alignItems: "center" }}>
-          <Typography
-            variant="body1"
-            sx={{ fontSize: "1.15rem", color: "#32cd32" }}
-          >
-            {wonRounds}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontSize: "1.15rem", color: "white" }}
-          >
-            :
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontSize: "1.15rem", color: "#ED1C24" }}
-          >
-            {lostRounds}
-          </Typography>
-        </Box>
+      > */}
+      <Box>
+        <Avatar
+          src={matchData.image}
+          alt="Agent icon"
+          sx={{ width: "48px", height: "48px" }}
+        />
       </Box>
-
+      <Box>
+        <Typography variant="body1" sx={{ color: "white" }}>
+          Competitive
+        </Typography>
+      </Box>
       <Box
         sx={{
           display: "flex",
-          gap: 3,
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          pr: "1rem",
         }}
       >
-        <Box>
-          <Typography variant="caption" sx={{ color: "#dddddd" }}>
-            K/D/A
-          </Typography>
-          <Typography variant="body1" sx={{ color: "white" }}>
-            {matchData.playerStats.kills}/{matchData.playerStats.deaths}/
-            {matchData.playerStats.assists}
-          </Typography>
-        </Box>
-        <Box>
-          <Typography variant="caption" sx={{ color: "#dddddd" }}>
-            K/D
-          </Typography>
-          <Typography variant="body1" sx={{ color: "white" }}>
-            {kd}
-          </Typography>
-        </Box>
-        <Box>
-          <Typography variant="caption" sx={{ color: "#dddddd" }}>
-            HS%
-          </Typography>
-          <Typography variant="body1" sx={{ color: "white" }}>
-            {headshotPercent}
-          </Typography>
-        </Box>
-        <Box>
-          <Typography variant="caption" sx={{ color: "#dddddd" }}>
-            ADR
-          </Typography>
-          <Typography variant="body1" sx={{ color: "white" }}>
-            {Math.round(matchData.adr)}
-          </Typography>
-        </Box>
+        <Avatar src={rankImage} alt="Rank Image" />
+        <Typography variant="caption" sx={{ color: "white" }}>
+          {rank}
+        </Typography>
       </Box>
+      <Box sx={{ display: "flex", gap: 0.5, alignItems: "center" }}>
+        <Typography
+          variant="body1"
+          sx={{ fontSize: "1.15rem", color: "#32cd32" }}
+        >
+          {wonRounds}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ fontSize: "1.15rem", color: "white" }}
+        >
+          :
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ fontSize: "1.15rem", color: "#ED1C24" }}
+        >
+          {lostRounds}
+        </Typography>
+      </Box>
+      {/* </Box> */}
+
+      {/* <Box
+        sx={{
+          display: "flex",
+          gap: 5,
+          justifyContent: "center",
+          alignItems: "center",
+          px: "2rem",
+        }}
+      > */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "flex-end",
+        }}
+      >
+        <Typography variant="caption" sx={{ color: "#dddddd" }}>
+          K/D/A
+        </Typography>
+        <Typography variant="body1" sx={{ color: "white" }}>
+          {matchData.playerStats.kills} / {matchData.playerStats.deaths} /{" "}
+          {matchData.playerStats.assists}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "flex-end",
+        }}
+      >
+        <Typography variant="caption" sx={{ color: "#dddddd" }}>
+          K/D
+        </Typography>
+        <Typography variant="body1" sx={{ color: "white" }}>
+          {kd}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "flex-end",
+        }}
+      >
+        <Typography variant="caption" sx={{ color: "#dddddd" }}>
+          HS%
+        </Typography>
+        <Typography variant="body1" sx={{ color: "white" }}>
+          {headshotPercent}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "flex-end",
+        }}
+      >
+        <Typography variant="caption" sx={{ color: "#dddddd" }}>
+          ADR
+        </Typography>
+        <Typography variant="body1" sx={{ color: "white" }}>
+          {Math.round(matchData.adr)}
+        </Typography>
+      </Box>
+      {/* </Box> */}
     </Grid>
   );
 };
