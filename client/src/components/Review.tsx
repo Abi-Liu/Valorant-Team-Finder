@@ -1,4 +1,11 @@
-import { Box, Button, Rating, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Rating,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState, useEffect, ChangeEvent, FC, SyntheticEvent } from "react";
 import ReviewCard from "./ReviewCard";
 import axiosInstance from "../utils/axios";
@@ -149,12 +156,24 @@ const Review: FC<ReviewProps> = ({ id }) => {
           </Typography>
         </Box>
       </Box>
+
+      <Divider
+        variant="middle"
+        sx={{
+          backgroundColor: "gray", // Change this to your desired color
+          height: 2, // Adjust the height as needed
+          mt: 2, // Add margin at the top
+          mb: 2, // Add margin at the bottom
+        }}
+      />
+
       <Box
         sx={{
           my: "2rem",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          pb: "3rem",
         }}
       >
         <Typography variant="h5" sx={{ color: "gray", mb: "1rem" }}>
@@ -170,6 +189,17 @@ const Review: FC<ReviewProps> = ({ id }) => {
           />
         ))}
       </Box>
+
+      <Divider
+        variant="middle"
+        sx={{
+          backgroundColor: "gray", // Change this to your desired color
+          height: 2, // Adjust the height as needed
+          mt: 2, // Add margin at the top
+          mb: 2, // Add margin at the bottom
+        }}
+      />
+
       <Box
         sx={{
           display: "flex",

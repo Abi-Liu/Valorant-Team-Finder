@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "./utils/axios";
 import Profile from "./pages/Profile";
 import getProfileData from "./utils/GetUserData";
+import Search from "./pages/Search";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
@@ -117,6 +118,10 @@ function App() {
           <Route
             path="/profile/:id"
             element={loggedIn ? <Profile /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/search"
+            element={loggedIn ? <Search /> : <Navigate to="/login" />}
           />
         </Routes>
       </ThemeProvider>

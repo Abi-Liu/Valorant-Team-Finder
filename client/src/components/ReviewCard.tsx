@@ -150,7 +150,7 @@ const ReviewCard = ({
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Rating value={review.rating} />
+          <Rating value={review.rating} readOnly />
         </Box>
       </CardContent>
       {review.creatingUser === user._id && (
