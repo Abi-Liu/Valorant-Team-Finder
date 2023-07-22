@@ -10,7 +10,7 @@ router.post(
   reviewController.createReview
 );
 router.delete(
-  "/deleteReview/:reviewid",
+  "/deleteReview/:reviewId",
   auth.ensureAuth,
   reviewController.deleteReview
 );
