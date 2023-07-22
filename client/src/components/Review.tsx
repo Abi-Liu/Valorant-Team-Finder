@@ -1,4 +1,11 @@
-import { Box, Button, Rating, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Rating,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState, useEffect, ChangeEvent, FC, SyntheticEvent } from "react";
 import ReviewCard from "./ReviewCard";
 import axiosInstance from "../utils/axios";
@@ -30,13 +37,10 @@ const Review: FC<ReviewProps> = ({ id }) => {
     async function getReviews() {
       try {
         const response = await axiosInstance.get(`/review/getReviews/${id}`);
-        console.log(response);
+
         if (response.data) {
           if (!ignore) {
             setReviews(response.data);
-            let total = 0;
-            reviews.forEach((review) => (total += review.rating));
-            setTotalStars(total);
           }
         }
       } catch (error) {
@@ -51,6 +55,23 @@ const Review: FC<ReviewProps> = ({ id }) => {
       ignore = true;
     };
   }, [id]);
+
+  useEffect(() => {
+    let ignore = false;
+    function getTotalStars() {
+      if (!ignore) {
+        let total = 0;
+        reviews.forEach((review) => (total += review.rating));
+        setTotalStars(total);
+      }
+    }
+
+    getTotalStars();
+
+    return () => {
+      ignore = true;
+    };
+  }, [id, reviews]);
 
   const handleMessageChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
@@ -68,20 +89,21 @@ const Review: FC<ReviewProps> = ({ id }) => {
             rating,
           }
         );
-        if (response.data && !response.data.message) {
+        if (response.data && response.status === 200) {
           setReviews((prev) => [...prev, response.data]);
           setTotalStars((prev) => prev + rating);
         }
       } else {
-        setError("Please select a rating");
-        throw new Error("Please select a rating");
+        setError("Please give a rating.");
+        console.log(error);
+        throw new Error("Please give a rating.");
       }
     } catch (error) {
-      setError("failed to create review");
+      setError("Failed to create review");
       console.log(error);
-      throw new Error("failed to create review");
+      throw new Error("Failed to create review");
     }
-    console.log("Message submitted:", message);
+
     // Clear the message and rating input after submitting
     setMessage("");
     setRating(null);
@@ -89,6 +111,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
 
   return (
     <Box>
+      {error ? <Alert severity="error">{error}</Alert> : ""}
       <Box
         sx={{
           display: "flex",
@@ -103,7 +126,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
         <Rating
           name="read-only"
           precision={0.5}
-          value={5}
+          value={Math.round(totalStars * 10) / 10}
           readOnly
           sx={{
             "& .MuiRating-iconEmpty": {
@@ -136,6 +159,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
           <ReviewCard
             key={review._id}
             review={review}
+            setTotalStars={setTotalStars}
             setReviews={setReviews}
           />
         ))}

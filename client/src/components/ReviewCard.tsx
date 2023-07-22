@@ -7,9 +7,8 @@ import {
   Typography,
   Avatar,
   Divider,
-  CardActions,
-  Button,
   Rating,
+  Tooltip,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -20,9 +19,11 @@ import { useUserContext } from "../contexts/UserContext";
 const ReviewCard = ({
   review,
   setReviews,
+  setTotalStars,
 }: {
   review: ReviewResponseData;
   setReviews: Dispatch<SetStateAction<ReviewResponseData[]>>;
+  setTotalStars: Dispatch<SetStateAction<number>>;
 }) => {
   const { user } = useUserContext();
   const navigate = useNavigate();
@@ -78,9 +79,9 @@ const ReviewCard = ({
       const response = await axiosInstance.delete(
         `/review/deleteReview/${review._id}`
       );
-      console.log(response);
 
       if (response.data) {
+        setTotalStars((prev) => (prev -= review.rating));
         setReviews((prev) => {
           const index = prev.findIndex((review) => review._id === review._id);
           return [...prev.slice(0, index), ...prev.slice(index + 1)];
@@ -151,7 +152,12 @@ const ReviewCard = ({
         </Box>
         {review.creatingUser === user._id && (
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Delete sx={{ color: "black" }} onClick={deleteReview} />
+            <Tooltip title="Delete">
+              <Delete
+                sx={{ color: "black", cursor: "pointer" }}
+                onClick={deleteReview}
+              />
+            </Tooltip>
           </Box>
         )}
       </CardContent>

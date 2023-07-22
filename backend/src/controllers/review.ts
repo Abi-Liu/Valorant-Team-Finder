@@ -27,7 +27,7 @@ export default {
       } else {
         console.log("You have already made a review for this player");
         res
-          .status(200)
+          .status(400)
           .json({ message: "You have already made a review for this player" });
       }
     } catch (error) {
