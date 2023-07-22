@@ -20,10 +20,12 @@ const ReviewCard = ({
   review,
   setReviews,
   setTotalStars,
+  setError,
 }: {
   review: ReviewResponseData;
   setReviews: Dispatch<SetStateAction<ReviewResponseData[]>>;
   setTotalStars: Dispatch<SetStateAction<number>>;
+  setError: Dispatch<SetStateAction<string>>;
 }) => {
   const { user } = useUserContext();
   const navigate = useNavigate();
@@ -47,9 +49,9 @@ const ReviewCard = ({
           ];
         });
       }
-    } catch (error) {
-      console.log(error);
-      throw new Error("failed to add like");
+    } catch (error: any) {
+      setError(error.response.data.message);
+      throw new Error(error.response.data.message);
     }
   }
 
@@ -68,9 +70,9 @@ const ReviewCard = ({
           ];
         });
       }
-    } catch (error) {
-      console.log(error);
-      throw new Error("failed to add dislike");
+    } catch (error: any) {
+      setError(error.response.data.message);
+      throw new Error(error.response.data.message);
     }
   }
 
@@ -87,9 +89,9 @@ const ReviewCard = ({
           return [...prev.slice(0, index), ...prev.slice(index + 1)];
         });
       }
-    } catch (error) {
-      console.log(error);
-      throw new Error("failed to delete");
+    } catch (error: any) {
+      setError(error.response.data.message);
+      throw new Error(error.response.data.message);
     }
   }
 

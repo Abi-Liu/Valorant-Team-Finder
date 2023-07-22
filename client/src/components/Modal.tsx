@@ -22,8 +22,10 @@ const style = {
 
 export default function BasicModal({
   setTeams,
+  setError,
 }: {
   setTeams: Dispatch<SetStateAction<TeamInterface[]>>;
+  setError: Dispatch<SetStateAction<string>>;
 }) {
   const { user, setUser } = useUserContext();
   const [teamName, setTeamName] = React.useState("");
@@ -46,8 +48,9 @@ export default function BasicModal({
         team: team.data._id,
       }));
       handleClose();
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      setError(error.response.data.message);
+      throw new Error(error.response.data.message);
     }
   }
 

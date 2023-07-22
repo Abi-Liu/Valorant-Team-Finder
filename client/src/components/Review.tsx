@@ -166,6 +166,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
             review={review}
             setTotalStars={setTotalStars}
             setReviews={setReviews}
+            setError={setError}
           />
         ))}
       </Box>

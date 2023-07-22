@@ -1,4 +1,4 @@
-import { Alert, Button, IconButton } from "@mui/material";
+import { Alert, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { FC, useState, useEffect } from "react";
 
@@ -21,7 +21,7 @@ const CustomAlert: FC<Props> = ({ severity, message, duration, onRender }) => {
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [duration]);
+  }, [duration, onRender]);
 
   const handleClose = () => {
     setOpen(false);

@@ -49,7 +49,7 @@ const Navbar = () => {
       rankImage: "",
       puuid: "",
       region: "",
-      matches: [{}],
+      matches: [],
     });
     setLoggedIn(false);
     setAnchorElUser(null);
