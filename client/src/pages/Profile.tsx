@@ -135,7 +135,12 @@ const Profile = () => {
       {/* container for rank, data, reviews, and match history */}
       <Container maxWidth="xl" sx={{ display: "flex", gap: 4 }}>
         <Box
-          sx={{ width: "400px", height: "100vh", backgroundColor: "#1B2733" }}
+          sx={{
+            width: "400px",
+            height: "100%",
+            pb: "2rem",
+            backgroundColor: "#1B2733",
+          }}
         >
           {id && <Review id={id} />}
         </Box>

@@ -24,7 +24,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
   const [reviews, setReviews] = useState<ReviewResponseData[]>([]);
   const [totalStars, setTotalStars] = useState(0);
   const [error, setError] = useState("");
-
+  console.log(reviews);
   useEffect(() => {
     let ignore = false;
     async function getReviews() {
@@ -96,6 +96,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
           alignItems: "center",
           flexDirection: "column",
           py: "1rem",
+          pt: "2rem",
         }}
       >
         <Rating sx={{ display: "none" }} />
@@ -120,7 +121,17 @@ const Review: FC<ReviewProps> = ({ id }) => {
           </Typography>
         </Box>
       </Box>
-      <Box sx={{ my: "2rem" }}>
+      <Box
+        sx={{
+          my: "2rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h5" sx={{ color: "gray", mb: "1rem" }}>
+          Reviews
+        </Typography>
         {reviews.map((review) => (
           <ReviewCard
             key={review._id}
@@ -136,9 +147,12 @@ const Review: FC<ReviewProps> = ({ id }) => {
           alignItems: "center",
           justifyContent: "center",
           gap: 2,
-          mt: "10px",
+          mt: "50px",
         }}
       >
+        <Typography variant="h5" sx={{ color: "gray", mb: "1rem" }}>
+          Leave a Review
+        </Typography>
         <Rating
           value={rating}
           sx={{

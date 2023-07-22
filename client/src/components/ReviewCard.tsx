@@ -7,10 +7,13 @@ import {
   Typography,
   Avatar,
   Divider,
+  CardActions,
+  Button,
+  Rating,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import { ThumbUpOffAlt, ThumbDownOffAlt } from "@mui/icons-material";
+import { ThumbUpOffAlt, ThumbDownOffAlt, Delete } from "@mui/icons-material";
 import axiosInstance from "../utils/axios";
 
 const ReviewCard = ({
@@ -68,9 +71,28 @@ const ReviewCard = ({
     }
   }
 
+  async function deleteReview() {
+    try {
+      const response = await axiosInstance.delete(
+        `/review/deleteReview/${review._id}`
+      );
+      console.log(response);
+
+      if (response.data) {
+        setReviews((prev) => {
+          const index = prev.findIndex((review) => review._id === review._id);
+          return [...prev.slice(0, index), ...prev.slice(index + 1)];
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error("failed to delete");
+    }
+  }
+
   return (
     <Card variant="outlined">
-      <CardContent>
+      <CardContent sx={{ pb: "16px" }}>
         <Box sx={{ height: "100px", overflowY: "auto" }}>
           <Typography variant="body2">{review.message}</Typography>
         </Box>
@@ -121,6 +143,12 @@ const ReviewCard = ({
               <Typography variant="caption">{review.likes.length}</Typography>
             </Box>
           </Box>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Rating value={review.rating} />
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Delete sx={{ color: "black" }} onClick={deleteReview} />
         </Box>
       </CardContent>
     </Card>

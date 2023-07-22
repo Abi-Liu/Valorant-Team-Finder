@@ -38,7 +38,8 @@ export default {
   deleteReview: async (req: Request, res: Response) => {
     try {
       const { reviewId } = req.params;
-      await Review.findByIdAndDelete(reviewId);
+      const response = await Review.findByIdAndDelete(reviewId);
+      console.log(response);
       res.status(200).json({ message: "review successfully deleted" });
     } catch (error) {
       console.error(error);
