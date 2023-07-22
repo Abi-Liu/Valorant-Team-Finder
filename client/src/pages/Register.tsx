@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import axiosInstance from "../utils/axios";
 import { useUserContext } from "../contexts/UserContext";
-import { Alert, Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomAlert from "../components/CustomAlert";
 
@@ -42,9 +42,9 @@ const Register = () => {
         team: user.data.team,
         _id: user.data._id,
       }));
-    } catch (err) {
-      setError("Passwords do not match");
-      throw new Error("Passwords do not match");
+    } catch (err: any) {
+      setError(err.response.data.message);
+      throw new Error(err.response.data.message);
     }
   }
 
@@ -83,7 +83,7 @@ const Register = () => {
           <CustomAlert
             severity="error"
             duration={5000}
-            message="Passwords do not match"
+            message={error}
             onRender={handleRender}
           />
         ) : (

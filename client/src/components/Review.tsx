@@ -1,14 +1,8 @@
-import {
-  Alert,
-  Box,
-  Button,
-  Rating,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Rating, TextField, Typography } from "@mui/material";
 import { useState, useEffect, ChangeEvent, FC, SyntheticEvent } from "react";
 import ReviewCard from "./ReviewCard";
 import axiosInstance from "../utils/axios";
+import CustomAlert from "./CustomAlert";
 
 interface ReviewProps {
   id: string;
@@ -77,6 +71,10 @@ const Review: FC<ReviewProps> = ({ id }) => {
     setMessage(event.target.value);
   };
 
+  function handleRender() {
+    setError("");
+  }
+
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
     // Handle submitting the message (e.g., send it to a backend server, etc.)
@@ -97,9 +95,9 @@ const Review: FC<ReviewProps> = ({ id }) => {
         setError("Please give a rating.");
         throw new Error("Please give a rating.");
       }
-    } catch (error) {
-      setError("Failed to create review");
-      throw new Error("Failed to create review");
+    } catch (error: any) {
+      setError(error.response.data.message);
+      throw new Error(error.response.data.message);
     }
 
     // Clear the message and rating input after submitting
@@ -109,7 +107,16 @@ const Review: FC<ReviewProps> = ({ id }) => {
 
   return (
     <Box>
-      {error ? <Alert severity="error">{error}</Alert> : ""}
+      {error ? (
+        <CustomAlert
+          severity="error"
+          duration={5000}
+          message={error}
+          onRender={handleRender}
+        />
+      ) : (
+        ""
+      )}
       <Box
         sx={{
           display: "flex",

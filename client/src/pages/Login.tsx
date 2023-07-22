@@ -1,8 +1,9 @@
 import axiosInstance from "../utils/axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useUserContext } from "../contexts/UserContext";
-import { Alert, Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import CustomAlert from "../components/CustomAlert";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -34,15 +35,18 @@ const Login = () => {
         team: user.data.team,
         _id: user.data._id,
       }));
-    } catch (error) {
-      console.log(error);
-      setError("Invalid Username/Password");
-      throw new Error("Couldn't log in");
+    } catch (error: any) {
+      setError(error.response.data.message);
+      throw new Error(error.response.data.message);
     }
     setFormData({ email: "", password: "" });
   }
 
   const navigate = useNavigate();
+
+  function handleRender() {
+    setError("");
+  }
 
   return (
     <Box
@@ -73,7 +77,16 @@ const Login = () => {
           mt: "20px",
         }}
       >
-        {error ? <Alert severity="error">{error}</Alert> : ""}
+        {error ? (
+          <CustomAlert
+            severity="error"
+            duration={5000}
+            message={error}
+            onRender={handleRender}
+          />
+        ) : (
+          ""
+        )}
         <Typography
           variant="h6"
           sx={{ fontFamily: "Poppins", color: "black", mt: "1rem" }}

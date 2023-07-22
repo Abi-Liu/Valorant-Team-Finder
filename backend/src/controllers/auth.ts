@@ -11,12 +11,16 @@ export default {
     try {
       const { password, ign, confirmPassword } = req.body;
       let { email } = req.body;
-      if (
-        !validator.isEmail(email) ||
-        !validator.isLength(password, { min: 6 }) ||
-        password !== confirmPassword
-      ) {
-        return res.status(400).json({ message: "Invalid Credentials" });
+      if (!validator.isEmail(email)) {
+        return res.status(400).json({ message: "Please enter a valid email" });
+      }
+      if (!validator.isLength(password, { min: 6 })) {
+        return res
+          .status(400)
+          .json({ message: "Password must be at least 6 characters" });
+      }
+      if (password !== confirmPassword) {
+        return res.status(400).json({ message: "Passwords do not match" });
       }
 
       email = validator.normalizeEmail(email, {
@@ -27,7 +31,7 @@ export default {
         $or: [{ email: email }, { ign: ign }],
       });
       if (user) {
-        return res.status(400).json({ message: "User already exists" });
+        return res.status(400).send({ message: "User already exists" });
       }
       if (!user) {
         const hashedPassword = await bcrypt.hash(password, 10);
