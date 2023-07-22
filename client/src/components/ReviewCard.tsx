@@ -12,7 +12,13 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import { ThumbUpOffAlt, ThumbDownOffAlt, Delete } from "@mui/icons-material";
+import {
+  ThumbUpOffAlt,
+  ThumbDownOffAlt,
+  Delete,
+  ThumbDownAlt,
+  ThumbUpAlt,
+} from "@mui/icons-material";
 import axiosInstance from "../utils/axios";
 import { useUserContext } from "../contexts/UserContext";
 
@@ -137,14 +143,38 @@ const ReviewCard = ({
               <Typography variant="caption">
                 {review.dislikes.length}
               </Typography>
-              <ThumbDownOffAlt
-                sx={{ fontSize: "24px", px: "2.5px", cursor: "pointer" }}
-                onClick={dislikeReview}
-              />
-              <ThumbUpOffAlt
-                sx={{ fontSize: "24px", px: "2.5px", cursor: "pointer" }}
-                onClick={likeReview}
-              />
+              {!review.dislikes.includes(user._id) ? (
+                <ThumbDownOffAlt
+                  sx={{ fontSize: "24px", px: "2.5px", cursor: "pointer" }}
+                  onClick={dislikeReview}
+                />
+              ) : (
+                <ThumbDownAlt
+                  sx={{
+                    fontSize: "24px",
+                    px: "2.5px",
+                    cursor: "pointer",
+                    color: "#FF4655",
+                  }}
+                  onClick={dislikeReview}
+                />
+              )}
+              {!review.likes.includes(user._id) ? (
+                <ThumbUpOffAlt
+                  sx={{ fontSize: "24px", px: "2.5px", cursor: "pointer" }}
+                  onClick={likeReview}
+                />
+              ) : (
+                <ThumbUpAlt
+                  sx={{
+                    fontSize: "24px",
+                    px: "2.5px",
+                    cursor: "pointer",
+                    color: "#00579C",
+                  }}
+                  onClick={likeReview}
+                />
+              )}
               <Typography variant="caption">{review.likes.length}</Typography>
             </Box>
           </Box>
