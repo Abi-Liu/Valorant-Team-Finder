@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useState } from "react";
 import axiosInstance from "../utils/axios";
 import { useUserContext } from "../contexts/UserContext";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import CustomAlert from "../components/CustomAlert";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,13 @@ const Register = () => {
     confirmPassword: "",
   });
 
+  const [error, setError] = useState("");
+
   const { setLoggedIn, setUser } = useUserContext();
+
+  function handleRender() {
+    setError("");
+  }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value, id } = event.target;
@@ -36,7 +43,8 @@ const Register = () => {
         _id: user.data._id,
       }));
     } catch (err) {
-      console.error(err);
+      setError("Passwords do not match");
+      throw new Error("Passwords do not match");
     }
   }
 
@@ -71,6 +79,16 @@ const Register = () => {
           mt: "20px",
         }}
       >
+        {error ? (
+          <CustomAlert
+            severity="error"
+            duration={5000}
+            message="Passwords do not match"
+            onRender={handleRender}
+          />
+        ) : (
+          ""
+        )}
         <Typography
           variant="h6"
           sx={{ fontFamily: "Poppins", color: "black", my: "1rem" }}

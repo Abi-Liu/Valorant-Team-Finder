@@ -1,7 +1,7 @@
 import axiosInstance from "../utils/axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useUserContext } from "../contexts/UserContext";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -9,6 +9,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
   const { setUser, setLoggedIn } = useUserContext();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -35,8 +36,10 @@ const Login = () => {
       }));
     } catch (error) {
       console.log(error);
+      setError("Invalid Username/Password");
       throw new Error("Couldn't log in");
     }
+    setFormData({ email: "", password: "" });
   }
 
   const navigate = useNavigate();
@@ -70,6 +73,7 @@ const Login = () => {
           mt: "20px",
         }}
       >
+        {error ? <Alert severity="error">{error}</Alert> : ""}
         <Typography
           variant="h6"
           sx={{ fontFamily: "Poppins", color: "black", mt: "1rem" }}

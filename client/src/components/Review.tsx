@@ -95,12 +95,10 @@ const Review: FC<ReviewProps> = ({ id }) => {
         }
       } else {
         setError("Please give a rating.");
-        console.log(error);
         throw new Error("Please give a rating.");
       }
     } catch (error) {
       setError("Failed to create review");
-      console.log(error);
       throw new Error("Failed to create review");
     }
 

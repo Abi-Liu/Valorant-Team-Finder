@@ -150,17 +150,17 @@ const ReviewCard = ({
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Rating value={review.rating} />
         </Box>
-        {review.creatingUser === user._id && (
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Tooltip title="Delete">
-              <Delete
-                sx={{ color: "black", cursor: "pointer" }}
-                onClick={deleteReview}
-              />
-            </Tooltip>
-          </Box>
-        )}
       </CardContent>
+      {review.creatingUser === user._id && (
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Tooltip title="Delete">
+            <Delete
+              sx={{ color: "black", cursor: "pointer" }}
+              onClick={deleteReview}
+            />
+          </Tooltip>
+        </Box>
+      )}
     </Card>
   );
 };

@@ -152,7 +152,7 @@ const Profile = () => {
               <StatCard key={stat.name} name={stat.name} value={stat.value} />
             ))}
           </Grid>
-          <Grid spacing={2}>
+          <Grid container>
             {matches.map((match) => (
               <MatchCard
                 key={match._id}
