@@ -24,7 +24,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
   const [reviews, setReviews] = useState<ReviewResponseData[]>([]);
   const [totalStars, setTotalStars] = useState(0);
   const [error, setError] = useState("");
-  console.log(reviews);
+
   useEffect(() => {
     let ignore = false;
     async function getReviews() {

@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ThumbUpOffAlt, ThumbDownOffAlt, Delete } from "@mui/icons-material";
 import axiosInstance from "../utils/axios";
+import { useUserContext } from "../contexts/UserContext";
 
 const ReviewCard = ({
   review,
@@ -23,6 +24,7 @@ const ReviewCard = ({
   review: ReviewResponseData;
   setReviews: Dispatch<SetStateAction<ReviewResponseData[]>>;
 }) => {
+  const { user } = useUserContext();
   const navigate = useNavigate();
 
   function goToProfile() {
@@ -147,9 +149,11 @@ const ReviewCard = ({
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Rating value={review.rating} />
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Delete sx={{ color: "black" }} onClick={deleteReview} />
-        </Box>
+        {review.creatingUser === user._id && (
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Delete sx={{ color: "black" }} onClick={deleteReview} />
+          </Box>
+        )}
       </CardContent>
     </Card>
   );
