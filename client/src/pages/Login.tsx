@@ -15,12 +15,10 @@ const Login = () => {
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value, id } = event.target;
-    if (value && id) {
-      setFormData((prev) => ({
-        ...prev,
-        [id]: value,
-      }));
-    }
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
