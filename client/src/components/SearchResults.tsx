@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import React, { FC } from "react";
+import { Box, ListItem, ListItemText } from "@mui/material";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoRed from "../assets/LogoRed.svg";
 interface SearchResultsProps {
@@ -10,15 +10,10 @@ interface SearchResultsProps {
 const SearchResults: FC<SearchResultsProps> = ({ ign, _id }) => {
   const navigate = useNavigate();
   return (
-    <Box
-      onClick={() => navigate(`/profile/${_id}`)}
-      sx={{ cursor: "pointer", display: "flex" }}
-    >
+    <ListItem button onClick={() => navigate(`/profile/${_id}`)}>
       <Box component="img" src={LogoRed} sx={{ height: "30px" }}></Box>
-      <Box>
-        <Typography>{ign}</Typography>
-      </Box>
-    </Box>
+      <ListItemText primary={ign} />
+    </ListItem>
   );
 };
 

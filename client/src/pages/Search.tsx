@@ -2,13 +2,12 @@ import {
   Box,
   Divider,
   IconButton,
-  InputAdornment,
   InputBase,
   List,
   ListItem,
   ListItemText,
   Paper,
-  TextField,
+  Typography,
 } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -25,16 +24,6 @@ interface playersInterface {
 const Search = () => {
   const [searchTerm, setsearchTerm] = useState("");
   const [players, setPlayersData] = useState<playersInterface[] | []>([]);
-
-  async function searchUsers() {
-    try {
-      const response = await axiosInstance.get(`/search/${searchTerm}`);
-      console.log(response);
-      setPlayersData(response.data);
-    } catch (error: any) {
-      throw new Error(error.response.data.message);
-    }
-  }
 
   useEffect(() => {
     async function searchUsers() {
@@ -67,8 +56,12 @@ const Search = () => {
         borderRadius: "4px",
         pt: "4rem",
         bgcolor: "#0F141A",
+        gap: 3,
       }}
     >
+      <Typography variant="h4" sx={{ color: "White" }}>
+        Find Players
+      </Typography>
       <Paper component="form" sx={{ width: "40%" }}>
         <Box display="flex" alignItems="center" p={1}>
           <IconButton disabled>
@@ -83,12 +76,20 @@ const Search = () => {
         </Box>
         <Divider />
         <List>
-          {players.map((player) => (
-            <ListItem key={player._id} button>
+          {players.length > 0 ? (
+            players.map((player) => (
+              <SearchResults
+                key={player._id}
+                ign={player.ign}
+                _id={player._id}
+              />
+            ))
+          ) : (
+            <ListItem button>
               <Box component="img" src={LogoRed} sx={{ height: "30px" }}></Box>
-              <ListItemText primary={player.ign} />
+              <ListItemText primary={"No user found"} />
             </ListItem>
-          ))}
+          )}
         </List>
       </Paper>
     </Box>
