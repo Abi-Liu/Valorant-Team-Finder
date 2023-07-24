@@ -79,7 +79,7 @@ const Home = () => {
             height: "40rem",
             backgroundImage: `url(${Jett})`,
             backgroundPosition: { md: "center" },
-            backgroundPositionX: { xs: "", md: "center" },
+            backgroundPositionX: { xs: "unset", md: "center" },
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             "::before": {
@@ -96,12 +96,15 @@ const Home = () => {
         >
           <Box
             sx={{
-              width: "40%",
+              width: { xs: "90%", md: "40%" },
               ml: "auto",
               py: "8rem",
-              mr: "2rem",
+              pb: { xs: "2rem", md: "8rem" },
+              mr: { xs: "auto", md: "2rem" },
               position: "relative", // Add this to make sure the text is on top of the overlay
               zIndex: 2, // Add this to make sure the text is on top of the overlay
+              display: { xs: "flex", md: "block" },
+              flexDirection: { xs: "column" },
             }}
           >
             <Typography
@@ -110,17 +113,18 @@ const Home = () => {
                 color: "white",
                 fontFamily: "Tungsten",
                 fontWeight: "bold",
-                fontSize: "5rem",
+                fontSize: { xs: "3rem", md: "5rem" },
               }}
             >
               Find Your Dream Team
             </Typography>
             <Typography
-              variant="body1"
+              variant="body2"
               sx={{
                 color: "white",
                 fontFamily: "Poppins",
                 fontWeight: "400",
+                fontSize: "1rem",
               }}
             >
               Join a vast network of like-minded gamers, who are ready to take
