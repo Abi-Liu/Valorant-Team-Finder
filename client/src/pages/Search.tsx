@@ -1,34 +1,35 @@
 import { Box, InputAdornment, TextField } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import LogoRed from "../assets/LogoRed.svg";
+import axiosInstance from "../utils/axios";
+
+interface playersInterface {
+  _id: string;
+  ign: string;
+  cardSmall: string;
+}
 
 const Search = () => {
-  const [searchData, setSearchData] = useState("");
+  const [searchTerm, setsearchTerm] = useState("");
+  const [players, setPlayersData] = useState<playersInterface[] | []>([]);
 
-  //   return (
-  //     <Box
-  //       component="main"
-  //       sx={{
-  //         backgroundColor: "#0F141A",
-  //         height: "100vh",
-  //         display: "flex",
-  //         justifyContent: "center",
-  //         alignItems: "flex-start",
-  //         pt: "2rem",
-  //       }}
-  //     >
-  //       <TextField
-  //         variant="outlined"
-  //         placeholder="Search Players"
-  //         fullWidth
-  //         InputProps={{
-  //           startAdornment: <SearchIcon color="action" />,
-  //         }}
-  //         sx={{ backgroundColor: "white", width: "50%" }}
-  //       />
-  //     </Box>
-  //   );
+  async function searchUsers() {
+    try {
+      const response = await axiosInstance.get(`/search/${searchTerm}`);
+      console.log(response);
+    } catch (error: any) {
+      throw new Error(error.response.data.message);
+    }
+  }
+
+  if (searchTerm.length >= 3) {
+    searchUsers();
+  }
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    setsearchTerm(event.target.value);
+  }
 
   return (
     <Box
@@ -62,15 +63,17 @@ const Search = () => {
       {/* Search bar */}
       <TextField
         variant="outlined"
-        placeholder="Search..."
+        placeholder="Search Players"
         fullWidth
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon color="action" />
-            </InputAdornment>
-          ),
-        }}
+        value={searchTerm}
+        onChange={handleChange}
+        // InputProps={{
+        //   startAdornment: (
+        //     <InputAdornment position="start">
+        //       <SearchIcon color="action" />
+        //     </InputAdornment>
+        //   ),
+        // }}
         sx={{ backgroundColor: "white", width: "40%" }}
       />
     </Box>

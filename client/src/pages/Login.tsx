@@ -69,10 +69,10 @@ const Login = () => {
         sx={{
           backgroundColor: "white",
           width: "350px",
-          height: "350px",
+          height: "400px",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "start",
+          justifyContent: "center",
           alignItems: "center",
           mt: "20px",
         }}

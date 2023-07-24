@@ -71,10 +71,10 @@ const Register = () => {
         sx={{
           backgroundColor: "white",
           width: "350px",
-          height: "550px",
+          height: "600px",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "start",
+          justifyContent: "center",
           alignItems: "center",
           mt: "20px",
         }}
@@ -89,10 +89,7 @@ const Register = () => {
         ) : (
           ""
         )}
-        <Typography
-          variant="h6"
-          sx={{ fontFamily: "Poppins", color: "black", my: "1rem" }}
-        >
+        <Typography variant="h6" sx={{ fontFamily: "Poppins", color: "black" }}>
           Signup
         </Typography>
         <TextField

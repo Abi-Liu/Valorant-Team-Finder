@@ -10,6 +10,7 @@ import teamRoutes from "../routes/team";
 import matchRoutes from "../routes/match";
 import profileRoutes from "../routes/profile";
 import reviewRoutes from "../routes/review";
+import searchRoutes from "../routes/search";
 import passportLocal from "passport-local";
 import User from "../models/User";
 import { DatabaseUserInterface } from "../Interfaces/DatabaseInterfaces";
@@ -93,6 +94,7 @@ export default function createServer() {
   app.use("/profile", profileRoutes);
   app.use("/matches", matchRoutes);
   app.use("/review", reviewRoutes);
+  app.use("/search", searchRoutes);
 
   //setting up a cron job to run once every hour
   cron.schedule("0 * * * *", async () => {});
