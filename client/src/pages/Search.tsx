@@ -3,6 +3,7 @@ import { Search as SearchIcon } from "@mui/icons-material";
 import { ChangeEvent, useState } from "react";
 import LogoRed from "../assets/LogoRed.svg";
 import axiosInstance from "../utils/axios";
+import SearchResults from "../components/SearchResults";
 
 interface playersInterface {
   _id: string;
@@ -18,6 +19,7 @@ const Search = () => {
     try {
       const response = await axiosInstance.get(`/search/${searchTerm}`);
       console.log(response);
+      setPlayersData(response.data);
     } catch (error: any) {
       throw new Error(error.response.data.message);
     }
@@ -36,46 +38,72 @@ const Search = () => {
       component="main"
       sx={{
         display: "flex",
+        flexDirection: "column",
         height: "100vh",
-        justifyContent: "center",
-        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        alignItems: "center",
         borderRadius: "4px",
         pt: "4rem",
         bgcolor: "#0F141A",
       }}
     >
-      {/* Box with the logo */}
       <Box
         sx={{
           display: "flex",
-          alignItems: "center",
-          padding: "8px",
-          bgcolor: "black",
+          justifyContent: "center",
+          alignItems: "flex-start",
+          width: "100%",
         }}
       >
-        <img
-          src={LogoRed}
-          alt="Logo"
-          style={{ height: "40px", width: "40px" }}
+        {/* Box with the logo */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            padding: "8px",
+            bgcolor: "black",
+          }}
+        >
+          <img
+            src={LogoRed}
+            alt="Logo"
+            style={{ height: "40px", width: "40px" }}
+          />
+        </Box>
+
+        {/* Search bar */}
+        <TextField
+          variant="outlined"
+          placeholder="Search Players"
+          fullWidth
+          value={searchTerm}
+          onChange={handleChange}
+          // InputProps={{
+          //   startAdornment: (
+          //     <InputAdornment position="start">
+          //       <SearchIcon color="action" />
+          //     </InputAdornment>
+          //   ),
+          // }}
+          sx={{ backgroundColor: "white", width: "40%" }}
         />
       </Box>
-
-      {/* Search bar */}
-      <TextField
-        variant="outlined"
-        placeholder="Search Players"
-        fullWidth
-        value={searchTerm}
-        onChange={handleChange}
-        // InputProps={{
-        //   startAdornment: (
-        //     <InputAdornment position="start">
-        //       <SearchIcon color="action" />
-        //     </InputAdornment>
-        //   ),
-        // }}
-        sx={{ backgroundColor: "white", width: "40%" }}
-      />
+      <Box
+        sx={{
+          width: "37%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "white",
+        }}
+      >
+        <Box>
+          {players.map((player) => (
+            <SearchResults key={player._id} ign={player.ign} _id={player._id} />
+          ))}
+        </Box>
+      </Box>
     </Box>
   );
 };
