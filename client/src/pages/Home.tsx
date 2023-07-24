@@ -14,7 +14,7 @@ const Home = () => {
         {/* hero section for medium to large screens */}
         <Box
           sx={{
-            display: { xs: "none", md: "block" },
+            display: { md: "block" },
             position: "relative",
             width: "100%",
             height: "35rem",
@@ -22,12 +22,24 @@ const Home = () => {
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
+            "::before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.3)", // Change this to set the overlay color and opacity
+              zIndex: 1,
+            },
           }}
         >
           <Box
             sx={{
               display: "flex",
               pl: "5rem",
+              position: "relative", // Add this to make sure the text is on top of the overlay
+              zIndex: 2, // Add this to make sure the text is on top of the overlay
             }}
           >
             <Box sx={{ pt: "12rem", width: "35%" }}>
@@ -64,16 +76,34 @@ const Home = () => {
           sx={{
             position: "relative",
             width: "100%",
-            // bottom: "0rem",
-            left: "0rem",
             height: "40rem",
             backgroundImage: `url(${Jett})`,
-            backgroundPosition: "center",
+            backgroundPosition: { md: "center" },
+            backgroundPositionX: { xs: "", md: "center" },
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
+            "::before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.3)", // Change this to set the overlay color and opacity
+              zIndex: 1,
+            },
           }}
         >
-          <Box sx={{ width: "40%", ml: "auto", py: "8rem", mr: "2rem" }}>
+          <Box
+            sx={{
+              width: "40%",
+              ml: "auto",
+              py: "8rem",
+              mr: "2rem",
+              position: "relative", // Add this to make sure the text is on top of the overlay
+              zIndex: 2, // Add this to make sure the text is on top of the overlay
+            }}
+          >
             <Typography
               variant="h2"
               sx={{
@@ -93,7 +123,7 @@ const Home = () => {
                 fontWeight: "400",
               }}
             >
-              Join a vast network of like minded gamers, who are ready to take
+              Join a vast network of like-minded gamers, who are ready to take
               their skills to the next level. Find teammates based on their
               preferred roles and agents, or by rank to form the perfect team.
             </Typography>
@@ -104,6 +134,8 @@ const Home = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              position: "relative", // Add this to make sure the text is on top of the overlay
+              zIndex: 2, // Add this to make sure the text is on top of the overlay
             }}
           >
             {loggedIn ? (
