@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Dispatch,
   ReactNode,
@@ -43,14 +44,15 @@ const defaultState = {
     _id: "",
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setUser: (user: User) => {},
+  setUser: (_user: User) => {},
   loggedIn: false,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setLoggedIn: (loggedIn: boolean) => {},
+  setLoggedIn: (_loggedIn: boolean) => {},
 } as UserContextInterface;
 
 const UserContext = createContext<UserContextInterface>(defaultState);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useUserContext() {
   return useContext(UserContext);
 }

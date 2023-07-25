@@ -220,7 +220,7 @@ const Review: FC<ReviewProps> = ({ id }) => {
               color: "grey", //set outline color to grey
             },
           }}
-          onChange={(event: React.SyntheticEvent, newValue) => {
+          onChange={(_event: React.SyntheticEvent, newValue) => {
             setRating(newValue);
           }}
         />
