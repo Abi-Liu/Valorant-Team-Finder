@@ -3,10 +3,23 @@ import Background from "../assets/background.jpg";
 import Jett from "../assets/val-jett.jpg";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/UserContext";
+import CustomAlert from "../components/CustomAlert";
+import { Dispatch, SetStateAction } from "react";
 
-const Home = () => {
+const Home = ({
+  error,
+  setError,
+}: {
+  error: string;
+  setError: Dispatch<SetStateAction<string>>;
+}) => {
   const navigate = useNavigate();
   const { loggedIn } = useUserContext();
+
+  function handleRender() {
+    setError("");
+  }
+  console.log(error);
 
   return (
     <>
@@ -70,6 +83,16 @@ const Home = () => {
                 TEAM FINDER
               </Typography>
             </Box>
+            {error && (
+              <Box>
+                <CustomAlert
+                  severity="error"
+                  message={error}
+                  duration={10000}
+                  onRender={handleRender}
+                />
+              </Box>
+            )}
           </Box>
         </Box>
         <Box

@@ -19,9 +19,9 @@ const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 function App() {
   const { user, loggedIn, setLoggedIn, setUser } = useUserContext();
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
+  console.log(error);
   //used to create the custom Valorant font
   const theme = createTheme({
     typography: {
@@ -45,15 +45,20 @@ function App() {
 
   useEffect(() => {
     async function getStatus() {
-      const response = await axiosInstance.get("/auth/status");
-      if (response.status === 200) {
-        setLoggedIn(true);
-        setUser((prev) => ({
-          ...prev,
-          ign: response.data.ign,
-          team: response.data.team,
-          _id: response.data._id,
-        }));
+      try {
+        const response = await axiosInstance.get("/auth/status");
+        if (response.status === 200) {
+          setLoggedIn(true);
+          setUser((prev) => ({
+            ...prev,
+            ign: response.data.ign,
+            team: response.data.team,
+            _id: response.data._id,
+          }));
+        }
+      } catch (error: any) {
+        setError(error.response.data.message);
+        throw new Error(error.response.data.message);
       }
     }
     getStatus();
@@ -99,12 +104,10 @@ function App() {
               rankImage: profileData.data.rankImage,
               matches: matchHistory.data.matches,
             }));
-          } catch (error) {
-            console.error(error);
+          } catch (error: any) {
+            console.error(error.response.data.message);
             setError("Failed to fetch data, did you enter a real Riot ID?");
           }
-        } finally {
-          setLoading(false);
         }
       }
     };
@@ -118,7 +121,10 @@ function App() {
         <Navbar />
         <Offset />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={<Home error={error} setError={setError} />}
+          />
           <Route
             path="/login"
             element={!loggedIn ? <Login /> : <Navigate to="/" />}
