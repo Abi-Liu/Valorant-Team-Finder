@@ -57,7 +57,7 @@ function App() {
       }
     }
     getStatus();
-  }, [setUser]);
+  }, [setUser, setLoggedIn]);
 
   //refactored for increased reusability and readability
   useEffect(() => {
