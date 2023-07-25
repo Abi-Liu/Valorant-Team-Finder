@@ -11,7 +11,7 @@ interface MatchDataProps {
 
 const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
   const [show, setShow] = useState(false);
-  console.log(matchData);
+
   //headshot %
   const headshots = matchData.playerStats.headshots;
   const total =
@@ -171,6 +171,8 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
           </Typography>
         </Box>
       </Box>
+
+      {/* add a drop down to display stats on smaller screens */}
       {show && <Divider sx={{ bgcolor: "gray" }} />}
       {show && (
         <Box

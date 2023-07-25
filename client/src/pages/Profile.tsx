@@ -1,4 +1,11 @@
-import { Avatar, Box, Container, Grid, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { Match } from "../interfaces/MatchResponse";
 import StatCard from "../components/StatCard";
 import MatchCard from "../components/MatchCard";
@@ -14,6 +21,7 @@ const Profile = () => {
   const [matches, setMatches] = useState<Match[]>([]);
   const [profileData, setProfileData] = useState<ProfileResponse>();
   const [ign, setIgn] = useState<string>("");
+  const [pageShow, setPageShown] = useState("Stats"); //used to toggle between pages when on mobile
 
   useEffect(() => {
     let ignore = false;
@@ -91,10 +99,10 @@ const Profile = () => {
       <Container
         sx={{
           display: "flex",
-          gap: 10,
+          gap: { xs: 2, md: 7 },
           alignItems: "center",
           // justifyContent: "center",
-          mb: "20px",
+          mb: { xs: "0px", md: "20px" },
           py: "10px",
         }}
       >
@@ -110,16 +118,16 @@ const Profile = () => {
             }}
           />
         </Box>
-        <Box>
+        <Box sx={{ width: "100%" }}>
           <Typography
-            variant="h4"
+            variant="h5"
             component="span"
             sx={{ color: "white", fontFamily: "Poppins" }}
           >
             {ign.split("#")[0]}
           </Typography>
           <Typography
-            variant="h5"
+            variant="h6"
             component="span"
             sx={{
               fontFamily: "Poppins",
@@ -132,6 +140,89 @@ const Profile = () => {
           </Typography>
         </Box>
       </Container>
+
+      {/* Buttons to cycle between stats and review pages when screen size is xtra small */}
+      <Box
+        sx={{
+          display: { xs: "flex", md: "none" },
+          mb: "15px",
+          gap: 3,
+          justifyContent: "center",
+        }}
+      >
+        {pageShow === "Reviews" ? (
+          <Button
+            onClick={() => setPageShown("Stats")}
+            sx={{
+              backgroundColor: "#FF4654",
+              color: "white",
+              width: "90px",
+              padding: "8px 15px",
+              fontFamily: "Poppins",
+              fontWeight: "400",
+              "&:hover": {
+                backgroundColor: "#660001",
+              },
+            }}
+          >
+            Stats
+          </Button>
+        ) : (
+          <Button
+            onClick={() => setPageShown("Stats")}
+            sx={{
+              backgroundColor: "#660001",
+              color: "white",
+              width: "90px",
+              padding: "8px 15px",
+              fontFamily: "Poppins",
+              fontWeight: "400",
+              "&:hover": {
+                backgroundColor: "#660001",
+              },
+            }}
+          >
+            Stats
+          </Button>
+        )}
+
+        {pageShow === "Stats" ? (
+          <Button
+            onClick={() => setPageShown("Reviews")}
+            sx={{
+              backgroundColor: "#FF4654",
+              color: "white",
+              width: "90px",
+              padding: "8px 15px",
+              fontFamily: "Poppins",
+              fontWeight: "400",
+              "&:hover": {
+                backgroundColor: "#660001",
+              },
+            }}
+          >
+            Reviews
+          </Button>
+        ) : (
+          <Button
+            onClick={() => setPageShown("Reviews")}
+            sx={{
+              backgroundColor: "#660001",
+              color: "white",
+              width: "90px",
+              padding: "8px 15px",
+              fontFamily: "Poppins",
+              fontWeight: "400",
+              "&:hover": {
+                backgroundColor: "#660001",
+              },
+            }}
+          >
+            Reviews
+          </Button>
+        )}
+      </Box>
+
       {/* container for rank, data, reviews, and match history */}
       <Container maxWidth="xl" sx={{ display: "flex", gap: 4 }}>
         <Box
@@ -146,7 +237,12 @@ const Profile = () => {
           {id && <Review id={id} />}
         </Box>
         <Box
-          sx={{ width: "100%", height: "100vh", backgroundColor: "#0F141A" }}
+          sx={{
+            width: "100%",
+            height: "100vh",
+            backgroundColor: "#0F141A",
+            display: { xs: "none", md: "block" },
+          }}
         >
           <Grid container spacing={2} sx={{ mb: "2rem" }}>
             {stats.map((stat) => (
@@ -164,6 +260,47 @@ const Profile = () => {
             ))}
           </Grid>
         </Box>
+
+        {/* Determines which page is shown on smaller screens, reviews or stats */}
+        {pageShow === "Stats" ? (
+          <Box
+            sx={{
+              width: "100%",
+              height: "100vh",
+              backgroundColor: "#0F141A",
+              display: { xs: "block", md: "none" },
+            }}
+          >
+            <Grid container spacing={2} sx={{ mb: "2rem" }}>
+              {stats.map((stat) => (
+                <StatCard key={stat.name} name={stat.name} value={stat.value} />
+              ))}
+            </Grid>
+            <Grid container>
+              {matches.map((match) => (
+                <MatchCard
+                  key={match._id}
+                  matchData={match}
+                  rank={profileData?.rank}
+                  rankImage={profileData?.rankImage}
+                />
+              ))}
+            </Grid>
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              width: "400px",
+              height: "100%",
+              pb: "2rem",
+              margin: "auto",
+              backgroundColor: "#1B2733",
+              display: { xs: "block", md: "none" },
+            }}
+          >
+            {id && <Review id={id} />}
+          </Box>
+        )}
       </Container>
     </Box>
   );
