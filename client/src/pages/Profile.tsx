@@ -81,8 +81,8 @@ const Profile = () => {
   return (
     <Box component={"main"} sx={{ backgroundColor: "#0F141A", height: "100%" }}>
       <Box
-        style={{
-          height: "35vh", // Set the height of the box to 20% of the viewport height
+        sx={{
+          height: { xs: "15vh", md: "35vh" }, // Set the height of the box to 35% of the viewport height
           background: `url("https://trackercdn.com/cdn/tracker.gg/valorant/images/heroes/hero-reyna.jpg?v=1")`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
@@ -140,6 +140,7 @@ const Profile = () => {
             height: "100%",
             pb: "2rem",
             backgroundColor: "#1B2733",
+            display: { xs: "none", md: "block" },
           }}
         >
           {id && <Review id={id} />}

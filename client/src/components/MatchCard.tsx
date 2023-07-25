@@ -79,7 +79,10 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
         </Typography>
         <Typography
           variant="body1"
-          sx={{ fontSize: "1.15rem", color: "white" }}
+          sx={{
+            fontSize: "1.15rem",
+            color: "white",
+          }}
         >
           :
         </Typography>
@@ -93,7 +96,7 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
 
       <Box
         sx={{
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "flex-end",
@@ -109,7 +112,7 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
       </Box>
       <Box
         sx={{
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "flex-end",
@@ -124,7 +127,7 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
       </Box>
       <Box
         sx={{
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "flex-end",
@@ -139,7 +142,7 @@ const MatchCard: FC<MatchDataProps> = ({ matchData, rank, rankImage }) => {
       </Box>
       <Box
         sx={{
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "flex-end",
