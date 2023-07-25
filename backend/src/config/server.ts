@@ -23,6 +23,22 @@ import cron from "node-cron";
 export default function createServer() {
   const app = express();
   dotenv.config();
+
+  app.use(function (req, res, next) {
+    // res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+    );
+    if ("OPTIONS" == req.method) {
+      res.send(200);
+    } else {
+      next();
+    }
+  });
+
   app.use(express.json());
   app.use(
     cors({ origin: "https://valorantfinder.netlify.app", credentials: true })
@@ -35,8 +51,6 @@ export default function createServer() {
       saveUninitialized: false,
       cookie: {
         maxAge: 30 * 24 * 60 * 60 * 1000,
-        sameSite: "none", // Set SameSite to "None" for cross-site usage
-        secure: true, // Recommended to use secure cookies over HTTPS
       },
       rolling: true,
       store: MongoStore.create({ mongoUrl: process.env.DB_STRING }),
