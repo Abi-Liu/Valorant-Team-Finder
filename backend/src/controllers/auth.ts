@@ -4,7 +4,7 @@ import User from "../models/User";
 import bcrypt from "bcrypt";
 import validator from "validator";
 
-const CLIENT_URL = "https://valorantfinder.netlify.app/";
+const CLIENT_URL = "http://localhost:5173/";
 
 export default {
   register: async (req: Request, res: Response, next: NextFunction) => {
