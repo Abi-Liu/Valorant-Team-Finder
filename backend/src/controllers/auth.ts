@@ -83,4 +83,11 @@ export default {
       res.redirect(CLIENT_URL);
     });
   },
+  status: (req: Request, res: Response, next: NextFunction) => {
+    if (req.user) {
+      res.status(200).json(req.user);
+    } else {
+      res.status(400).json({ message: "Please log in or register" });
+    }
+  },
 };

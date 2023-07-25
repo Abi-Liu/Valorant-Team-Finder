@@ -28,11 +28,11 @@ export default function createServer() {
   connectDB();
   app.use(
     session({
-      secret: "secretcode",
+      secret: process.env.SESSION_SECRET!,
       resave: false,
       saveUninitialized: false,
       cookie: {
-        maxAge: 60 * 60 * 1000,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
       },
       rolling: true,
       store: MongoStore.create({ mongoUrl: process.env.DB_STRING }),
@@ -95,9 +95,6 @@ export default function createServer() {
   app.use("/matches", matchRoutes);
   app.use("/review", reviewRoutes);
   app.use("/search", searchRoutes);
-
-  //setting up a cron job to run once every hour
-  cron.schedule("0 * * * *", async () => {});
 
   return app;
 }
