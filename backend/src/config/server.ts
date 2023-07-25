@@ -24,7 +24,9 @@ export default function createServer() {
   const app = express();
   dotenv.config();
   app.use(express.json());
-  app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+  app.use(
+    cors({ origin: "https://valorantfinder.netlify.app", credentials: true })
+  );
   connectDB();
   app.use(
     session({
