@@ -35,6 +35,8 @@ export default function createServer() {
       saveUninitialized: false,
       cookie: {
         maxAge: 30 * 24 * 60 * 60 * 1000,
+        sameSite: "none", // Set SameSite to "None" for cross-site usage
+        secure: true, // Recommended to use secure cookies over HTTPS
       },
       rolling: true,
       store: MongoStore.create({ mongoUrl: process.env.DB_STRING }),
