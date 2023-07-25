@@ -18,7 +18,7 @@ import Search from "./pages/Search";
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 function App() {
-  const { user, loggedIn, setUser } = useUserContext();
+  const { user, loggedIn, setLoggedIn, setUser } = useUserContext();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -36,12 +36,28 @@ function App() {
             font-display: swap;
             font-weight: 400;
             src: url(${ValorantFont}) format('ttf');
-            unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+            unicodeRanxge: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
           }
         `,
       },
     },
   });
+
+  useEffect(() => {
+    async function getStatus() {
+      const response = await axiosInstance.get("/auth/status");
+      if (response.status === 200) {
+        setLoggedIn(true);
+        setUser((prev) => ({
+          ...prev,
+          ign: response.data.ign,
+          team: response.data.team,
+          _id: response.data._id,
+        }));
+      }
+    }
+    getStatus();
+  }, [setUser]);
 
   //refactored for increased reusability and readability
   useEffect(() => {
