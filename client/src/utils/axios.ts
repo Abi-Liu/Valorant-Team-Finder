@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   withCredentials: true,
-  baseURL: "https://valorantfinder.onrender.com",
+  baseURL: "http://localhost:8000",
 });
 
 export default axiosInstance;

@@ -53,7 +53,7 @@ const Navbar = () => {
     });
     setLoggedIn(false);
     setAnchorElUser(null);
-    window.open("https://valorantfinder.onrender.com/auth/logout", "_self");
+    window.open("http://localhost:8000/auth/logout", "_self");
   }
 
   const pages = loggedIn
