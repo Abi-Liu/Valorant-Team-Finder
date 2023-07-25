@@ -60,7 +60,7 @@ const Navbar = () => {
     ? [
         { text: "Active Teams", click: () => navigate("/teams") },
         { text: "Search Users", click: () => navigate("/search") },
-        { text: "Shop", click: () => navigate("/shop") },
+        // { text: "Shop", click: () => navigate("/shop") },
       ]
     : [
         { text: "Login", click: () => navigate("/login") },

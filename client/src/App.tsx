@@ -45,20 +45,15 @@ function App() {
 
   useEffect(() => {
     async function getStatus() {
-      try {
-        const response = await axiosInstance.get("/auth/status");
-        if (response.status === 200) {
-          setLoggedIn(true);
-          setUser((prev) => ({
-            ...prev,
-            ign: response.data.ign,
-            team: response.data.team,
-            _id: response.data._id,
-          }));
-        }
-      } catch (error: any) {
-        setError(error.response.data.message);
-        throw new Error(error.response.data.message);
+      const response = await axiosInstance.get("/auth/status");
+      if (response.status === 200) {
+        setLoggedIn(true);
+        setUser((prev) => ({
+          ...prev,
+          ign: response.data.ign,
+          team: response.data.team,
+          _id: response.data._id,
+        }));
       }
     }
     getStatus();
