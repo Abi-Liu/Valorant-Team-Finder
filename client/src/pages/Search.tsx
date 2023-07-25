@@ -62,7 +62,7 @@ const Search = () => {
       <Typography variant="h4" sx={{ color: "White" }}>
         Find Players
       </Typography>
-      <Paper component="form" sx={{ width: "40%" }}>
+      <Paper component="form" sx={{ width: { xs: "80%", md: "40%" } }}>
         <Box display="flex" alignItems="center" p={1}>
           <IconButton disabled>
             <SearchIcon />
