@@ -15,7 +15,7 @@ export default {
       if (!user.team) {
         const team = await Team.create({
           name: teamName,
-          teammates: [user.ign],
+          teammates: [{ ign: user.ign, userId: user._id }],
         });
         await User.findByIdAndUpdate(user._id, { team: team._id });
         console.log("team successfully created");
@@ -47,7 +47,7 @@ export default {
         const team = await Team.findByIdAndUpdate(
           id,
           {
-            $push: { teammates: user.ign },
+            $push: { teammates: { ign: user.ign, userId: user._id } },
           },
           { new: true }
         );
@@ -79,7 +79,7 @@ export default {
         const team = await Team.findByIdAndUpdate(
           id,
           {
-            $pull: { teammates: user.ign },
+            $pull: { teammates: { ign: user.ign, userId: user._id } },
           },
           { new: true }
         );

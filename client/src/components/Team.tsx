@@ -10,6 +10,7 @@ import { FC, Dispatch, SetStateAction } from "react";
 import { TeamInterface } from "../interfaces/TeamInterface";
 import axiosInstance from "../utils/axios";
 import { useUserContext } from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 interface TeamItemProps {
   team: TeamInterface;
@@ -19,6 +20,8 @@ interface TeamItemProps {
 
 const Team: FC<TeamItemProps> = ({ team, setTeams, teams }) => {
   const { user, setUser } = useUserContext();
+
+  const navigate = useNavigate();
 
   //Join team
   async function joinTeam() {
@@ -96,9 +99,15 @@ const Team: FC<TeamItemProps> = ({ team, setTeams, teams }) => {
           >
             {team.name}
           </Typography>
-          <Typography sx={{ fontFamily: "Poppins" }} gutterBottom>
-            {team.teammates.join(", ")}
-          </Typography>
+          {team.teammates.map((teammate) => (
+            <Typography
+              onClick={() => navigate(`/profile/${teammate.userId}`)}
+              sx={{ fontFamily: "Poppins", cursor: "pointer" }}
+              gutterBottom
+            >
+              {teammate.ign}
+            </Typography>
+          ))}
         </CardContent>
         <CardActions>
           <Button

@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
-
+const TeammateSchema = new mongoose.Schema({
+  userId: { type: String },
+  ign: { type: String },
+});
 const TeamSchema = new mongoose.Schema({
   teammates: {
-    type: [String],
+    type: [TeammateSchema],
   },
   name: {
     type: String,

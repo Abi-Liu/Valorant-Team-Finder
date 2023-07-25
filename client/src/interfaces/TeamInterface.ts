@@ -1,5 +1,5 @@
 export interface TeamInterface {
   name: string;
-  teammates: [string];
+  teammates: [{ ign: string; userId: string }];
   _id: string;
 }

@@ -10,8 +10,8 @@ const Teams = () => {
   const [teams, setTeams] = useState<TeamInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  console.log(teams);
 
-  console.log(error);
   useEffect(() => {
     let ignore = false;
 
