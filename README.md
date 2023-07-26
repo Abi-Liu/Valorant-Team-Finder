@@ -36,6 +36,9 @@
     It is a full-stack application where users can create an account and find teammates to queue with in the popular FPS game, Valorant. Users will have customized profiles showcasing their rank as well as tracking their statistics from their 5 most recent games so        users can see how they've been doing in their matches, as well as a review system to rate their experiences playing with that user. They can then join or create a team with other online users.
     <br />
     <br />
+    <strong>NOTE: Users must register with a VALID RIOT ID in order for the app to function as expected</strong>
+    <br />
+    <br />
     <a href="https://valorantfinder.netlify.app/">View Demo</a>
  
   </p>
