@@ -101,7 +101,15 @@ Another educational and practical step I took was to implement unit testing for 
 
 Another big learning moment during this project was how to keep code DRY. Because of the way my controllers were set up, I found myself repeating the same long snippet of code whenever I wanted to fetch the match data and to check if the current version in the database was stale. So I ended up creating a new file that I would import into wherever I needed the code in order to make my code more readable as well as reusable. This really helped keep my code cleaner and less lengthy.
 
-This project really helped me hone my frontend skills as well as I really went all out to try to make things as visually appealing and easy to use as I could. I had a chat with a great developer and he gave me a piece of advice that really changed my mindset on the way I designed things. He told me to not think of everything in terms of code, but instead really try to hone in on the product level design and to make the app functional as well as visually appealing. He also taught me to really mess around in the Dev tools to quickly build out a prototype of the UI and to wireframe the layout before focusing solely on the code. With that advice in mind, I'm really proud of what I've created UI wise. It's functional and easy to use on all screensizes, and looks visually appealing as well, at least in my opinion.
+This project really helped me hone my frontend skills as well as I really went all out to try to make things as visually appealing and easy to use as I could. I had a chat with a great developer and he gave me a piece of advice that really changed my mindset on the way I designed things. He told me to not think of everything in terms of code, but instead really try to hone in on the product level design and to make the app functional as well as visually appealing. He also taught me to really mess around in the Dev tools to quickly build out a prototype of the UI and to wireframe the layout before focusing solely on the code. With that advice in mind, I'm really proud of what I've created UI wise. It's functional and easy to use on all screensizes, and looks visually appealing as well.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- OPTIMIZATIONS -->
+
+## Optimizations
+
+If I were to do this project again, I would definitely optimize my test suites. The way they are currently set up, the tests are dependant upon each other and need to run in order for the tests to work as intended. Now looking back on it, this is a massive issue as the test should work independant of each other. For example, my unit tests to delete a review first needs my test to create a review to run or else there will be no test to delete, resulting in the test failing. To fix this, I would just insert mock data into the DB inside the delete test so that way it will work as intended, even if ran individually. This will make my test suites much more robust and I can test individual endpoints more quickly.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
