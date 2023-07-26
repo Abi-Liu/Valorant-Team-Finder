@@ -103,6 +103,8 @@ Another big learning moment during this project was how to keep code DRY. Becaus
 
 This project really helped me hone my frontend skills as well as I really went all out to try to make things as visually appealing and easy to use as I could. I had a chat with a great developer and he gave me a piece of advice that really changed my mindset on the way I designed things. He told me to not think of everything in terms of code, but instead really try to hone in on the product level design and to make the app functional as well as visually appealing. He also taught me to really mess around in the Dev tools to quickly build out a prototype of the UI and to wireframe the layout before focusing solely on the code. With that advice in mind, I'm really proud of what I've created UI wise. It's functional and easy to use on all screensizes, and looks visually appealing as well, at least in my opinion.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- GETTING STARTED -->
 
 ## Getting Started
