@@ -58,6 +58,9 @@
       <a href = "#how-its-made">How It's Made</a>
     </li>
     <li>
+      <a href = "#optimizations">Optimizations</a>
+    </li>
+    <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
