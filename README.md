@@ -35,14 +35,9 @@
     <br />
     It is a full-stack application where users can create an account and find teammates to queue with in the popular FPS game, Valorant. Users will have customized profiles showcasing their rank as well as tracking their statistics from their 5 most recent games so        users can see how they've been doing in their matches, as well as a review system to rate their experiences playing with that user. They can then join or create a team with other online users.
     <br />
-    <a href="https://github.com/Abi-Liu/Valorant-Team-Finder"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/Abi-Liu/Valorant-Team-Finder">View Demo</a>
-    ·
-    <a href="https://github.com/Abi-Liu/Valorant-Team-Finder/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/Abi-Liu/Valorant-Team-Finder/issues">Request Feature</a>
+    <a href="https://valorantfinder.netlify.app/">View Demo</a>
+ 
   </p>
 </div>
 
@@ -57,6 +52,9 @@
       </ul>
     </li>
     <li>
+      <a href = "#how-its-made">How It's Made</a>
+    </li>
+    <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
@@ -64,8 +62,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -91,6 +87,21 @@
 - [![jest][jest]][jest-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- HOW ITS MADE -->
+
+## How Its Made
+
+This is my first project dabbling in Typescript, and one of the main reasons why I made this project was to dip my toes into Typescript and learn something new. Almost immediately I ran into issues. It took me a few days to even get the project set up in Typescript, and once I did, I was getting eslint errors everywhere and it just felt like there were so many new things like type declaration packages, interfaces, typing for things like errors, react components, and even api responses, it was all just a bit overwhelming. However, I stuck to it and eventually everything started to click.
+
+A large part of this app is statistics tracking, and keeping the data needed fresh. Which introduced the first big problem I had: How should I efficiently store and update the data?
+My first thought was just to fetch the users data from the Valorant API whenever someone went to that users profile. However, this solution turned out to be a bit slow and inefficient as it lead to long load times for the end user. The next idea I came up with was a cron job to automatically updated the match history data every few hours in order to ensure the latest matches are loaded. However if my user base got too big, then this would lead to a massive strain on both my server, as well as the third party API server I'm using as I would need to update the matches for every single one of my users in my database. The solution I came up with was to combine both solutions. The idea is to get the match history data and store it into the database with a "fresh time", i.e one or two hours after its original fetch date. If a user tries to go to a profile _before_ the data is "stale", it serves the data directly from the DB, however, if the user requests the data _after_ the stale time, the server will refetch that data from the third party API. This combines both the previous methods and caches the data while maintaing the most recent match history data at the same time.
+
+Another educational and practical step I took was to implement unit testing for my endpoints with Jest and Supertest. This allowed me to test my endpoints as I built them to ensure everything was functioning as expected when it came time to build out my UI. This saved a lot of headache and switching back and forth between my code and Postman or building out my UI and then realizing that some endpoints didn't work as expected.
+
+Another big learning moment during this project was how to keep code DRY. Because of the way my controllers were set up, I found myself repeating the same long snippet of code whenever I wanted to fetch the match data and to check if the current version in the database was stale. So I ended up creating a new file that I would import into wherever I needed the code in order to make my code more readable as well as reusable. This really helped keep my code cleaner and less lengthy.
+
+This project really helped me hone my frontend skills as well as I really went all out to try to make things as visually appealing and easy to use as I could. I had a chat with a great developer and he gave me a piece of advice that really changed my mindset on the way I designed things. He told me to not think of everything in terms of code, but instead really try to hone in on the product level design and to make the app functional as well as visually appealing. He also taught me to really mess around in the Dev tools to quickly build out a prototype of the UI and to wireframe the layout before focusing solely on the code. With that advice in mind, I'm really proud of what I've created UI wise. It's functional and easy to use on all screensizes, and looks visually appealing as well, at least in my opinion.
 
 <!-- GETTING STARTED -->
 
@@ -128,19 +139,6 @@ This project requires you to have NPM installed. If you don't, you can do so by 
    DB_STRING = "YOUR_DB_URI";
    SESSION_SECRET = YOUR_SECRET
    ```
-4. start both the frontend and backend separately.
-
-```sh
- cd client
- npm run dev
-```
-
-```sh
-cd backend
-npm start
-```
-
-_Note_ To run locally, you will need to change the urls in the project to your localhost port numbers. An easy way of doing this is to search for all instances of `valorantfinder` and change it to your respective localhost port.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -148,39 +146,23 @@ _Note_ To run locally, you will need to change the urls in the project to your l
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+To use, start the server by navigating to the backend folder and running
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+```sh
+cd backend
+npm start
+```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Once the server is running, navigate to the client folder and use the command
 
-<!-- ROADMAP -->
+```sh
+ cd client
+ npm run dev
+```
 
-## Roadmap
+Once the servers are up and running, you will be free to use the app and all of it's features. Just register your account and be sure to use a _VALID RIOT ID_ or else the app will not work. It is dependant on that to be able to actually fetch all of the details that are unique to you, such as your banner card, rank, match history, and etc.
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
-
-See the [open issues](https://github.com/Abi-Liu/Valorant-Team-Finder/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+_Note: To run locally, you will need to change the urls in the project to your localhost port numbers. An easy way of doing this is to search for all instances of `valorantfinder` and change it to your respective localhost port._
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -188,7 +170,7 @@ Don't forget to give the project a star! Thanks again!
 
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -206,9 +188,10 @@ Project Link: [https://github.com/Abi-Liu/Valorant-Team-Finder](https://github.c
 
 ## Acknowledgments
 
-- []()
-- []()
-- []()
+I would like to give a special thanks to these resources that really helped me make this project
+
+- [Valorant API](https://github.com/Henrik-3/unofficial-valorant-api)
+- [Valorant Assets File](<https://www.figma.com/file/yeusbXGVd3uaeZetmzFavP/VALORANT-Graphic-Assets-(Community)?type=design&node-id=106-124&mode=design&t=UCzXgjLqZPLs54rK-0>)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
