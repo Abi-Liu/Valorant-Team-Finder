@@ -39,6 +39,13 @@
     <strong>NOTE: Users must register with a VALID RIOT ID in order for the app to function as expected</strong>
     <br />
     <br />
+    <strong>Demo Login</strong>
+    <br />
+    <strong>Email:</strong> demo@demo.com
+    <br />
+    <strong>Password:</strong> password123
+    <br />
+    <br />
     <a href="https://valorantfinder.netlify.app/">View Demo</a>
  
   </p>
