@@ -34,8 +34,9 @@ const Login = () => {
         _id: user.data._id,
       }));
     } catch (error: any) {
-      setError(error.response.data.message);
-      throw new Error(error.response.data.message);
+      // setError(error.response.data.message);
+      // throw new Error(error.response.data.message);
+      console.log(error);
     }
     setFormData({ email: "", password: "" });
   }

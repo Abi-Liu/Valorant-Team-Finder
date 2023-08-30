@@ -14,6 +14,7 @@ import axiosInstance from "./utils/axios";
 import Profile from "./pages/Profile";
 import getProfileData from "./utils/GetUserData";
 import Search from "./pages/Search";
+import Footer from "./components/Footer";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
@@ -141,6 +142,7 @@ function App() {
             element={loggedIn ? <Search /> : <Navigate to="/login" />}
           />
         </Routes>
+        <Footer />
       </ThemeProvider>
     </>
   );
