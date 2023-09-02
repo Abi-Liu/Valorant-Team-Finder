@@ -47,6 +47,8 @@
     <br />
     <br />
     <a href="https://valorantfinder.netlify.app/">View Demo</a>
+    <br />
+    Please allow for slow loading times of up to 3 minutes due to free hosting.
  
   </p>
 </div>
