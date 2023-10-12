@@ -1,5 +1,5 @@
 import axiosInstance from "../utils/axios";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, MouseEvent } from "react";
 import { useUserContext } from "../contexts/UserContext";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -44,6 +44,24 @@ const Login = () => {
 
   function handleRender() {
     setError("");
+  }
+
+  async function demoLogin(event: MouseEvent<HTMLButtonElement>){
+    event.preventDefault();
+    try {
+      const user = await axiosInstance.post("/auth/login", {email: "demo@demo.com", password: 'password123'});
+
+      setLoggedIn(true);
+      setUser((prev) => ({
+        ...prev,
+        ign: user.data.ign,
+        team: user.data.team,
+        _id: user.data._id,
+      }));
+    } catch (error: any) {
+      setError(error.response.data.message);
+      throw new Error(error.response.data.message);
+    }
   }
 
   return (
@@ -143,6 +161,9 @@ const Login = () => {
             Sign up now
           </Button>
         </Box>
+        <Button size="small" onClick={demoLogin}>
+            Login with demo account
+        </Button>
       </Box>
     </Box>
   );
