@@ -46,6 +46,27 @@ const Register = () => {
     }
   }
 
+  async function demoLogin(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    try {
+      const user = await axiosInstance.post("/auth/login", {
+        email: "demo@demo.com",
+        password: "password123",
+      });
+
+      setLoggedIn(true);
+      setUser((prev) => ({
+        ...prev,
+        ign: user.data.ign,
+        team: user.data.team,
+        _id: user.data._id,
+      }));
+    } catch (error: any) {
+      setError(error.response.data.message);
+      throw new Error(error.response.data.message);
+    }
+  }
+
   const navigate = useNavigate();
 
   return (
@@ -183,6 +204,9 @@ const Register = () => {
             Log in now
           </Button>
         </Box>
+        <Button size="small" onClick={demoLogin}>
+          Login with demo account
+        </Button>
       </Box>
     </Box>
   );
