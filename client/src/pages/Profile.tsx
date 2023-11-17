@@ -49,6 +49,7 @@ const Profile = () => {
   }, [id]);
   //   const navigate = useNavigate();
 
+  // cache the statistics data for optimization
   const stats = useMemo(() => calculateStatistics(matches), [matches]);
 
   return (
